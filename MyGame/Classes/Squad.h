@@ -23,41 +23,66 @@ enum SquadState{
     Wait
 };
 
+enum SquadType{
+    Footman,
+    Knight,
+    Archer
+};
+
+enum SquadFaceTo
+{
+    Right,
+    Left
+};
+
+enum SquadSide
+{
+    TeamA,
+    TeamB
+};
+
 class Squad{
 private:
-    std::string _name;
-    Point _pos;
-    Point _targetPoint;
-    SquadState _state;
-    float _speed;
-    bool _heroDead;
     bool _soldierDead;
     
-    unsigned int _heroHealth;
-    unsigned int _soldierHealth;
-    unsigned int _soldierCount;
-    unsigned int _currentSoldierHealth;
-    unsigned int _currentHeroHealth;
-    
-    unsigned int _attackPoint;
-    unsigned int _defensePoint;
-    
-    Sprite* _spriteHero;
-    Sprite* _spriteSoldier;
-    
 public:
-    Squad(std::string,Point);
-    std::string getName();
-    void setPosition(Point);
-    Point getPosition();
-    void setTargetPosition(Point);
-    void setName(std::string);
-    unsigned int getSoldiersCount();
+    std::vector<Point> _soldiersPos;
+    std::vector<int> _soldiersHealth;
     
-    int attack();
-    void beAttacked(int);
+    // Use this property to index all squads in the battle field
+    CC_SYNTHESIZE(int,_index,Index);
+    CC_SYNTHESIZE(SquadState,_state,State);
+    CC_SYNTHESIZE(std::string,_name,Name);
+    CC_SYNTHESIZE(Point,_pos,Position);
+    CC_SYNTHESIZE(Point,_target,TargetPosition);
+    CC_SYNTHESIZE(float,_speed,Speed);
+    CC_SYNTHESIZE(SquadFaceTo,_faceTo,FaceTo);
+    CC_SYNTHESIZE(unsigned int,_soldierCount,SoldierCount);
+    CC_SYNTHESIZE(SquadType, _type, SoldierType);
+    CC_SYNTHESIZE(SquadSide, _side, SquadSide);
+    
+    // Squad's attack range, if hero is alive, ues hero's position
+    // otherwise using the first's soldier's position
+    CC_SYNTHESIZE(float,_attackRange,AttackRange);
+    
+    // Soldier's attack point, hero = atk * 2
+    CC_SYNTHESIZE(float,_attackPoint,AttackPoint);
+    
+    // Soldier's defense point, hero = def * 2
+    CC_SYNTHESIZE(float,_defensePoint,DefensePoint);
+    
+    // Hero's max HP
+    CC_SYNTHESIZE(int, _heroHealth, HeroHealth);
+    
+    // Every soldier's max HP
+    CC_SYNTHESIZE(int, _soldierHealth, SoldierHealth);
+    
+    CC_SYNTHESIZE(bool,_heroDead,HeroDead);
+    
+    Squad(std::string,Point,int);
+    
+    bool faceToRight();
     bool die();
-    void move(float dt);
     void draw();
 };
 
