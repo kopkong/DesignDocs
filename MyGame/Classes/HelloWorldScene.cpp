@@ -1,4 +1,5 @@
 #include "HelloWorldScene.h"
+#include <algorithm>
 USING_NS_CC;
 
 // Constant paras
@@ -68,11 +69,13 @@ bool HelloWorld::init()
 }
 
 void HelloWorld::update(float dt){
-    
-    if(_squadListA.size() > 0){ // teamA strategy is attacking
-        for(int i = 0; i < _squadListA.size(); i++)
+    // Check battle finished or not
+
+	if(_allSquadsInBattle.size() > 0){ 
+        for(unsigned int i = 0; i < _allSquadsInBattle.size(); i++)
         {
-            Squad* sq = &_squadListA[i];
+            Squad* sq = &_allSquadsInBattle[i];
+			log("Squad[%s] state is %d", sq->getName().c_str(),sq->getState());
             switch(sq->getState()){
                 case SquadState::Moving:
                 {
@@ -82,58 +85,29 @@ void HelloWorld::update(float dt){
                 }
                 case SquadState::BattleBegin:
                 {
-                    log("Battle begin, squad %s is ready",sq->getName().c_str());
+                    //log("Battle begin, squad %s is ready",sq->getName().c_str());
                     battleBegin(sq);
                     sq->setState(SquadState::Moving);
                     //log("Squad %s state is %d", sq->getName().c_str(), sq->getState());
                     break;
                 }
-                case SquadState::Fighting:
-                {
-                    log("Squad %s is fighting", sq->getName().c_str());
-                    squadFighting(sq,dt);
-                    break;
-                }
-                    
-                default:
-                    break;
-            }
-        }
-    }
-    
-    if(_squadListB.size() > 0){ // TeamB strategy is waiting
-        for(int i = 0; i < _squadListB.size(); i++)
-        {
-            Squad* sq = &_squadListB[i];
-            switch(sq->getState()){
-                case SquadState::Moving:
-                {
-                    //log("Squad %s is moving",sq->getName().c_str());
-                    squadMove(sq,dt);
-                    break;
-                }
-                case SquadState::BattleBegin:
-                {
-                    log("Battle begin, squad %s is ready",sq->getName().c_str());
-                    battleBegin(sq);
-                    sq->setState(SquadState::Wait);
-                    //log("Squad %s state is %d", sq->getName().c_str(), sq->getState());
-                    break;
-                }
-                case SquadState::Wait:
+				case SquadState::Wait:
                 {
                     squadWait(sq);
                 }
                 case SquadState::Fighting:
                 {
-                    log("Squad %s is fighting", sq->getName().c_str());
+                    //log("Squad %s is fighting", sq->getName().c_str());
                     squadFighting(sq,dt);
                     break;
                 }
+				case SquadState::Eliminated:
+					{
+						
+					}
                 default:
                     break;
             }
-            
         }
     }
 }
@@ -160,112 +134,25 @@ void HelloWorld::squadWait(Squad* sq){
 void HelloWorld::squadMove(Squad* sq,float dt){
     if(sq->getState() != SquadState::Moving)
         return;
-    
-    bool up ;
-    
-    Point direction = sq->getTargetPosition() - sq->getPosition();
-    if(direction.x > 0)
-    {
-        sq->setFaceTo(SquadFaceTo::Right);
-    }
-    else{
-        sq->setFaceTo(SquadFaceTo::Left);
-    }
-    
-    if(direction.y > 0)
-    {
-        up = true;
-    }
-    else
-    {
-        up = false;
-    }
-    
-    
-    // Compute tangent
-    float tan = 0;
-    if(abs(direction.x) > 0.0001)
-    {
-        tan = abs(direction.y) / abs(direction.x);
-    }
-    
+        
     // Hero move
     if(!sq->getHeroDead()){
         int heroIndex = getHeroSpriteID(sq->getIndex());
-        Sprite* heroSprite = _allUnitsSprite[heroIndex];
-    
-        Point heroNextPosition;
-        if(sq->faceToRight()){
-            heroNextPosition.x = heroSprite->getPositionX() + dt * sq->getSpeed();
-        }
-        else{
-            heroNextPosition.x = heroSprite->getPositionX() - dt * sq->getSpeed();
-        }
         
-        if(up){
-            heroNextPosition.y = heroSprite->getPositionY() + tan * dt * sq->getSpeed();
-        }
-        else{
-            heroNextPosition.y = heroSprite->getPositionY() - tan * dt * sq->getSpeed();
-        }
-    
-        // If hero will move outside the screen, stop moving.
-        if(heroNextPosition.x > _screenSize.width - HEROSIZE.width ||
-           heroNextPosition.x < HEROSIZE.width ||
-           heroNextPosition.y > _screenSize.height - HEROSIZE.height ||
-           heroNextPosition.y < HEROSIZE.height)
-        {
-            sq->setState(SquadState::Wait);
-            log("Squad %s reached the edge and stop moving",sq->getName().c_str());
-            return;
-        }
-        else{
-            heroSprite->setPosition(heroNextPosition);
-            
-            // Here update the squad's position too.
-            sq->setPosition(heroNextPosition);
-        }
+		Point pos = moveSpriteUnit(heroIndex,sq,dt);
+		sq->setPosition(pos);
     }
     
     // Soldier move
     for(unsigned int i = 0 ; i< sq->getSoldierCount();i++){
         int soldierIndex = getSoldierSpriteID(sq->getIndex(), i);
-        Sprite* soldierSprite = _allUnitsSprite[soldierIndex];
-        Point soldierNextPosition;
-        
-        if(sq->faceToRight()){
-            soldierNextPosition.x = soldierSprite->getPositionX() + dt * sq->getSpeed();
-        }
-        else{
-            soldierNextPosition.x = soldierSprite->getPositionX() - dt * sq->getSpeed();
-        }
-        
-        if(up){
-            soldierNextPosition.y = soldierSprite->getPositionY() + tan * dt * sq->getSpeed();
-        }
-        else{
-            soldierNextPosition.y = soldierSprite->getPositionY() - tan * dt * sq->getSpeed();
-        }
-        
-        // If any soldier would go outside the screen, stop moving.
-        if(soldierNextPosition.x > _screenSize.width - SOLDIERSIZE.width ||
-           soldierNextPosition.x < SOLDIERSIZE.width ||
-           soldierNextPosition.y > _screenSize.height - SOLDIERSIZE.height ||
-           soldierNextPosition.y < SOLDIERSIZE.height)
+
+		Point pos =  moveSpriteUnit(soldierIndex,sq,dt);  
+   
+        // If hero died , update squad's position with the first soldier's position
+        if(sq->getHeroDead() && i == 0)
         {
-            sq->setState(SquadState::Wait);
-            log("Squad %s reached the edge and stop moving",sq->getName().c_str());
-            return;
-        }
-        else
-        {
-            soldierSprite->setPosition(soldierNextPosition);
-            
-            // If hero died , update squad's position with the first soldier's position
-            if(sq->getHeroDead() && i == 0)
-            {
-                sq->setPosition(soldierNextPosition);
-            }
+            sq->setPosition(pos);
         }
     }
     
@@ -274,25 +161,76 @@ void HelloWorld::squadMove(Squad* sq,float dt){
 }
 
 void HelloWorld::squadFighting(Squad* pSquad, float dt){
-    
+
     // Check state first
     if(pSquad->getState() != SquadState::Fighting)
         return;
     
-    // First decide the actions for hero in the squad
+    // Let hero to fight
     int heroID = getHeroSpriteID(pSquad->getIndex());
     int targetSquadIndex = pSquad->getTargetIndex();
     Squad* pTargetSquad = getSquadByIndex(targetSquadIndex);
+
+	// If target squad is eliminated, return to waiting state
+	if(pTargetSquad->getState() == SquadState::Eliminated)
+	{
+		pSquad->setState(SquadState::Wait);
+		return;
+	}
     
-    if (_allUnitsTargetIndex.at(heroID) == 0) // no aim target
-    {
-        pickTarget(heroID, pSquad, pTargetSquad);
-    }
-    else// Already has a target
-    {
-        attackTarget(heroID,pSquad,pTargetSquad,dt);
-    }
-    
+	if(unitAlive(heroID))
+	{
+		if (_allUnitsTargetIndex.at(heroID) == 0) // no aim target
+		{
+			pickTarget(heroID, pSquad, pTargetSquad);
+		}
+		else// Already has a target
+		{
+			attackTarget(heroID,pSquad,pTargetSquad,dt);
+		}
+	}
+
+	// Let soldiers to fight
+	for(unsigned int i = 0; i < pSquad->getSoldierCount(); i ++)
+	{
+		int soldierID = getSoldierSpriteID(pSquad->getIndex(),i);
+
+		if(unitAlive(soldierID))
+		{
+			if(_allUnitsTargetIndex[soldierID] == 0) // no target
+			{
+				pickTarget(soldierID,pSquad,pTargetSquad);
+			}
+			else
+			{
+				attackTarget(soldierID,pSquad,pTargetSquad,dt);
+			}
+		}
+	}
+
+	// Check target has been eliminated or not
+	bool heroDead = !unitAlive(getHeroSpriteID(targetSquadIndex));
+
+	bool allSoldiersDead = true;
+	for(unsigned int i = 0; i < pTargetSquad->getSoldierCount(); i ++)
+	{
+		int soldierID = getSoldierSpriteID(targetSquadIndex,i);
+
+		if(unitAlive(soldierID))
+		{
+			allSoldiersDead = false;
+			break;
+		}
+	}
+
+	// Target squad is eliminated
+	if( heroDead && allSoldiersDead)
+	{
+		pTargetSquad->setState(SquadState::Eliminated);
+
+		// Our current Squad turn to wait
+		pSquad->setState(SquadState::Wait);
+	}
 }
 
 void HelloWorld::saveHeroSprite(int squadIndex,Sprite* sprite){
@@ -313,14 +251,14 @@ int HelloWorld::getSoldierSpriteID(int squadIndex, int soldierIndex){
 
 void HelloWorld::drawAll(){
     if(_squadListA.size() > 0){
-        for(int i = 0; i < _squadListA.size(); i++)
+        for(unsigned int i = 0; i < _squadListA.size(); i++)
         {
             drawSquad(&_squadListA[i]);
         }
     }
     
     if(_squadListB.size() > 0){
-        for(int i = 0; i < _squadListB.size(); i++)
+        for(unsigned int i = 0; i < _squadListB.size(); i++)
         {
             drawSquad(&_squadListB[i]);
         }
@@ -382,7 +320,6 @@ void HelloWorld::drawSquad(Squad* sq){
 		Point p = Point(x,y);
 		soldier->setPosition(p);
         saveSoldierSprite(sq->getIndex(), i, soldier);
-        sq->_soldiersHealth.push_back(100);
         this->addChild(soldier,1);
     }
 }
@@ -394,55 +331,35 @@ void HelloWorld::searchEnemy(Squad* sq){
     
     if(!inSearchingState)
         return;
-    
-    if(sq->getIndex() < 9)
-    {
-        // If squad in ListA
-        // search ListB
-        
-        for(int i= 0 ;i < _squadListB.size() ; i++)
+
+	// First pick alive emeny squads list
+	std::vector<Squad*> rivalSquads;
+	for(unsigned int i = 0 ; i < _allSquadsInBattle.size(); i++)
+	{
+		if(_allSquadsInBattle[i].getSquadSide() != sq->getSquadSide() &&
+			_allSquadsInBattle[i].getState() != SquadState::Eliminated)
+			rivalSquads.push_back(&_allSquadsInBattle[i]);
+	}
+
+	float minDistance = 1024 * 1024;
+	for(unsigned int i = 0; i< rivalSquads.size() ; i++)
+	{
+		float distance = pow((sq->getPosition().x - rivalSquads[i]->getPosition().x),2) + pow((sq->getPosition().y - rivalSquads[i]->getPosition().y),2);
+
+		if(distance < minDistance)
         {
-            float distance = pow((sq->getPosition().x - _squadListB[i].getPosition().x),2) + pow((sq->getPosition().y - _squadListB[i].getPosition().y),2);
-            
-            if(distance <= sq->getAttackRange())
-            {
-                log("Squad %s found it's target is Squad %s", sq->getName().c_str(), _squadListB[i].getName().c_str());
+            //log("Squad %s found it's target is Squad %s", sq->getName().c_str(), _squadListB[i].getName().c_str());
                 
-                // Locate the target and aim to it
-                sq->setTargetIndex(_squadListB[i].getIndex());
-                sq->setTargetPosition(_squadListB[i].getPosition());
-                
-                // Stop moving and turn to fighting state
-                sq->setState(SquadState::Fighting);
-                
-                // Only need to locate one target at one time
-                break;
-            }
-        }
-    }
-    else // Squad in ListB
-    {
-        // Search ListA
-        for(int i= 0 ;i < _squadListA.size() ; i++)
-        {
-            float distance = pow((sq->getPosition().x - _squadListA[i].getPosition().x),2) + pow((sq->getPosition().y - _squadListA[i].getPosition().y),2);
-            
-            if(distance <= sq->getAttackRange())
-            {
-                log("Squad %s found it's target is Squad %s", sq->getName().c_str(), _squadListA[i].getName().c_str());
-                
-                // Locate the target and aim to it
-                sq->setTargetIndex(_squadListA[i].getIndex());
-                sq->setTargetPosition(_squadListA[i].getPosition());
-                
-                sq->setState(SquadState::Fighting);
-                
-                // Only need to locate one target at one time
-                break;
-                
-            }
-        }
-    }
+            // Locate the target and aim to it
+            sq->setTargetIndex(rivalSquads[i]->getIndex());
+            sq->setTargetPosition(rivalSquads[i]->getPosition());
+			
+			minDistance = distance;
+		}
+	}
+
+	// Stop moving and turn to fighting state
+    sq->setState(SquadState::Fighting);
 }
 
 void HelloWorld::initSquads(){
@@ -460,7 +377,7 @@ void HelloWorld::initSquads(){
 		Point p(_screenSize.width/2 - 20 - SQUADBLOCKSIZE.width * col,
                 _screenSize.height  - SQUADBLOCKSIZE.height/2 - SQUADBLOCKSIZE.height * row);
         
-        log("Squad %s position is(%f,%f)", name.c_str(), p.x,p.y);
+        //log("Squad %s position is(%f,%f)", name.c_str(), p.x,p.y);
         Squad a = Squad(name,p,indexCount);
         
         if(col == 0)
@@ -477,7 +394,9 @@ void HelloWorld::initSquads(){
         }
         
         indexCount ++;
+		a.setSquadSide(SquadSide::TeamA);
         _squadListA.push_back(a);
+		_allSquadsInBattle.push_back(a);
     }
     
 
@@ -492,7 +411,7 @@ void HelloWorld::initSquads(){
 		Point p(_screenSize.width/2 + 20 + SQUADBLOCKSIZE.width * col,
                 _screenSize.height  - SQUADBLOCKSIZE.height/2 - SQUADBLOCKSIZE.height * row);
         
-        log("Squad %s position is(%f,%f)", name.c_str(), p.x,p.y);
+        //log("Squad %s position is(%f,%f)", name.c_str(), p.x,p.y);
         Squad b = Squad(name,p,indexCount);
         indexCount ++;
         if(col == 0)
@@ -507,7 +426,10 @@ void HelloWorld::initSquads(){
         {
             initSquadProperty(&b,Archer);
         }
+
+		b.setSquadSide(SquadSide::TeamB);
         _squadListB.push_back(b);
+		_allSquadsInBattle.push_back(b);
     }
     
     drawAll();
@@ -552,7 +474,7 @@ void HelloWorld::initSquadProperty(Squad * pSquad, SquadType type){
     _allUnitsHealth.insert(std::pair<int,int>(heroID,pSquad->getHeroHealth()));
     _allUnitsTargetIndex.insert(std::pair<int,int>(heroID,0)); // no target yet
     
-    for(int i= 0 ; i < pSquad->getSoldierCount(); i ++){
+    for(unsigned int i= 0 ; i < pSquad->getSoldierCount(); i ++){
         int soldierID = getSoldierSpriteID(pSquad->getIndex(), i);
         _allUnitsHealth.insert(std::pair<int,int>(soldierID,pSquad->getSoldierHealth()));
         _allUnitsTargetIndex.insert(std::pair<int,int>(soldierID,0));
@@ -560,14 +482,14 @@ void HelloWorld::initSquadProperty(Squad * pSquad, SquadType type){
 }
 
 Squad* HelloWorld::getSquadByIndex(int squadIndex){
-    for(int i = 0; i < _squadListA.size() ; i ++){
+    for(unsigned int i = 0; i < _squadListA.size() ; i ++){
         if(_squadListA[i].getIndex() == squadIndex)
         {
             return &(_squadListA[i]);
         }
     }
     
-    for(int j = 0; j <_squadListB.size(); j ++){
+    for(unsigned int j = 0; j <_squadListB.size(); j ++){
         if(_squadListB[j].getIndex() == squadIndex)
         {
             return &(_squadListB[j]);
@@ -602,13 +524,22 @@ void HelloWorld::attackTarget(int selfID, Squad* pSelfSquad, Squad* pTargetSquad
         // Far away from attack range, go near to target
         if(range > pSelfSquad->getAttackRange() * pSelfSquad->getAttackRange())
         {
-            
+            // Move to the target
+			moveSpriteUnit(selfID,pSelfSquad,dt);
         }
-        
-        //if()
-        
-        // Attack
-        //_allUnitsHealth[targetUnitID] -= pSquad->getAttackPoint() * 2;
+		else // Inside the attack range
+		{
+			// Attack, Consider play some effect here
+			// ...
+
+			if(selfID % 100 == 0) // It's a hero
+				_allUnitsHealth[targetUnitID] -= pSelfSquad->getAttackPoint() * 2;
+			else
+				_allUnitsHealth[targetUnitID] -= pSelfSquad->getAttackPoint() ;
+
+			log("UnitA[%d] attacks unitB[%d]",selfID,targetUnitID);
+			log("UnitB[%d] health is %d",targetUnitID,_allUnitsHealth[targetUnitID]);
+		}
     }
 
 }
@@ -616,8 +547,9 @@ void HelloWorld::attackTarget(int selfID, Squad* pSelfSquad, Squad* pTargetSquad
 Point HelloWorld::moveSpriteUnit(int selfID,Squad* pSelfSquad,float dt){
     int targetID = _allUnitsTargetIndex[selfID];
     Sprite * selfSprite = _allUnitsSprite[selfID];
-    
-    Point nextPosition;
+    float speed = pSelfSquad->getSpeed();
+
+    Point nextPosition ;
     if(targetID == 0) // No target
     {
         // move straight forward
@@ -654,7 +586,6 @@ Point HelloWorld::moveSpriteUnit(int selfID,Squad* pSelfSquad,float dt){
         up = false;
     }
     
-    
     // Compute tangent
     float tan = 0;
     if(abs(direction.x) > 0.0001)
@@ -662,62 +593,56 @@ Point HelloWorld::moveSpriteUnit(int selfID,Squad* pSelfSquad,float dt){
         tan = abs(direction.y) / abs(direction.x);
     }
     
-    // Hero move
-    if(!sq->getHeroDead()){
-        int heroIndex = getHeroSpriteID(sq->getIndex());
-        Sprite* heroSprite = _allUnitsSprite[heroIndex];
-        
-        Point heroNextPosition;
-        if(sq->faceToRight()){
-            heroNextPosition.x = heroSprite->getPositionX() + dt * sq->getSpeed();
-        }
-        else{
-            heroNextPosition.x = heroSprite->getPositionX() - dt * sq->getSpeed();
-        }
-        
-        if(up){
-            heroNextPosition.y = heroSprite->getPositionY() + tan * dt * sq->getSpeed();
-        }
-        else{
-            heroNextPosition.y = heroSprite->getPositionY() - tan * dt * sq->getSpeed();
-        }
-        
-        // If hero will move outside the screen, stop moving.
-        if(heroNextPosition.x > _screenSize.width - HEROSIZE.width ||
-           heroNextPosition.x < HEROSIZE.width ||
-           heroNextPosition.y > _screenSize.height - HEROSIZE.height ||
-           heroNextPosition.y < HEROSIZE.height)
-        {
-            sq->setState(SquadState::Wait);
-            log("Squad %s reached the edge and stop moving",sq->getName().c_str());
-            return;
-        }
-        else{
-            heroSprite->setPosition(heroNextPosition);
-            
-            // Here update the squad's position too.
-            sq->setPosition(heroNextPosition);
-        }
+
+    if(pSelfSquad->faceToRight()){
+        nextPosition.x = selfSprite->getPositionX() + dt * speed;
     }
+    else{
+        nextPosition.x = selfSprite->getPositionX() - dt *speed;
+    }
+        
+    if(up){
+        nextPosition.y = selfSprite->getPositionY() + tan * dt * speed;
+    }
+    else{
+        nextPosition.y = selfSprite->getPositionY() - tan * dt * speed;
+    }
+        
+    // If hero will move outside the screen, stop moving.
+    if(nextPosition.x > _screenSize.width ||
+        nextPosition.x < 0 ||
+        nextPosition.y > _screenSize.height ||
+        nextPosition.y < 0)
+    {
+        //pSelfSquad ->setState(SquadState::Wait);
+        
+		// Do not move anymore, so next position will be the same position
+		nextPosition = selfSprite->getPosition();
+
+		log("Squad %s reached the edge and stop moving",pSelfSquad->getName().c_str());
+    }
+
+	// Set the new position for the sprite
+	selfSprite->setPosition(nextPosition);
 }
 
 void HelloWorld::pickTarget(int unitSpriteID,Squad* pSelfSquad,Squad* pTargetSquad){
-    int heroSpriteID = getHeroSpriteID(pTargetSquad->getIndex());
+    int enemyHeroID = getHeroSpriteID(pTargetSquad->getIndex());
     
     // Alive units in the target Squad
     std::vector<int> aliveUnits;
-    if(_allUnitsHealth.at(heroSpriteID) > 0 )
+    if(_allUnitsHealth[enemyHeroID] > 0 )
     {
-        aliveUnits.push_back(heroSpriteID);
+        aliveUnits.push_back(enemyHeroID);
     }
     
     // Count there are how many alive soldiers
-    for( int i = 0; i < pTargetSquad->getSoldierCount(); i ++)
+    for(unsigned int i = 0; i < pTargetSquad->getSoldierCount(); i ++)
     {
-        int soldierSpriteID = getSoldierSpriteID(pTargetSquad->getIndex(), i);
-        if(_allUnitsHealth.at(soldierSpriteID) > 0 )
+        int enemySoldierID = getSoldierSpriteID(pTargetSquad->getIndex(), i);
+        if(_allUnitsHealth.at(enemySoldierID) > 0 )
         {
-            aliveUnits.push_back(soldierSpriteID);
+            aliveUnits.push_back(enemySoldierID);
         }
     }
     
@@ -728,7 +653,7 @@ void HelloWorld::pickTarget(int unitSpriteID,Squad* pSelfSquad,Squad* pTargetSqu
     else if( aliveUnits.size() == 1)
     {
         // Only one alive unit
-        _allUnitsTargetIndex[heroSpriteID] = aliveUnits[0];
+        _allUnitsTargetIndex[unitSpriteID] = aliveUnits[0];
     }
     else
     {
@@ -736,13 +661,19 @@ void HelloWorld::pickTarget(int unitSpriteID,Squad* pSelfSquad,Squad* pTargetSqu
         // pick a random unit
         int r = (int) (CCRANDOM_0_1() * aliveUnits.size());
         
-        _allUnitsTargetIndex[heroSpriteID] = aliveUnits[r];
+        _allUnitsTargetIndex[unitSpriteID] = aliveUnits[r];
     }
 
 }
-                              
 
+bool HelloWorld::unitAlive(int unitID)
+{
+	if( _allUnitsHealth.find(unitID) == _allUnitsHealth.end())
+		return false;
 
+	return _allUnitsHealth[unitID] > 0;
+}
+                           
 void HelloWorld::menuCloseCallback(Ref* pSender)
 {
     Director::getInstance()->end();

@@ -9,6 +9,7 @@ class HelloWorld : public cocos2d::Layer
 private:
     std::vector<Squad> _squadListA;
     std::vector<Squad> _squadListB;
+	std::vector<Squad> _allSquadsInBattle;
     Size _screenSize;
     
     std::map<int,Sprite*> _allUnitsSprite;
@@ -34,7 +35,7 @@ private:
     void pickTarget(int selfID, Squad*,Squad*);
     void attackTarget(int selfID, Squad* pSelfSquad, Squad* pTargetSquad,float dt);
     
-    bool heroUnitAlive(int);
+    bool unitAlive(int);
     bool soldierUnitAlive(int);
     
 public:

@@ -20,7 +20,8 @@ enum SquadState{
     Fighting,
     FightEnd,
     Moving,
-    Wait
+    Wait,
+	Eliminated
 };
 
 enum SquadType{
@@ -42,16 +43,11 @@ enum SquadSide
 };
 
 class Squad{
-private:
-    bool _soldierDead;
     
-public:
-    std::vector<Point> _soldiersPos;
-    std::vector<int> _soldiersHealth;
-    
+public:    
     // Use this property to index all squads in the battle field
     CC_SYNTHESIZE(int,_index,Index);
-    CC_SYNTHESIZE(int,_target,TargetIndex);
+    CC_SYNTHESIZE(int,_targetIndex,TargetIndex);
     CC_SYNTHESIZE(SquadState,_state,State);
     CC_SYNTHESIZE(std::string,_name,Name);
     CC_SYNTHESIZE(Point,_pos,Position);
@@ -61,6 +57,9 @@ public:
     CC_SYNTHESIZE(unsigned int,_soldierCount,SoldierCount);
     CC_SYNTHESIZE(SquadType, _type, SoldierType);
     CC_SYNTHESIZE(SquadSide, _side, SquadSide);
+
+	// Squad is eliminated or not
+	CC_SYNTHESIZE(bool, _eliminated, Eliminated);
     
     // Squad's attack range, if hero is alive, ues hero's position
     // otherwise using the first's soldier's position
@@ -83,8 +82,6 @@ public:
     Squad(std::string,Point,int);
     
     bool faceToRight();
-    bool die();
-    void draw();
 };
 
 #endif /* defined(__MyGame__Squad__) */

@@ -22,9 +22,6 @@ Squad::Squad(std::string name, Point posistion,int index){
     _soldierCount = 20;
     _state = SquadState::BattleBegin;
     
-    _heroDead = false;
-    _soldierDead = false;
-    
     if(_pos.x < 1024/2){
         _faceTo = SquadFaceTo::Right;
     }
@@ -38,8 +35,4 @@ bool Squad::faceToRight(){
         return true;
     
     return false;
-}
-
-bool Squad::die(){
-    return _heroDead && _soldierDead;
 }
