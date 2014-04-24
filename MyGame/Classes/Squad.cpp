@@ -11,7 +11,6 @@
 Squad::Squad(std::string name, Point posistion,int index){
     _name = name;
     _pos = posistion;
-    _speed = 10.0f;
     _index = index;
     
     // initialize some properties

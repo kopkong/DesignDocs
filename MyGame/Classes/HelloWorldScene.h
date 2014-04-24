@@ -11,18 +11,31 @@ private:
     std::vector<Squad> _squadListB;
     Size _screenSize;
     
-    
-    
     std::map<int,Sprite*> _allUnitsSprite;
     std::map<int,int> _allUnitsHealth;
+    std::map<int,int> _allUnitsTargetIndex; // Every unit in the battle should have one target
+    
     void squadMove(Squad* sq,float);
     void battleBegin(Squad* sq);
+    void squadWait(Squad* sq);
+    void searchEnemy(Squad*);
+    void squadFighting(Squad* sq, float dt);
+    
     void saveHeroSprite(int squadIndex, Sprite*);
     void saveSoldierSprite(int squadIndex,int soldierIndex, Sprite*);
     int getHeroSpriteID(int squadIndex);
     int getSoldierSpriteID(int squadIndex,int soldierIndex);
     void initSquads();
-    void searchEnemy(Squad*);
+    void initSquadProperty(Squad*,SquadType);
+    Squad* getSquadByIndex(int squadIndex);
+    
+    Point moveSpriteUnit(int selfID,Squad* pSelfSquad,float dt); // Move a unit sprite
+    
+    void pickTarget(int selfID, Squad*,Squad*);
+    void attackTarget(int selfID, Squad* pSelfSquad, Squad* pTargetSquad,float dt);
+    
+    bool heroUnitAlive(int);
+    bool soldierUnitAlive(int);
     
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
