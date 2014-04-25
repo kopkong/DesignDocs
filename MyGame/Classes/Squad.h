@@ -30,7 +30,7 @@ enum SquadType{
     Archer
 };
 
-enum SquadFaceTo
+enum Orientation
 {
     Right,
     Left
@@ -53,11 +53,15 @@ public:
     CC_SYNTHESIZE(Point,_pos,Position);
     CC_SYNTHESIZE(Point,_target,TargetPosition);
     CC_SYNTHESIZE(float,_speed,Speed);
-    CC_SYNTHESIZE(SquadFaceTo,_faceTo,FaceTo);
+    CC_SYNTHESIZE(Orientation,_faceTo,FaceTo);
     CC_SYNTHESIZE(unsigned int,_soldierCount,SoldierCount);
     CC_SYNTHESIZE(SquadType, _type, SoldierType);
     CC_SYNTHESIZE(SquadSide, _side, SquadSide);
 
+    // Using which texture
+    CC_SYNTHESIZE(std::string,_spriteTexture,SpriteTexture);
+    CC_SYNTHESIZE(Orientation, _spriteOrientation, SpriteOrientation);
+    
 	// Squad is eliminated or not
 	CC_SYNTHESIZE(bool, _eliminated, Eliminated);
     

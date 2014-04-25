@@ -7,10 +7,9 @@
 class HelloWorld : public cocos2d::Layer
 {
 private:
-    std::vector<Squad> _squadListA;
-    std::vector<Squad> _squadListB;
 	std::vector<Squad> _allSquadsInBattle;
     Size _screenSize;
+    bool _battleFinished;
     
     std::map<int,Sprite*> _allUnitsSprite;
     std::map<int,int> _allUnitsHealth;
@@ -37,6 +36,7 @@ private:
     
     bool unitAlive(int);
     bool soldierUnitAlive(int);
+    bool checkSideWin(SquadSide);
     
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer

@@ -36,6 +36,7 @@ bool HelloWorld::init()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Point origin = Director::getInstance()->getVisibleOrigin();
     _screenSize = Size(1024,768);
+    _battleFinished = false;
     
     // add background
     auto backGround = Sprite::create("bg.png");
@@ -69,9 +70,23 @@ bool HelloWorld::init()
 }
 
 void HelloWorld::update(float dt){
-    // Check battle finished or not
-
-	if(_allSquadsInBattle.size() > 0){ 
+    if(_battleFinished)
+        return;
+    
+	if(_allSquadsInBattle.size() > 0){
+        
+        // Check battle finished or not
+        if(checkSideWin(SquadSide::TeamA))
+        {
+            log("TeamA has won the battle!");
+            _battleFinished = true;
+        }
+        if(checkSideWin(SquadSide::TeamB))
+        {
+            log("TeamB has won the battle!");
+            _battleFinished = true;
+        }
+        
         for(unsigned int i = 0; i < _allSquadsInBattle.size(); i++)
         {
             Squad* sq = &_allSquadsInBattle[i];
@@ -250,53 +265,41 @@ int HelloWorld::getSoldierSpriteID(int squadIndex, int soldierIndex){
 }
 
 void HelloWorld::drawAll(){
-    if(_squadListA.size() > 0){
-        for(unsigned int i = 0; i < _squadListA.size(); i++)
+    if(_allSquadsInBattle.size() > 0){
+        for(unsigned int i = 0; i < _allSquadsInBattle.size(); i++)
         {
-            drawSquad(&_squadListA[i]);
+            drawSquad(&_allSquadsInBattle[i]);
         }
     }
-    
-    if(_squadListB.size() > 0){
-        for(unsigned int i = 0; i < _squadListB.size(); i++)
-        {
-            drawSquad(&_squadListB[i]);
-        }
-    }
-    
 }
 
 void HelloWorld::drawSquad(Squad* sq){
     // Texture rect
-    Sprite* hero = Sprite::create("lucille.png");
+    Sprite* hero = Sprite::create(sq->getSpriteTexture());
     float scale_x = HEROSIZE.width / hero->getContentSize().width ;
     float scale_y = HEROSIZE.height / hero->getContentSize().height;
     hero->setScale(scale_x,scale_y);
     
-    if(!sq->faceToRight())
+    if(sq->getFaceTo() != sq->getSpriteOrientation())
     {
         hero->setFlippedX(true);
     }
+    
     hero->setPosition(sq->getPosition());
 	saveHeroSprite(sq->getIndex(), hero);
     this->addChild(hero,1);
     
     for(unsigned int i = 0 ; i< sq->getSoldierCount();i++){
-        std::string typePng = "monk.png";
-        if(sq->getSoldierType() == SquadType::Knight)
-            typePng = "sherlock.png";
-        if(sq->getSoldierType() == SquadType::Archer)
-            typePng = "wynter.png";
-        
-        auto soldier = Sprite::create(typePng);
+        auto soldier = Sprite::create(sq->getSpriteTexture());
         scale_x = SOLDIERSIZE.width / soldier->getContentSize().width ;
         scale_y = SOLDIERSIZE.height / soldier->getContentSize().height;
         
         soldier->setScale(scale_x,scale_y);
-        if(!sq->faceToRight())
+        if(sq->getFaceTo() != sq->getSpriteOrientation())
         {
             soldier->setFlippedX(true);
         }
+        
 		float distance = (HEROSIZE.width - SOLDIERSIZE.width)/2;
 		float distanceFactor = 1.1f;
 
@@ -365,8 +368,9 @@ void HelloWorld::searchEnemy(Squad* sq){
 void HelloWorld::initSquads(){
     
     int indexCount = 0;
-    
-    for(int i = 0; i < 9; i++){ // Create left side squads
+    int leftSideSquads = 8;
+    int rightSideSquads = 8;
+    for(int i = 0; i < leftSideSquads; i++){ // Create left side squads
         char buff[100];
         sprintf(buff,"a%d",i);
         std::string name = buff;
@@ -382,25 +386,30 @@ void HelloWorld::initSquads(){
         
         if(col == 0)
         {
+            a.setSpriteTexture("dwarf_warrior.png");
+            a.setSpriteOrientation(Orientation::Left);
             initSquadProperty(&a, SquadType::Footman);
         }
         if(col == 1)
         {
+            a.setSpriteTexture("viking.png");
+            a.setSpriteOrientation(Orientation::Right);
             initSquadProperty(&a, SquadType::Knight);
         }
         if(col == 2)
         {
+            a.setSpriteTexture("archer.png");
+            a.setSpriteOrientation(Orientation::Right);
             initSquadProperty(&a, SquadType::Archer);
         }
         
         indexCount ++;
 		a.setSquadSide(SquadSide::TeamA);
-        _squadListA.push_back(a);
 		_allSquadsInBattle.push_back(a);
     }
     
 
-    for(int i = 0; i < 9; i++){ // Create right side squads
+    for(int i = 0; i < rightSideSquads; i++){ // Create right side squads
         char buff[100];
         sprintf(buff,"b%d",i);
         std::string name = buff;
@@ -416,19 +425,24 @@ void HelloWorld::initSquads(){
         indexCount ++;
         if(col == 0)
         {
+            b.setSpriteTexture("orc.png");
+            b.setSpriteOrientation(Orientation::Left);
             initSquadProperty(&b,Footman);
         }
         if(col == 1)
         {
+            b.setSpriteTexture("centaur.png");
+            b.setSpriteOrientation(Orientation::Left);
             initSquadProperty(&b,Knight);
         }
         if(col == 2)
         {
+            b.setSpriteTexture("dragon.png");
+            b.setSpriteOrientation(Orientation::Left);
             initSquadProperty(&b,Archer);
         }
 
 		b.setSquadSide(SquadSide::TeamB);
-        _squadListB.push_back(b);
 		_allSquadsInBattle.push_back(b);
     }
     
@@ -451,7 +465,7 @@ void HelloWorld::initSquadProperty(Squad * pSquad, SquadType type){
         case SquadType::Knight:
         {
             pSquad->setSoldierType(SquadType::Knight);
-            pSquad->setSpeed(basicUnitWidth * 2);
+            pSquad->setSpeed(basicUnitWidth * 1.4);
             pSquad->setAttackRange(basicUnitWidth);
             break;
         }
@@ -459,7 +473,7 @@ void HelloWorld::initSquadProperty(Squad * pSquad, SquadType type){
         {
             pSquad->setSoldierType(SquadType::Archer);
             pSquad->setSpeed(basicUnitWidth * 0.8);
-            pSquad->setAttackRange(basicUnitWidth * 10);
+            pSquad->setAttackRange(basicUnitWidth * 4);
             break;
         }
         default:
@@ -482,17 +496,10 @@ void HelloWorld::initSquadProperty(Squad * pSquad, SquadType type){
 }
 
 Squad* HelloWorld::getSquadByIndex(int squadIndex){
-    for(unsigned int i = 0; i < _squadListA.size() ; i ++){
-        if(_squadListA[i].getIndex() == squadIndex)
+    for(unsigned int i = 0; i < _allSquadsInBattle.size() ; i ++){
+        if(_allSquadsInBattle[i].getIndex() == squadIndex)
         {
-            return &(_squadListA[i]);
-        }
-    }
-    
-    for(unsigned int j = 0; j <_squadListB.size(); j ++){
-        if(_squadListB[j].getIndex() == squadIndex)
-        {
-            return &(_squadListB[j]);
+            return &(_allSquadsInBattle[i]);
         }
     }
     
@@ -570,10 +577,10 @@ Point HelloWorld::moveSpriteUnit(int selfID,Squad* pSelfSquad,float dt){
     Point direction = targetSprite->getPosition() - selfSprite->getPosition();
     if(direction.x > 0)
     {
-        pSelfSquad->setFaceTo(SquadFaceTo::Right);
+        pSelfSquad->setFaceTo(Orientation::Right);
     }
     else{
-        pSelfSquad->setFaceTo(SquadFaceTo::Left);
+        pSelfSquad->setFaceTo(Orientation::Left);
     }
     
     bool up ;
@@ -624,6 +631,8 @@ Point HelloWorld::moveSpriteUnit(int selfID,Squad* pSelfSquad,float dt){
 
 	// Set the new position for the sprite
 	selfSprite->setPosition(nextPosition);
+    
+    return nextPosition;
 }
 
 void HelloWorld::pickTarget(int unitSpriteID,Squad* pSelfSquad,Squad* pTargetSquad){
@@ -672,6 +681,22 @@ bool HelloWorld::unitAlive(int unitID)
 		return false;
 
 	return _allUnitsHealth[unitID] > 0;
+}
+
+bool HelloWorld::checkSideWin(SquadSide side){
+    bool win = true;
+    
+    for(unsigned int i = 0 ; i < _allSquadsInBattle.size(); i++)
+	{
+		if(_allSquadsInBattle[i].getSquadSide() != side &&
+           _allSquadsInBattle[i].getState() != SquadState::Eliminated)
+        {
+			win = false;
+            break;
+        }
+	}
+    
+    return win;
 }
                            
 void HelloWorld::menuCloseCallback(Ref* pSender)

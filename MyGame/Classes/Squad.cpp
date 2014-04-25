@@ -14,8 +14,8 @@ Squad::Squad(std::string name, Point posistion,int index){
     _index = index;
     
     // initialize some properties
-    _heroHealth = 100;
-    _soldierHealth = 20;
+    _heroHealth = 800;
+    _soldierHealth = 250;
     _attackPoint = 6;
     _defensePoint = 2;
     
@@ -23,15 +23,15 @@ Squad::Squad(std::string name, Point posistion,int index){
     _state = SquadState::BattleBegin;
     
     if(_pos.x < 1024/2){
-        _faceTo = SquadFaceTo::Right;
+        _faceTo = Orientation::Right;
     }
     else{
-        _faceTo = SquadFaceTo::Left;
+        _faceTo = Orientation::Left;
     }
 }
 
 bool Squad::faceToRight(){
-    if( _faceTo == SquadFaceTo::Right)
+    if( _faceTo == Orientation::Right)
         return true;
     
     return false;
