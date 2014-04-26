@@ -15,6 +15,10 @@ private:
     std::map<int,int> _allUnitsHealth;
     std::map<int,int> _allUnitsTargetIndex; // Every unit in the battle should have one target
     
+    Action* _actionAttacking;
+    
+    void createActions();
+    
     void squadMove(Squad* sq,float);
     void battleBegin(Squad* sq);
     void squadWait(Squad* sq);
@@ -37,6 +41,8 @@ private:
     bool unitAlive(int);
     bool soldierUnitAlive(int);
     bool checkSideWin(SquadSide);
+    
+    
     
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer

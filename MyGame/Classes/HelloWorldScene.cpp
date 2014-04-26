@@ -62,6 +62,7 @@ bool HelloWorld::init()
     menu->setPosition(Point::ZERO);
     this->addChild(menu, 1);
     
+    createActions();
     initSquads();
     
     this->schedule(schedule_selector(HelloWorld::update));
@@ -537,15 +538,17 @@ void HelloWorld::attackTarget(int selfID, Squad* pSelfSquad, Squad* pTargetSquad
 		else // Inside the attack range
 		{
 			// Attack, Consider play some effect here
-			// ...
+            ActionInterval* action = RotateBy::create(dt,15);
+            
+            selfSprite->runAction(action);
 
 			if(selfID % 100 == 0) // It's a hero
 				_allUnitsHealth[targetUnitID] -= pSelfSquad->getAttackPoint() * 2;
 			else
 				_allUnitsHealth[targetUnitID] -= pSelfSquad->getAttackPoint() ;
 
-			log("UnitA[%d] attacks unitB[%d]",selfID,targetUnitID);
-			log("UnitB[%d] health is %d",targetUnitID,_allUnitsHealth[targetUnitID]);
+			//log("UnitA[%d] attacks unitB[%d]",selfID,targetUnitID);
+			//log("UnitB[%d] health is %d",targetUnitID,_allUnitsHealth[targetUnitID]);
 		}
     }
 
@@ -569,6 +572,7 @@ Point HelloWorld::moveSpriteUnit(int selfID,Squad* pSelfSquad,float dt){
         }
         
         selfSprite->setPosition(nextPosition);
+        
         return nextPosition;
     }
     
@@ -697,6 +701,13 @@ bool HelloWorld::checkSideWin(SquadSide side){
 	}
     
     return win;
+}
+
+void HelloWorld::createActions(){
+    
+    // Create actions
+    ActionInterval* blink = Blink::create(0.5,2);
+    _actionAttacking = blink;
 }
                            
 void HelloWorld::menuCloseCallback(Ref* pSender)

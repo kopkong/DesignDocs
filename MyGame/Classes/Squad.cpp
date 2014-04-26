@@ -14,12 +14,12 @@ Squad::Squad(std::string name, Point posistion,int index){
     _index = index;
     
     // initialize some properties
-    _heroHealth = 800;
-    _soldierHealth = 250;
+    _heroHealth = 1800;
+    _soldierHealth = 1250;
     _attackPoint = 6;
     _defensePoint = 2;
     
-    _soldierCount = 20;
+    _soldierCount = 5;
     _state = SquadState::BattleBegin;
     
     if(_pos.x < 1024/2){
