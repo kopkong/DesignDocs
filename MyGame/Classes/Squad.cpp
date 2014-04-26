@@ -14,8 +14,8 @@ Squad::Squad(std::string name, Point posistion,int index){
     _index = index;
     
     // initialize some properties
-    _heroHealth = 1800;
-    _soldierHealth = 1250;
+    _heroHealth = 100;
+    _soldierHealth = 26;
     _attackPoint = 6;
     _defensePoint = 2;
     

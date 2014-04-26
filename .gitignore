@@ -44,3 +44,7 @@ Backup*/
 UpgradeLog*.XML
 UpgradeLog*.htm
 
+# Visual Studio project files
+*.suo
+*.user
+

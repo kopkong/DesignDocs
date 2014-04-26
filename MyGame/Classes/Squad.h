@@ -47,7 +47,7 @@ class Squad{
 public:    
     // Use this property to index all squads in the battle field
     CC_SYNTHESIZE(int,_index,Index);
-    CC_SYNTHESIZE(int,_targetIndex,TargetIndex);
+    CC_SYNTHESIZE(int,_targetSquadIndex,TargetSquadIndex);
     CC_SYNTHESIZE(SquadState,_state,State);
     CC_SYNTHESIZE(std::string,_name,Name);
     CC_SYNTHESIZE(Point,_pos,Position);
