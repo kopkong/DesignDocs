@@ -21,6 +21,8 @@ build/
 bld/
 [Bb]in/
 [Oo]bj/
+Debug.win32/
+Release.win32/
 
 # Visual C++ cache files
 ipch/
