@@ -25,8 +25,8 @@ void Battle::reset()
 	_battleFinished = false;
 	_battleFieldSize = Size(1024,768);
 	_squadSize = Size(170,256);
-	_heroSize = Size(100,100);
-	_soldierSize = Size(50,50);
+	_heroSize = Size(32,32);
+	_soldierSize = Size(24,24);
 }
 
 void Battle::initSquads(int leftSquads, int rightSquads)
@@ -708,14 +708,14 @@ void Battle::printStats()
 {
 	// Print some statistics 
 	log("==============Print Statistics =====================");
-	for(std::map<int,Unit>::iterator it = _allUnits.begin();
-		it !=  _allUnits.end(); ++it )
-	{
+	//for(std::map<int,Unit>::iterator it = _allUnits.begin();
+	//	it !=  _allUnits.end(); ++it )
+	//{
 
-		log("Unit[%d], health = %d, doAttackTimes = %d, tryAttackTimes = %d, SpriteVisible = %d, Sprite address is %d",
-			it->second.getIndex(), it->second.getHealthPoint(), it->second.getDoAttackTimes(),
-			it->second.getTryAttackTimes(), it->second.getSprite()->isVisible(), it->second.getSprite());
-	}
+	//	log("Unit[%d], health = %d, doAttackTimes = %d, tryAttackTimes = %d, SpriteVisible = %d, Sprite address is %d",
+	//		it->second.getIndex(), it->second.getHealthPoint(), it->second.getDoAttackTimes(),
+	//		it->second.getTryAttackTimes(), it->second.getSprite()->isVisible(), it->second.getSprite());
+	//}
 
 	log("==============End Statistics =====================\n");
 }

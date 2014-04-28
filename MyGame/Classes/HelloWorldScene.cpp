@@ -118,7 +118,7 @@ void HelloWorld::initBattle()
 {
 	Battle::getInstance()->reset();
 
-	Battle::getInstance()->initSquads(1,1);
+	Battle::getInstance()->initSquads(9,9);
 
 	// add background
 	auto backGround = Sprite::create("bg.png");
