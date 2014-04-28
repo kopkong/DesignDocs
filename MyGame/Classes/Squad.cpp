@@ -19,7 +19,7 @@ Squad::Squad(std::string name, Point posistion,int index){
     _attackPoint = 6;
     _defensePoint = 2;
     
-    _soldierCount = 5;
+    _soldierCount = 10;
     _state = SquadState::BattleBegin;
     
     if(_pos.x < 1024/2){

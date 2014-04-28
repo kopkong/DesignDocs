@@ -7,6 +7,7 @@
 //
 
 #include "Resources.h"
+#include <string>
 
 Resources::Resources()
 {
@@ -31,7 +32,7 @@ Resources* Resources::getInstance()
 
 std::string Resources::getFootmanResourceA()
 {
-    return _osDirectory + "dwarf_warrior.png";
+	return _osDirectory + "dwarf_warrior.png";
 }
 
 std::string Resources::getKnightResourceA()

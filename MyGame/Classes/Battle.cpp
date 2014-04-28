@@ -38,10 +38,10 @@ void Battle::initSquads(int leftSquads, int rightSquads)
         sprintf(buff,"%d(TeamA)",indexCount);
         std::string name = buff;
         
-        int col = i / 5;
+        int col = i / 4;
         int row = i % 4;
         
-		Point p(_battleFieldSize.width/2 - 20 - _squadSize.width * col,
+		Point p(_battleFieldSize.width/2 - 12 - _squadSize.width * col,
                 _battleFieldSize.height  - _squadSize.height/2 - _squadSize.height * row);
         
         //log("Squad %s position is(%f,%f)", name.c_str(), p.x,p.y);
@@ -68,7 +68,7 @@ void Battle::initSquads(int leftSquads, int rightSquads)
         if(col == 3)
         {
             a.setSpriteTexture(Resources::getInstance()->getFootmanResourceA());
-            a.setSpriteOrientation(Orientation::Right);
+            a.setSpriteOrientation(Orientation::Left);
             initSquadProperty(&a,SquadType::Footman);
         }
         if(col == 4)
@@ -89,10 +89,10 @@ void Battle::initSquads(int leftSquads, int rightSquads)
         sprintf(buff,"%d(TeamB)",indexCount);
         std::string name = buff;
         
-        int col = i / 5;
+        int col = i / 4;
         int row = i % 4;
         
-		Point p(_battleFieldSize.width/2 + 20 + _squadSize.width * col,
+		Point p(_battleFieldSize.width/2 + 12 + _squadSize.width * col,
                 _battleFieldSize.height  - _squadSize.height/2 - _squadSize.height * row);
         
         //log("Squad %s position is(%f,%f)", name.c_str(), p.x,p.y);
@@ -188,6 +188,7 @@ void Battle::initSquadProperty(Squad * pSquad, SquadType type){
 void Battle::initSquadSprite(Squad* pSquad)
 {
 	// Texture rect
+	//2D-Cartoon Vector Characters/archer.png
 	Sprite* spriteHero = Sprite::create(pSquad->getSpriteTexture());
 	float scale_x = _heroSize.width / spriteHero->getContentSize().width ;
 	float scale_y = _heroSize.height / spriteHero->getContentSize().height;

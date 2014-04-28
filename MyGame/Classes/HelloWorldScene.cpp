@@ -41,17 +41,17 @@ void HelloWorld::showLevelSelect()
     this->removeAllChildren();
     
     // Display level selector
-    auto itemLevel1 = MenuItemFont::create("Level 1",CC_CALLBACK_0(HelloWorld::menuLevel1Callback,this));
+    auto itemLevel1 = MenuItemFont::create("4v4只有步兵",CC_CALLBACK_0(HelloWorld::menuLevel1Callback,this));
     itemLevel1->setPosition(100,_screenSize.height - 100);
     
-    auto itemLevel2 = MenuItemFont::create("选择难度 2",CC_CALLBACK_0(HelloWorld::menuLevel2Callback,this));
+    auto itemLevel2 = MenuItemFont::create("8v8步兵骑兵",CC_CALLBACK_0(HelloWorld::menuLevel2Callback,this));
     itemLevel2->setPosition(100, _screenSize.height - 200);
     
-    auto itemLevel3 = MenuItemFont::create("选择难度 3",CC_CALLBACK_0(HelloWorld::menuLevel3Callback,this));
+    auto itemLevel3 = MenuItemFont::create("20v20",CC_CALLBACK_0(HelloWorld::menuLevel3Callback,this));
     itemLevel3->setPosition(100, _screenSize.height - 300);
     
     // create menu, it's an autorelease object
-    auto menu = Menu::create(itemLevel1, NULL);
+    auto menu = Menu::create(itemLevel1, itemLevel2, itemLevel3, NULL);
     menu->setPosition(Point::ZERO);
     this->addChild(menu, 1);
     
@@ -161,41 +161,39 @@ void HelloWorld::initBattle()
 
 void HelloWorld::menuLevel1Callback()
 {
-    if(_level == 1) // 4 v 4
-    {
-        _testTimes = 0 ;
-        _allTestTimes = 1;
-        _inLeveltSelect = false;
-        _leftSideSquads = 4;
-        _rightSideSquads = 4;
-        resetTest();
-    }
+	_level = 1; // 4 v 4
+
+    _testTimes = 0 ;
+    _allTestTimes = 1;
+    _inLeveltSelect = false;
+    _leftSideSquads = 4;
+    _rightSideSquads = 4;
+    resetTest();
+
 }
 
 void HelloWorld::menuLevel2Callback()
 {
-    if(_level == 2) // 8 v 8
-    {
-        _testTimes = 0;
-        _allTestTimes = 1;
-        _inLeveltSelect = false;
-        _leftSideSquads = 8;
-        _rightSideSquads = 8;
-        resetTest();
-    }
+	_level = 2; // 8 v 8
+	_testTimes = 0;
+	_allTestTimes = 1;
+	_inLeveltSelect = false;
+	_leftSideSquads = 8;
+	_rightSideSquads = 8;
+	resetTest();
+    
 }
 
 void HelloWorld::menuLevel3Callback()
 {
-    if(_level == 3) // 20 v 20
-    {
-        _testTimes = 0;
-        _allTestTimes = 1;
-        _inLeveltSelect = false;
-        _leftSideSquads = 20;
-        _rightSideSquads = 20;
-        resetTest();
-    }
+	_level = 3; // 20 v 20
+	_testTimes = 0;
+	_allTestTimes = 1;
+	_inLeveltSelect = false;
+	_leftSideSquads = 20;
+	_rightSideSquads = 20;
+	resetTest();
+    
 }
 
     
