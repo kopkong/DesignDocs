@@ -43,10 +43,15 @@ public:
 	// Reset everything for one battle
 	virtual void reset();
 	
+    
+    // Init Squad properties and positions
 	virtual void initSquads(int leftSquads, int rightSquads);
 
-	virtual void startBattle(Squad*);				// Let the squad to be ready for a battle
-
+    
+    // Let the squad to be ready for a battle
+	virtual void startBattle(Squad*);
+    
+    
 	virtual void wholeSquadWaiting(Squad*);
 
 	virtual void searchEnemy(Squad*);
@@ -55,9 +60,15 @@ public:
 
 	virtual void wholeSquadFight(Squad*,float);
 
-	virtual void SquadFightEnd(Squad*);		// End a fight for a squad
+    
+    // End a fight for a squad
+	virtual void SquadFightEnd(Squad*);
 
-	virtual void clearSquad(Squad*);			// Make sure the squad is cleared in the battle field
+    
+    // Make sure the squad is cleared in the battle field
+	virtual void clearSquad(Squad*);
+    
+    
 
 	/*		help methods below		*/
 
@@ -77,8 +88,11 @@ public:
 
 	virtual bool battleFinished();
 
+    // End one battle and clear all temp datas
 	virtual void endBattle();
+    
 
+    // Clear resources used for singleton instance
 	virtual void end();
 };
 

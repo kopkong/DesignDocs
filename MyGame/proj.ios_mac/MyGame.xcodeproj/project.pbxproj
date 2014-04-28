@@ -60,6 +60,9 @@
 		50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF629517ECD46A001EB2F8 /* Icon-100.png */; };
 		50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF62A017ECD613001EB2F8 /* Icon-29.png */; };
 		50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF62A117ECD613001EB2F8 /* Icon-50.png */; };
+		89912113190DF1C2006C5590 /* Battle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89912111190DF1C2006C5590 /* Battle.cpp */; };
+		89912116190DF570006C5590 /* Resources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89912114190DF570006C5590 /* Resources.cpp */; };
+		89912118190DF984006C5590 /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89912117190DF984006C5590 /* Unit.cpp */; };
 		89F899F91909F91C00CD1293 /* lucille.png in Resources */ = {isa = PBXBuildFile; fileRef = 89F899F51909F91C00CD1293 /* lucille.png */; };
 		89F899FA1909F91C00CD1293 /* monk.png in Resources */ = {isa = PBXBuildFile; fileRef = 89F899F61909F91C00CD1293 /* monk.png */; };
 		89F899FB1909F91C00CD1293 /* sherlock.png in Resources */ = {isa = PBXBuildFile; fileRef = 89F899F71909F91C00CD1293 /* sherlock.png */; };
@@ -282,6 +285,12 @@
 		50EF629517ECD46A001EB2F8 /* Icon-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-100.png"; sourceTree = "<group>"; };
 		50EF62A017ECD613001EB2F8 /* Icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-29.png"; sourceTree = "<group>"; };
 		50EF62A117ECD613001EB2F8 /* Icon-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-50.png"; sourceTree = "<group>"; };
+		8991210E190DF1B8006C5590 /* Unit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Unit.h; path = ../Classes/Unit.h; sourceTree = "<group>"; };
+		89912111190DF1C2006C5590 /* Battle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Battle.cpp; path = ../Classes/Battle.cpp; sourceTree = "<group>"; };
+		89912112190DF1C2006C5590 /* Battle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Battle.h; path = ../Classes/Battle.h; sourceTree = "<group>"; };
+		89912114190DF570006C5590 /* Resources.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Resources.cpp; path = ../Classes/Resources.cpp; sourceTree = "<group>"; };
+		89912115190DF570006C5590 /* Resources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../Classes/Resources.h; sourceTree = "<group>"; };
+		89912117190DF984006C5590 /* Unit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Unit.cpp; path = ../Classes/Unit.cpp; sourceTree = "<group>"; };
 		89F899F51909F91C00CD1293 /* lucille.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lucille.png; sourceTree = "<group>"; };
 		89F899F61909F91C00CD1293 /* monk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = monk.png; sourceTree = "<group>"; };
 		89F899F71909F91C00CD1293 /* sherlock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sherlock.png; sourceTree = "<group>"; };
@@ -384,12 +393,18 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				89912111190DF1C2006C5590 /* Battle.cpp */,
+				89912112190DF1C2006C5590 /* Battle.h */,
+				8991210E190DF1B8006C5590 /* Unit.h */,
 				1AFAF8B316D35DE700DB1158 /* AppDelegate.cpp */,
 				1AFAF8B416D35DE700DB1158 /* AppDelegate.h */,
 				1AFAF8B516D35DE700DB1158 /* HelloWorldScene.cpp */,
 				1AFAF8B616D35DE700DB1158 /* HelloWorldScene.h */,
 				89F8C6491906364200CF817A /* Squad.cpp */,
 				89F8C64A1906364200CF817A /* Squad.h */,
+				89912114190DF570006C5590 /* Resources.cpp */,
+				89912115190DF570006C5590 /* Resources.h */,
+				89912117190DF984006C5590 /* Unit.cpp */,
 			);
 			name = Classes;
 			path = ../classes;
@@ -770,10 +785,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89912118190DF984006C5590 /* Unit.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
+				89912116190DF570006C5590 /* Resources.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				89F8C64B1906364200CF817A /* Squad.cpp in Sources */,
 				1AFAF8B716D35DE700DB1158 /* AppDelegate.cpp in Sources */,
+				89912113190DF1C2006C5590 /* Battle.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				1AFAF8B816D35DE700DB1158 /* HelloWorldScene.cpp in Sources */,
 			);

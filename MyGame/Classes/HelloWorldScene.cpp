@@ -26,38 +26,46 @@ bool HelloWorld::init()
         return false;
     }
     
-    Size visibleSize = Director::getInstance()->getVisibleSize();
-    Point origin = Director::getInstance()->getVisibleOrigin();
     _screenSize = Size(1024,768);
     
-    /////////////////////////////
-    // 2. add a menu item with "X" image, which is clicked to quit the program
-    //    you may modify it.
-
-    // add a "close" icon to exit the progress. it's an autorelease object
-    auto closeItem = MenuItemImage::create(
-                                           "CloseNormal.png",
-                                           "CloseSelected.png",
-                                           CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
-    
-	closeItem->setPosition(Point(origin.x + visibleSize.width - closeItem->getContentSize().width/2 ,
-                                origin.y + closeItem->getContentSize().height/2));
-
-    // create menu, it's an autorelease object
-    auto menu = Menu::create(closeItem, NULL);
-    menu->setPosition(Point::ZERO);
-    this->addChild(menu, 1);
-    
-    initBattle();
-
+    showLevelSelect();
     this->schedule(schedule_selector(HelloWorld::update));
     
     return true;
 }
 
+void HelloWorld::showLevelSelect()
+{
+    _inLeveltSelect = true;
+    _level = 0;
+    this->removeAllChildren();
+    
+    // Display level selector
+    auto itemLevel1 = MenuItemFont::create("Level 1",CC_CALLBACK_0(HelloWorld::menuLevel1Callback,this));
+    itemLevel1->setPosition(100,_screenSize.height - 100);
+    
+    auto itemLevel2 = MenuItemFont::create("选择难度 2",CC_CALLBACK_0(HelloWorld::menuLevel2Callback,this));
+    itemLevel2->setPosition(100, _screenSize.height - 200);
+    
+    auto itemLevel3 = MenuItemFont::create("选择难度 3",CC_CALLBACK_0(HelloWorld::menuLevel3Callback,this));
+    itemLevel3->setPosition(100, _screenSize.height - 300);
+    
+    // create menu, it's an autorelease object
+    auto menu = Menu::create(itemLevel1, NULL);
+    menu->setPosition(Point::ZERO);
+    this->addChild(menu, 1);
+    
+}
+
 void HelloWorld::update(float dt){
-    if(Battle::getInstance()->battleFinished())
+    if(_inLeveltSelect)
         return;
+    
+    if(Battle::getInstance()->battleFinished())
+    {
+        resetTest();
+        return;
+    }
 
 	unsigned int squadNumbers = Battle::getInstance()->getSquadNumbersInBattle();
 	if( squadNumbers > 0){
@@ -77,9 +85,6 @@ void HelloWorld::update(float dt){
         for(unsigned int i = 0; i < squadNumbers; i++)
         {
             Squad* sq = Battle::getInstance()->getSquadByIndex(i);
-
-			//if(sq->getState() != SquadState::Eliminated)
-			//	log("Squad[%s] state is %d", sq->getName().c_str(),sq->getState());
 
             switch(sq->getState()){
                 case SquadState::Moving:
@@ -114,12 +119,30 @@ void HelloWorld::update(float dt){
     }
 }
 
+void HelloWorld::resetTest()
+{
+    if(_testTimes < _allTestTimes)
+    {
+        _testTimes ++;
+        initBattle();
+    }
+    else
+    {
+        // Do more things here,
+        // Print the output on the screen , etc.
+        showLevelSelect();
+    }
+    
+}
+
 void HelloWorld::initBattle()
 {
 	Battle::getInstance()->reset();
 
-	Battle::getInstance()->initSquads(9,9);
+	Battle::getInstance()->initSquads(_leftSideSquads,_rightSideSquads);
 
+    this->removeAllChildren();
+    
 	// add background
 	auto backGround = Sprite::create("bg.png");
 	backGround->setPosition(_screenSize.width/2,_screenSize.height/2);
@@ -135,7 +158,47 @@ void HelloWorld::initBattle()
 		this->addChild(s,1);
 	}
 }
-                           
+
+void HelloWorld::menuLevel1Callback()
+{
+    if(_level == 1) // 4 v 4
+    {
+        _testTimes = 0 ;
+        _allTestTimes = 1;
+        _inLeveltSelect = false;
+        _leftSideSquads = 4;
+        _rightSideSquads = 4;
+        resetTest();
+    }
+}
+
+void HelloWorld::menuLevel2Callback()
+{
+    if(_level == 2) // 8 v 8
+    {
+        _testTimes = 0;
+        _allTestTimes = 1;
+        _inLeveltSelect = false;
+        _leftSideSquads = 8;
+        _rightSideSquads = 8;
+        resetTest();
+    }
+}
+
+void HelloWorld::menuLevel3Callback()
+{
+    if(_level == 3) // 20 v 20
+    {
+        _testTimes = 0;
+        _allTestTimes = 1;
+        _inLeveltSelect = false;
+        _leftSideSquads = 20;
+        _rightSideSquads = 20;
+        resetTest();
+    }
+}
+
+    
 void HelloWorld::menuCloseCallback(Ref* pSender)
 {
     Director::getInstance()->end();

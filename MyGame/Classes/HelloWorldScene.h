@@ -9,6 +9,14 @@ class HelloWorld : public cocos2d::Layer
 {
 private:
     Size _screenSize;
+    int _testTimes;
+    int _allTestTimes;
+    
+    bool _inLeveltSelect;
+    int _level;
+    
+    int _leftSideSquads;
+    int _rightSideSquads;
     
 	void initBattle();
     
@@ -21,8 +29,16 @@ public:
     
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
+    
+    void menuLevel1Callback();
+    void menuLevel2Callback();
+    void menuLevel3Callback();
         
     void update(float);
+    
+    void resetTest();
+    
+    void showLevelSelect();
     
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);

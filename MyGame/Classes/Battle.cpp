@@ -1,5 +1,6 @@
 #include "Battle.h"
 #include <algorithm>
+#include "Resources.h"
 
 Battle::Battle()
 {
@@ -24,7 +25,7 @@ void Battle::reset()
 
 	_battleFinished = false;
 	_battleFieldSize = Size(1024,768);
-	_squadSize = Size(170,256);
+	_squadSize = Size(100,192);
 	_heroSize = Size(32,32);
 	_soldierSize = Size(24,24);
 }
@@ -37,8 +38,8 @@ void Battle::initSquads(int leftSquads, int rightSquads)
         sprintf(buff,"%d(TeamA)",indexCount);
         std::string name = buff;
         
-        int col = i / 3;
-        int row = i % 3;
+        int col = i / 5;
+        int row = i % 4;
         
 		Point p(_battleFieldSize.width/2 - 20 - _squadSize.width * col,
                 _battleFieldSize.height  - _squadSize.height/2 - _squadSize.height * row);
@@ -48,19 +49,31 @@ void Battle::initSquads(int leftSquads, int rightSquads)
         
         if(col == 0)
         {
-            a.setSpriteTexture("2D-Cartoon Vector Characters/dwarf_warrior.png");
+            a.setSpriteTexture(Resources::getInstance()->getFootmanResourceA());
             a.setSpriteOrientation(Orientation::Left);
             initSquadProperty(&a, SquadType::Footman);
         }
         if(col == 1)
         {
-            a.setSpriteTexture("2D-Cartoon Vector Characters/viking.png");
+            a.setSpriteTexture(Resources::getInstance()->getKnightResourceA());
             a.setSpriteOrientation(Orientation::Right);
             initSquadProperty(&a, SquadType::Knight);
         }
         if(col == 2)
         {
-            a.setSpriteTexture("2D-Cartoon Vector Characters/archer.png");
+            a.setSpriteTexture(Resources::getInstance()->getArcherResourceA());
+            a.setSpriteOrientation(Orientation::Right);
+            initSquadProperty(&a, SquadType::Archer);
+        }
+        if(col == 3)
+        {
+            a.setSpriteTexture(Resources::getInstance()->getFootmanResourceA());
+            a.setSpriteOrientation(Orientation::Right);
+            initSquadProperty(&a,SquadType::Footman);
+        }
+        if(col == 4)
+        {
+            a.setSpriteTexture(Resources::getInstance()->getArcherResourceA());
             a.setSpriteOrientation(Orientation::Right);
             initSquadProperty(&a, SquadType::Archer);
         }
@@ -76,8 +89,8 @@ void Battle::initSquads(int leftSquads, int rightSquads)
         sprintf(buff,"%d(TeamB)",indexCount);
         std::string name = buff;
         
-        int col = i / 3;
-        int row = i % 3;
+        int col = i / 5;
+        int row = i % 4;
         
 		Point p(_battleFieldSize.width/2 + 20 + _squadSize.width * col,
                 _battleFieldSize.height  - _squadSize.height/2 - _squadSize.height * row);
@@ -87,21 +100,33 @@ void Battle::initSquads(int leftSquads, int rightSquads)
         indexCount ++;
         if(col == 0)
         {
-            b.setSpriteTexture("2D-Cartoon Vector Characters/orc.png");
+            b.setSpriteTexture(Resources::getInstance()->getFootmanResourceB());
             b.setSpriteOrientation(Orientation::Left);
             initSquadProperty(&b,Footman);
         }
         if(col == 1)
         {
-            b.setSpriteTexture("2D-Cartoon Vector Characters/centaur.png");
+            b.setSpriteTexture(Resources::getInstance()->getKnightResourceB());
             b.setSpriteOrientation(Orientation::Left);
             initSquadProperty(&b,Knight);
         }
         if(col == 2)
         {
-            b.setSpriteTexture("2D-Cartoon Vector Characters/dragon.png");
+            b.setSpriteTexture(Resources::getInstance()->getArcherResourceB());
             b.setSpriteOrientation(Orientation::Left);
             initSquadProperty(&b,Archer);
+        }
+        if(col == 3)
+        {
+            b.setSpriteTexture(Resources::getInstance()->getFootmanResourceB());
+            b.setSpriteOrientation(Orientation::Left);
+            initSquadProperty(&b, SquadType::Footman);
+        }
+        if(col == 4)
+        {
+            b.setSpriteTexture(Resources::getInstance()->getArcherResourceB());
+            b.setSpriteOrientation(Orientation::Left);
+            initSquadProperty(&b, SquadType::Archer);
         }
 
 		b.setSquadSide(SquadSide::TeamB);
@@ -147,28 +172,14 @@ void Battle::initSquadProperty(Squad * pSquad, SquadType type){
     // Set every hero's health
     int heroID = getHeroUnitID(pSquad->getIndex());
     
-	Unit u;
-	u.setIndex(heroID);
-	u.setHealthPoint(pSquad->getHeroHealth());
-	u.setTargetIndex(NONETARGET);
-	u.setAttackInterval(1.0f);
-	u.setElapsedTimeSinceLastAttack(0.5f);
-	u.setDoAttackTimes(0);
-	u.setTryAttackTimes(0);
+	Unit u = Unit(heroID,pSquad->getHeroHealth(),1.0f);
 	
 	_allUnits.insert(std::pair<int,Unit>(heroID,u));
     
     for(unsigned int i= 0 ; i < pSquad->getSoldierCount(); i ++){
         int soldierID = getSoldierUnitID(pSquad->getIndex(), i);
 
-		Unit s;
-		s.setIndex(soldierID);
-		s.setHealthPoint(pSquad->getSoldierHealth());
-		s.setTargetIndex(NONETARGET);
-		s.setAttackInterval(1.0f);
-		s.setElapsedTimeSinceLastAttack(0.5f);
-		s.setDoAttackTimes(0);
-		s.setTryAttackTimes(0);
+		Unit s = Unit(soldierID,pSquad->getSoldierHealth(),1.0f);
 
 		_allUnits.insert(std::pair<int,Unit>(soldierID,s));
     }
@@ -232,10 +243,6 @@ void Battle::initSquadSprite(Squad* pSquad)
 void Battle::startBattle(Squad* pSelfSquad)
 {
 	pSelfSquad->setState(SquadState::Moving);
-
-	log("Battle Begin!");
-
-	printStats();
 }
 
 void Battle::wholeSquadWaiting(Squad* pSelfSquad)
@@ -271,8 +278,8 @@ void Battle::wholeSquadMove(Squad* pSquad,float dt)
 
 void Battle::wholeSquadFight(Squad* pSquad,float dt)
 {
-	log("Squad[%s] is fighting",pSquad->getName().c_str());
-	printStats();
+	//log("Squad[%s] is fighting",pSquad->getName().c_str());
+	//printStats();
 
 	// Let hero to fight
 	int heroID = getHeroUnitID(pSquad->getIndex());
@@ -476,8 +483,8 @@ void Battle::doAttack(int unitID,int targetID, Squad* pSelfSquad, float dt)
 		if(!unitAlive(targetID))
 		{
 			_allUnits[targetID].getSprite()->setVisible(false);
-			log("TargetUnit[%d] has been killed, set sprite visible to %d",targetID,_allUnits[targetID].getSprite()->isVisible());
-			printStats();
+			//log("TargetUnit[%d] has been killed, set sprite visible to %d",targetID,_allUnits[targetID].getSprite()->isVisible());
+			//printStats();
 
 			_allUnits[unitID].setTargetIndex(NONETARGET);
 
@@ -696,7 +703,7 @@ std::map<int,Unit> Battle::getAllUnits()
 
 unsigned int Battle::getSquadNumbersInBattle()
 {
-	return _allSquads.size();
+	return (unsigned int)_allSquads.size();
 }
 
 void Battle::end()
@@ -708,14 +715,14 @@ void Battle::printStats()
 {
 	// Print some statistics 
 	log("==============Print Statistics =====================");
-	//for(std::map<int,Unit>::iterator it = _allUnits.begin();
-	//	it !=  _allUnits.end(); ++it )
-	//{
+	for(std::map<int,Unit>::iterator it = _allUnits.begin();
+		it !=  _allUnits.end(); ++it )
+	{
 
-	//	log("Unit[%d], health = %d, doAttackTimes = %d, tryAttackTimes = %d, SpriteVisible = %d, Sprite address is %d",
-	//		it->second.getIndex(), it->second.getHealthPoint(), it->second.getDoAttackTimes(),
-	//		it->second.getTryAttackTimes(), it->second.getSprite()->isVisible(), it->second.getSprite());
-	//}
+		log("Unit[%d], health = %d, doAttackTimes = %d, tryAttackTimes = %d, SpriteVisible = %d",
+			it->second.getIndex(), it->second.getHealthPoint(), it->second.getDoAttackTimes(),
+			it->second.getTryAttackTimes(), it->second.getSprite()->isVisible());
+	}
 
 	log("==============End Statistics =====================\n");
 }
