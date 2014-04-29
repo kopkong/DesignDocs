@@ -463,11 +463,12 @@ void Battle::doAttack(int unitID,int targetID, Squad* pSelfSquad, float dt)
 
 		//log("Unit[%d](Team[%d]) attacks Target[%d]", unitID,pSelfSquad->getSquadSide(),targetID);
 
-		// Play attack animation, Rotate ..
-		ActionInterval* action1 = RotateTo::create(_allUnits[unitID].getAttackInterval() /2  ,25);
-		ActionInterval* action2 = RotateTo::create(_allUnits[unitID].getAttackInterval() /2  ,-25);
+		// Play attack animation, rock and roll ..
+		ActionInterval* action1 = RotateTo::create(_allUnits[unitID].getAttackInterval() /3 ,25);
+		ActionInterval* action2 = RotateTo::create(_allUnits[unitID].getAttackInterval() /3  ,-25);
+        ActionInterval* action3 = RotateTo::create(_allUnits[unitID].getAttackInterval() /3, 0);
 
-		Action* actionAttack = Sequence::create(action1,action2,NULL);
+		Action* actionAttack = Sequence::create(action1,action2,action3,NULL);
 
 		_allUnits[unitID].getSprite()->runAction(actionAttack);
 

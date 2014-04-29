@@ -34,6 +34,26 @@ bool HelloWorld::init()
     return true;
 }
 
+void HelloWorld::showResults()
+{
+    _inDisplayResult = true;
+    
+    //this->removeAllChildren();
+    
+    std::string winMessages[2] = {"队伍1获得了胜利！","队伍2获得了胜利！"};
+    
+    auto label = LabelTTF::create(winMessages[_whichSideWin], "HeiTi", 40);
+    label->setPosition(_screenSize.width/2, _screenSize.height/2);
+    label->setColor(Color3B(1.0,0.0,0.0));
+    this->addChild(label,1);
+    
+    auto item = MenuItemFont::create("返回选择界面", CC_CALLBACK_0(HelloWorld::menuBackToLevelSelectCallback,this));
+    item->setPosition(_screenSize.width/2, _screenSize.height/2 - 200);
+    auto menu = Menu::create(item,NULL);
+    menu->setPosition(Point::ZERO);
+    this->addChild(menu,1);
+}
+
 void HelloWorld::showLevelSelect()
 {
     _inLeveltSelect = true;
@@ -61,6 +81,9 @@ void HelloWorld::update(float dt){
     if(_inLeveltSelect)
         return;
     
+    if(_inDisplayResult)
+        return;
+    
     if(Battle::getInstance()->battleFinished())
     {
         resetTest();
@@ -75,11 +98,13 @@ void HelloWorld::update(float dt){
         {
             log("TeamA has won the battle!");
             Battle::getInstance()->endBattle();
+            _whichSideWin = SquadSide::TeamA;
         }
         if(Battle::getInstance()->sideWin(SquadSide::TeamB))
         {
             log("TeamB has won the battle!");
             Battle::getInstance()->endBattle();
+            _whichSideWin = SquadSide::TeamB;
         }
         
         for(unsigned int i = 0; i < squadNumbers; i++)
@@ -128,9 +153,7 @@ void HelloWorld::resetTest()
     }
     else
     {
-        // Do more things here,
-        // Print the output on the screen , etc.
-        showLevelSelect();
+        showResults();
     }
     
 }
@@ -181,7 +204,6 @@ void HelloWorld::menuLevel2Callback()
 	_leftSideSquads = 8;
 	_rightSideSquads = 8;
 	resetTest();
-    
 }
 
 void HelloWorld::menuLevel3Callback()
@@ -196,13 +218,10 @@ void HelloWorld::menuLevel3Callback()
     
 }
 
-    
-void HelloWorld::menuCloseCallback(Ref* pSender)
+void HelloWorld::menuBackToLevelSelectCallback()
 {
-    Director::getInstance()->end();
-	Battle::getInstance()->end();
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
-#endif
+    _inDisplayResult = false;
+    _inLeveltSelect = true;
+    
+    showLevelSelect();
 }

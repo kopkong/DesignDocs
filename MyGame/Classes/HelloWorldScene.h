@@ -13,10 +13,12 @@ private:
     int _allTestTimes;
     
     bool _inLeveltSelect;
+    bool _inDisplayResult;
     int _level;
     
     int _leftSideSquads;
     int _rightSideSquads;
+    SquadSide _whichSideWin;
     
 	void initBattle();
     
@@ -27,18 +29,20 @@ public:
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
     virtual bool init();
     
-    // a selector callback
-    void menuCloseCallback(cocos2d::Ref* pSender);
     
     void menuLevel1Callback();
     void menuLevel2Callback();
     void menuLevel3Callback();
+    
+    void menuBackToLevelSelectCallback();
         
     void update(float);
     
     void resetTest();
     
     void showLevelSelect();
+    
+    void showResults();
     
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
