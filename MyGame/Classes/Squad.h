@@ -25,6 +25,7 @@ enum SquadState{
 };
 
 enum SquadType{
+    None,
     Footman,
     Knight,
     Archer

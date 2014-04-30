@@ -12,9 +12,11 @@
 Resources::Resources()
 {
 #ifdef WIN32
-    _osDirectory = "2D-Cartoon Vector Characters/";
+    _2DCharacterDirectory = "2D-Cartoon Vector Characters/";
+    _menuItemDirectory = "Menu/";
 #else
-    _osDirectory = "";
+    _2DCharacterDirectory = "";
+    _menuItemDirectory = "";
 #endif
     
 }
@@ -32,30 +34,60 @@ Resources* Resources::getInstance()
 
 std::string Resources::getFootmanResourceA()
 {
-	return _osDirectory + "dwarf_warrior.png";
+	return _2DCharacterDirectory + "dwarf_warrior.png";
 }
 
 std::string Resources::getKnightResourceA()
 {
-    return _osDirectory + "viking.png";
+    return _2DCharacterDirectory + "viking.png";
 }
 
 std::string Resources::getArcherResourceA()
 {
-    return _osDirectory + "archer.png";
+    return _2DCharacterDirectory + "archer.png";
 }
 
 std::string Resources::getFootmanResourceB()
 {
-    return _osDirectory + "orc.png";
+    return _2DCharacterDirectory + "orc.png";
 }
 
 std::string Resources::getKnightResourceB()
 {
-    return _osDirectory + "centaur.png";
+    return _2DCharacterDirectory + "centaur.png";
 }
 
 std::string Resources::getArcherResourceB()
 {
-    return _osDirectory + "dragon.png";
+    return _2DCharacterDirectory + "dragon.png";
+}
+
+std::string Resources::getMenuItem0()
+{
+    return _menuItemDirectory + "item0.png";
+}
+
+std::string Resources::getMenuItem1()
+{
+    return _menuItemDirectory + "item1.png";
+}
+
+std::string Resources::getMenuItem2()
+{
+    return _menuItemDirectory + "item2.png";
+}
+
+std::string Resources::getMenuItem3()
+{
+    return _menuItemDirectory + "item3.png";
+}
+
+std::string Resources::getFormationBoard()
+{
+    return _menuItemDirectory + "board.png";
+}
+
+std::string Resources::getStartBattleButton()
+{
+    return _menuItemDirectory + "startBattle.png";
 }

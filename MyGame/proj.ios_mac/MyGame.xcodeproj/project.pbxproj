@@ -63,6 +63,12 @@
 		89912113190DF1C2006C5590 /* Battle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89912111190DF1C2006C5590 /* Battle.cpp */; };
 		89912116190DF570006C5590 /* Resources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89912114190DF570006C5590 /* Resources.cpp */; };
 		89912118190DF984006C5590 /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89912117190DF984006C5590 /* Unit.cpp */; };
+		899121301910D8E5006C5590 /* board.png in Resources */ = {isa = PBXBuildFile; fileRef = 8991212B1910D8E5006C5590 /* board.png */; };
+		899121311910D8E5006C5590 /* item0.png in Resources */ = {isa = PBXBuildFile; fileRef = 8991212C1910D8E5006C5590 /* item0.png */; };
+		899121321910D8E5006C5590 /* item1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8991212D1910D8E5006C5590 /* item1.png */; };
+		899121331910D8E5006C5590 /* item2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8991212E1910D8E5006C5590 /* item2.png */; };
+		899121341910D8E5006C5590 /* item3.png in Resources */ = {isa = PBXBuildFile; fileRef = 8991212F1910D8E5006C5590 /* item3.png */; };
+		8991213619110637006C5590 /* startBattle.png in Resources */ = {isa = PBXBuildFile; fileRef = 8991213519110637006C5590 /* startBattle.png */; };
 		89F899F91909F91C00CD1293 /* lucille.png in Resources */ = {isa = PBXBuildFile; fileRef = 89F899F51909F91C00CD1293 /* lucille.png */; };
 		89F899FA1909F91C00CD1293 /* monk.png in Resources */ = {isa = PBXBuildFile; fileRef = 89F899F61909F91C00CD1293 /* monk.png */; };
 		89F899FB1909F91C00CD1293 /* sherlock.png in Resources */ = {isa = PBXBuildFile; fileRef = 89F899F71909F91C00CD1293 /* sherlock.png */; };
@@ -291,6 +297,12 @@
 		89912114190DF570006C5590 /* Resources.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Resources.cpp; path = ../Classes/Resources.cpp; sourceTree = "<group>"; };
 		89912115190DF570006C5590 /* Resources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../Classes/Resources.h; sourceTree = "<group>"; };
 		89912117190DF984006C5590 /* Unit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Unit.cpp; path = ../Classes/Unit.cpp; sourceTree = "<group>"; };
+		8991212B1910D8E5006C5590 /* board.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = board.png; path = Menu/board.png; sourceTree = "<group>"; };
+		8991212C1910D8E5006C5590 /* item0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = item0.png; path = Menu/item0.png; sourceTree = "<group>"; };
+		8991212D1910D8E5006C5590 /* item1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = item1.png; path = Menu/item1.png; sourceTree = "<group>"; };
+		8991212E1910D8E5006C5590 /* item2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = item2.png; path = Menu/item2.png; sourceTree = "<group>"; };
+		8991212F1910D8E5006C5590 /* item3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = item3.png; path = Menu/item3.png; sourceTree = "<group>"; };
+		8991213519110637006C5590 /* startBattle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = startBattle.png; path = Menu/startBattle.png; sourceTree = "<group>"; };
 		89F899F51909F91C00CD1293 /* lucille.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lucille.png; sourceTree = "<group>"; };
 		89F899F61909F91C00CD1293 /* monk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = monk.png; sourceTree = "<group>"; };
 		89F899F71909F91C00CD1293 /* sherlock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sherlock.png; sourceTree = "<group>"; };
@@ -520,6 +532,7 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8991211B19109FF7006C5590 /* Menu */,
 				89F89A03190A09FE00CD1293 /* 2D-Cartoon Vector Characters */,
 				89F89A011909F96B00CD1293 /* bg.png */,
 				89F899F51909F91C00CD1293 /* lucille.png */,
@@ -531,6 +544,19 @@
 			);
 			name = Resources;
 			path = ../Resources;
+			sourceTree = "<group>";
+		};
+		8991211B19109FF7006C5590 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				8991213519110637006C5590 /* startBattle.png */,
+				8991212B1910D8E5006C5590 /* board.png */,
+				8991212C1910D8E5006C5590 /* item0.png */,
+				8991212D1910D8E5006C5590 /* item1.png */,
+				8991212E1910D8E5006C5590 /* item2.png */,
+				8991212F1910D8E5006C5590 /* item3.png */,
+			);
+			name = Menu;
 			sourceTree = "<group>";
 		};
 		89F89A03190A09FE00CD1293 /* 2D-Cartoon Vector Characters */ = {
@@ -735,6 +761,7 @@
 				89F89A29190A09FE00CD1293 /* wizzard.png in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
 				1AFAF8BC16D35E4900DB1158 /* CloseNormal.png in Resources */,
+				8991213619110637006C5590 /* startBattle.png in Resources */,
 				89F899F91909F91C00CD1293 /* lucille.png in Resources */,
 				89F899FB1909F91C00CD1293 /* sherlock.png in Resources */,
 				89F89A27190A09FE00CD1293 /* viking.png in Resources */,
@@ -742,7 +769,9 @@
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
 				89F89A1B190A09FE00CD1293 /* dragon.png in Resources */,
 				89F89A1D190A09FE00CD1293 /* elvenArcher.png in Resources */,
+				899121301910D8E5006C5590 /* board.png in Resources */,
 				89F89A17190A09FE00CD1293 /* angel_normal.png in Resources */,
+				899121341910D8E5006C5590 /* item3.png in Resources */,
 				89F89A28190A09FE00CD1293 /* witch.png in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
 				1AFAF8BD16D35E4900DB1158 /* CloseSelected.png in Resources */,
@@ -751,8 +780,10 @@
 				89F89A26190A09FE00CD1293 /* troubadour.png in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				89F89A1E190A09FE00CD1293 /* faun.png in Resources */,
+				899121331910D8E5006C5590 /* item2.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				89F89A25190A09FE00CD1293 /* stone-gaint.png in Resources */,
+				899121311910D8E5006C5590 /* item0.png in Resources */,
 				89F89A1C190A09FE00CD1293 /* dwarf_warrior.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
 				89F89A18190A09FE00CD1293 /* archer.png in Resources */,
@@ -764,6 +795,7 @@
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
 				89F89A021909F96B00CD1293 /* bg.png in Resources */,
 				89F89A23190A09FE00CD1293 /* spaceArmor.png in Resources */,
+				899121321910D8E5006C5590 /* item1.png in Resources */,
 				50EF629717ECD46A001EB2F8 /* Icon-58.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

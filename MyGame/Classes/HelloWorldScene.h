@@ -5,6 +5,14 @@
 #include "Squad.h"
 #include "Battle.h"
 
+
+enum MenuTag
+{
+    Level1,
+    Level2
+};
+
+
 class HelloWorld : public cocos2d::Layer
 {
 private:
@@ -12,12 +20,17 @@ private:
     int _testTimes;
     int _allTestTimes;
     
+    bool _inFormationSelect;
+    int _currentItemIndex;
+    Vector<Label*> _menuLabels;
+    Vector<MenuItem*> _menuItems;
+    
     bool _inLeveltSelect;
     bool _inDisplayResult;
     int _level;
     
-    int _leftSideSquads;
-    int _rightSideSquads;
+    Formation _leftFormation;
+    Formation _rightFormation;
     SquadSide _whichSideWin;
     
 	void initBattle();
@@ -29,16 +42,17 @@ public:
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
     virtual bool init();
     
+    void menuItemCallback(int index);
+    void menuSubItemCallback(int subIndex);
     
-    void menuLevel1Callback();
-    void menuLevel2Callback();
-    void menuLevel3Callback();
-    
+    void menuStartBattle();
     void menuBackToLevelSelectCallback();
         
     void update(float);
     
     void resetTest();
+    
+    void showFormationSelect();
     
     void showLevelSelect();
     

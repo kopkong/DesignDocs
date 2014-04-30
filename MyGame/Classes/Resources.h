@@ -14,7 +14,8 @@
 class Resources
 {
 private:
-    std::string _osDirectory;
+    std::string _2DCharacterDirectory;
+    std::string _menuItemDirectory;
     
 protected:
 	Resources(void);
@@ -31,6 +32,13 @@ public:
     
     std::string getArcherResourceA();
     std::string getArcherResourceB();
+    
+    std::string getFormationBoard();
+    std::string getStartBattleButton();
+    std::string getMenuItem0();
+    std::string getMenuItem1();
+    std::string getMenuItem2();
+    std::string getMenuItem3();
 };
 
 #endif /* defined(__MyGame__Resources__) */

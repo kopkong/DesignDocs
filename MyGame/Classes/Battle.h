@@ -8,6 +8,8 @@
 
 USING_NS_CC;
 
+typedef SquadType Formation[5][4];
+
 class Battle
 {
 private:
@@ -45,7 +47,7 @@ public:
 	
     
     // Init Squad properties and positions
-	virtual void initSquads(int leftSquads, int rightSquads);
+	virtual void initSquads(Formation leftFormation, Formation rightFormation);
 
     
     // Let the squad to be ready for a battle

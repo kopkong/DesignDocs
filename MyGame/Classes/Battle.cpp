@@ -30,109 +30,92 @@ void Battle::reset()
 	_soldierSize = Size(24,24);
 }
 
-void Battle::initSquads(int leftSquads, int rightSquads)
+void Battle::initSquads(Formation leftFormation, Formation rightFormation)
 {
 	char buff[100];
 	int indexCount = 0;
-    for(int i = 0; i < leftSquads; i++){ // Create left side squads
-        sprintf(buff,"%d(TeamA)",indexCount);
-        std::string name = buff;
-        
-        int col = i / 4;
-        int row = i % 4;
-        
-		Point p(_battleFieldSize.width/2 - 12 - _squadSize.width * col,
-                _battleFieldSize.height  - _squadSize.height/2 - _squadSize.height * row);
-        
-        //log("Squad %s position is(%f,%f)", name.c_str(), p.x,p.y);
-        Squad a = Squad(name,p,indexCount);
-        
-        if(col == 0)
-        {
-            a.setSpriteTexture(Resources::getInstance()->getFootmanResourceA());
-            a.setSpriteOrientation(Orientation::Left);
-            initSquadProperty(&a, SquadType::Footman);
-        }
-        if(col == 1)
-        {
-            a.setSpriteTexture(Resources::getInstance()->getKnightResourceA());
-            a.setSpriteOrientation(Orientation::Right);
-            initSquadProperty(&a, SquadType::Knight);
-        }
-        if(col == 2)
-        {
-            a.setSpriteTexture(Resources::getInstance()->getArcherResourceA());
-            a.setSpriteOrientation(Orientation::Right);
-            initSquadProperty(&a, SquadType::Archer);
-        }
-        if(col == 3)
-        {
-            a.setSpriteTexture(Resources::getInstance()->getFootmanResourceA());
-            a.setSpriteOrientation(Orientation::Left);
-            initSquadProperty(&a,SquadType::Footman);
-        }
-        if(col == 4)
-        {
-            a.setSpriteTexture(Resources::getInstance()->getArcherResourceA());
-            a.setSpriteOrientation(Orientation::Right);
-            initSquadProperty(&a, SquadType::Archer);
-        }
-        
-        indexCount ++;
-		a.setSquadSide(SquadSide::TeamA);
-		a.setTargetSquadIndex(NONETARGET);
-		initSquadSprite(&a);
-		_allSquads.push_back(a);
-    }
     
-    for(int i = 0; i < rightSquads; i++){ // Create right side squads
-        sprintf(buff,"%d(TeamB)",indexCount);
-        std::string name = buff;
-        
-        int col = i / 4;
-        int row = i % 4;
-        
-		Point p(_battleFieldSize.width/2 + 12 + _squadSize.width * col,
-                _battleFieldSize.height  - _squadSize.height/2 - _squadSize.height * row);
-        
-        //log("Squad %s position is(%f,%f)", name.c_str(), p.x,p.y);
-        Squad b = Squad(name,p,indexCount);
-        indexCount ++;
-        if(col == 0)
+    for(int row = 0; row<= 4 ; row ++)
+    {
+        for(int col = 0; col <= 5; col ++)
         {
-            b.setSpriteTexture(Resources::getInstance()->getFootmanResourceB());
-            b.setSpriteOrientation(Orientation::Left);
-            initSquadProperty(&b,Footman);
+            // Create left side squads
+            if(leftFormation[row][col] != SquadType::None)
+            {
+                sprintf(buff,"%d(TeamA)",indexCount);
+                std::string name = buff;
+                
+                Point p(_battleFieldSize.width/2 - 12 - _squadSize.width * col,
+                        _battleFieldSize.height  - _squadSize.height/2 - _squadSize.height * row);
+                
+                Squad a = Squad(name,p,indexCount);
+                
+                if(leftFormation[row][col] == SquadType::Footman)
+                {
+                    a.setSpriteTexture(Resources::getInstance()->getFootmanResourceA());
+                    a.setSpriteOrientation(Orientation::Left);
+                    initSquadProperty(&a, SquadType::Footman);
+                }
+                
+                if(leftFormation[row][col] == SquadType::Knight)
+                {
+                    a.setSpriteTexture(Resources::getInstance()->getKnightResourceA());
+                    a.setSpriteOrientation(Orientation::Right);
+                    initSquadProperty(&a, SquadType::Knight);
+                }
+                
+                if(leftFormation[row][col] == SquadType::Archer)
+                {
+                    a.setSpriteTexture(Resources::getInstance()->getArcherResourceA());
+                    a.setSpriteOrientation(Orientation::Right);
+                    initSquadProperty(&a, SquadType::Archer);
+                }
+                
+                indexCount ++;
+                a.setSquadSide(SquadSide::TeamA);
+                a.setTargetSquadIndex(NONETARGET);
+                initSquadSprite(&a);
+                _allSquads.push_back(a);
+                
+            }
+            
+            // Create right side suqads
+            if(rightFormation[row][col] != SquadType::None)
+            {
+                sprintf(buff,"%d(TeamB)",indexCount);
+                std::string name = buff;
+                
+                Point p(_battleFieldSize.width/2 + 12 + _squadSize.width * col,
+                        _battleFieldSize.height  - _squadSize.height/2 - _squadSize.height * row);
+                
+                Squad b = Squad(name,p,indexCount);
+                
+                if(rightFormation[row][col] == SquadType::Footman)
+                {
+                    b.setSpriteTexture(Resources::getInstance()->getFootmanResourceB());
+                    b.setSpriteOrientation(Orientation::Left);
+                    initSquadProperty(&b,Footman);
+                }
+                if(rightFormation[row][col] == SquadType::Knight)
+                {
+                    b.setSpriteTexture(Resources::getInstance()->getKnightResourceB());
+                    b.setSpriteOrientation(Orientation::Left);
+                    initSquadProperty(&b,Knight);
+                }
+                if(rightFormation[row][col] == SquadType::Archer)
+                {
+                    b.setSpriteTexture(Resources::getInstance()->getArcherResourceB());
+                    b.setSpriteOrientation(Orientation::Left);
+                    initSquadProperty(&b,Archer);
+                }
+                
+                indexCount ++;
+                b.setSquadSide(SquadSide::TeamB);
+                b.setTargetSquadIndex(NONETARGET);
+                initSquadSprite(&b);
+                _allSquads.push_back(b);
+            }
         }
-        if(col == 1)
-        {
-            b.setSpriteTexture(Resources::getInstance()->getKnightResourceB());
-            b.setSpriteOrientation(Orientation::Left);
-            initSquadProperty(&b,Knight);
-        }
-        if(col == 2)
-        {
-            b.setSpriteTexture(Resources::getInstance()->getArcherResourceB());
-            b.setSpriteOrientation(Orientation::Left);
-            initSquadProperty(&b,Archer);
-        }
-        if(col == 3)
-        {
-            b.setSpriteTexture(Resources::getInstance()->getFootmanResourceB());
-            b.setSpriteOrientation(Orientation::Left);
-            initSquadProperty(&b, SquadType::Footman);
-        }
-        if(col == 4)
-        {
-            b.setSpriteTexture(Resources::getInstance()->getArcherResourceB());
-            b.setSpriteOrientation(Orientation::Left);
-            initSquadProperty(&b, SquadType::Archer);
-        }
-
-		b.setSquadSide(SquadSide::TeamB);
-		b.setTargetSquadIndex(NONETARGET);
-		initSquadSprite(&b);
-		_allSquads.push_back(b);
     }
 }
 

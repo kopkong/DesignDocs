@@ -1,5 +1,8 @@
 #include "HelloWorldScene.h"
+#include "Resources.h"
 USING_NS_CC;
+
+Size CellSize(70,100);
 
 Scene* HelloWorld::createScene()
 {
@@ -28,53 +31,10 @@ bool HelloWorld::init()
     
     _screenSize = Size(1024,768);
     
-    showLevelSelect();
+    showFormationSelect();
     this->schedule(schedule_selector(HelloWorld::update));
     
     return true;
-}
-
-void HelloWorld::showResults()
-{
-    _inDisplayResult = true;
-    
-    //this->removeAllChildren();
-    
-    std::string winMessages[2] = {"队伍1获得了胜利！","队伍2获得了胜利！"};
-    
-    auto label = LabelTTF::create(winMessages[_whichSideWin], "HeiTi", 40);
-    label->setPosition(_screenSize.width/2, _screenSize.height/2);
-    label->setColor(Color3B(1.0,0.0,0.0));
-    this->addChild(label,1);
-    
-    auto item = MenuItemFont::create("返回选择界面", CC_CALLBACK_0(HelloWorld::menuBackToLevelSelectCallback,this));
-    item->setPosition(_screenSize.width/2, _screenSize.height/2 - 200);
-    auto menu = Menu::create(item,NULL);
-    menu->setPosition(Point::ZERO);
-    this->addChild(menu,1);
-}
-
-void HelloWorld::showLevelSelect()
-{
-    _inLeveltSelect = true;
-    _level = 0;
-    this->removeAllChildren();
-    
-    // Display level selector
-    auto itemLevel1 = MenuItemFont::create("4v4只有步兵",CC_CALLBACK_0(HelloWorld::menuLevel1Callback,this));
-    itemLevel1->setPosition(100,_screenSize.height - 100);
-    
-    auto itemLevel2 = MenuItemFont::create("8v8步兵骑兵",CC_CALLBACK_0(HelloWorld::menuLevel2Callback,this));
-    itemLevel2->setPosition(100, _screenSize.height - 200);
-    
-    auto itemLevel3 = MenuItemFont::create("20v20",CC_CALLBACK_0(HelloWorld::menuLevel3Callback,this));
-    itemLevel3->setPosition(100, _screenSize.height - 300);
-    
-    // create menu, it's an autorelease object
-    auto menu = Menu::create(itemLevel1, itemLevel2, itemLevel3, NULL);
-    menu->setPosition(Point::ZERO);
-    this->addChild(menu, 1);
-    
 }
 
 void HelloWorld::update(float dt){
@@ -162,7 +122,7 @@ void HelloWorld::initBattle()
 {
 	Battle::getInstance()->reset();
 
-	Battle::getInstance()->initSquads(_leftSideSquads,_rightSideSquads);
+	Battle::getInstance()->initSquads(_leftFormation,_rightFormation);
 
     this->removeAllChildren();
     
@@ -182,40 +142,147 @@ void HelloWorld::initBattle()
 	}
 }
 
-void HelloWorld::menuLevel1Callback()
+
+void HelloWorld::showFormationSelect()
 {
-	_level = 1; // 4 v 4
-
-    _testTimes = 0 ;
-    _allTestTimes = 1;
-    _inLeveltSelect = false;
-    _leftSideSquads = 4;
-    _rightSideSquads = 4;
-    resetTest();
-
-}
-
-void HelloWorld::menuLevel2Callback()
-{
-	_level = 2; // 8 v 8
-	_testTimes = 0;
-	_allTestTimes = 1;
-	_inLeveltSelect = false;
-	_leftSideSquads = 8;
-	_rightSideSquads = 8;
-	resetTest();
-}
-
-void HelloWorld::menuLevel3Callback()
-{
-	_level = 3; // 20 v 20
-	_testTimes = 0;
-	_allTestTimes = 1;
-	_inLeveltSelect = false;
-	_leftSideSquads = 20;
-	_rightSideSquads = 20;
-	resetTest();
+    _inFormationSelect = true;
     
+    this->removeAllChildren();
+    _menuItems.clear();
+    
+    auto board = Sprite::create(Resources::getInstance()->getFormationBoard());
+	board->setPosition(_screenSize.width/2,_screenSize.height/2);
+	this->addChild(board,0);
+    
+    int index = 0;
+    for(int row = 0; row < 4; row ++)
+    {
+        for(int col =0 ; col < 5 ; col ++)
+        {
+            Label* label = Label::create();
+            label->setString("空");
+            label->setFontSize(48);
+            label->setColor(Color3B(1.0,0.0,0.0));
+        
+            auto item = MenuItemLabel::create(label);
+            
+            Point p(_screenSize.width/2 - 105 - CellSize.width * col,
+                    _screenSize.height  - 230 - CellSize.height * row);
+            
+            item->setPosition(p);
+            item->setCallback(CC_CALLBACK_0(HelloWorld::menuItemCallback,this,index));
+            
+            _menuLabels.pushBack(label);
+            _menuItems.pushBack(item);
+            
+            index ++;
+        }
+    }
+    
+    for(int row = 0; row < 4 ; row ++)
+    {
+        for(int col = 0 ; col < 5 ; col ++)
+        {
+            Label* label = Label::create();
+            label->setString("空");
+            label->setFontSize(48);
+            label->setColor(Color3B(1.0,0.0,0.0));
+            
+            auto item = MenuItemLabel::create(label);
+            
+            Point p(_screenSize.width/2 + 105 + CellSize.width * col,
+                    _screenSize.height  - 230 - CellSize.height * row);
+            
+            item->setPosition(p);
+            item->setCallback(CC_CALLBACK_0(HelloWorld::menuItemCallback,this,index));
+            
+            _menuLabels.pushBack(label);
+            _menuItems.pushBack(item);
+            
+            index ++;
+        }
+        
+    }
+    
+    auto menu = Menu::createWithArray(_menuItems);
+    menu->setPosition(Point::ZERO);
+    this->addChild(menu,1,MenuTag::Level1);
+    
+    auto buttonItem1 = MenuItemImage::create(Resources::getInstance()->getStartBattleButton(),Resources::getInstance()->getStartBattleButton(),CC_CALLBACK_0(HelloWorld::menuStartBattle,this));
+    buttonItem1->setPosition(_screenSize.width/2 - 60,_screenSize.height);
+    auto menu2 = Menu::create(buttonItem1,NULL);
+    menu2->setPosition(Point::ZERO);
+    this->addChild(menu,1,MenuTag::Level1);
+}
+
+void HelloWorld::menuItemCallback(int index)
+{
+    this->removeChildByTag(MenuTag::Level2);
+    if(index >=0 && index < _menuLabels.size())
+    {
+        _currentItemIndex = index;
+        Point pos = _menuItems.at(index)->getPosition();
+        
+        // Show subItems
+        std::string png0 = Resources::getInstance()->getMenuItem0();
+        auto item0 = MenuItemImage::create(png0,png0);
+        item0->setCallback(CC_CALLBACK_0(HelloWorld::menuSubItemCallback,this,0));
+        item0->setPosition(pos.x + 50, pos.y + 60);
+        
+        std::string png1 = Resources::getInstance()->getMenuItem1();
+        auto item1 = MenuItemImage::create(png1,png1,
+            CC_CALLBACK_0(HelloWorld::menuSubItemCallback,this,1));
+        item1->setPosition(pos.x + 65, pos.y + 20);
+        
+        std::string png2 = Resources::getInstance()->getMenuItem2();
+        auto item2 = MenuItemImage::create(png2,png2,
+            CC_CALLBACK_0(HelloWorld::menuSubItemCallback,this,2));
+        item2->setPosition(pos.x + 65, pos.y - 20);
+        
+        std::string png3 = Resources::getInstance()->getMenuItem3();
+        auto item3 = MenuItemImage::create(png3,png3,
+            CC_CALLBACK_0(HelloWorld::menuSubItemCallback,this,3));
+        item3->setPosition(pos.x + 50, pos.y - 60);
+        
+        auto menu = Menu::create(item0,item1,item2,item3,NULL);
+        menu->setPosition(Point::ZERO);
+        this->addChild(menu,1,MenuTag::Level2);
+    }
+    
+}
+
+void HelloWorld::menuSubItemCallback(int subIndex)
+{
+    if(_currentItemIndex >= 0)
+    {
+        std::string itemString[4] = {"空","步","骑","弓"};
+        _menuLabels.at(_currentItemIndex)->setString(itemString[subIndex]);
+    }
+    
+    _currentItemIndex = -1;
+    
+    // Clear sub items
+    this->removeChildByTag(MenuTag::Level2);
+}
+
+void HelloWorld::showResults()
+{
+    _inDisplayResult = true;
+    
+    //this->removeAllChildren();
+    
+    std::string winMessages[2] = {"队伍1获得了胜利！","队伍2获得了胜利！"};
+    
+    auto label = LabelTTF::create(winMessages[_whichSideWin], "HeiTi", 40);
+    label->setPosition(_screenSize.width/2, _screenSize.height/2);
+    label->setColor(Color3B(1.0,0.0,0.0));
+    this->addChild(label,1);
+    
+    auto item = MenuItemFont::create("返回选择界面", CC_CALLBACK_0(HelloWorld::menuBackToLevelSelectCallback,this));
+    item->setPosition(_screenSize.width/2, _screenSize.height/2 - 200);
+    auto menu = Menu::create(item,NULL);
+    menu->setPosition(Point::ZERO);
+    this->addChild(menu,1);
 }
 
 void HelloWorld::menuBackToLevelSelectCallback()
@@ -223,5 +290,11 @@ void HelloWorld::menuBackToLevelSelectCallback()
     _inDisplayResult = false;
     _inLeveltSelect = true;
     
-    showLevelSelect();
+    showFormationSelect();
+}
+
+void HelloWorld::menuStartBattle()
+{
+    // Constructe formations
+    
 }
