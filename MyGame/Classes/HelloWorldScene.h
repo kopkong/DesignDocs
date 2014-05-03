@@ -5,13 +5,11 @@
 #include "Squad.h"
 #include "Battle.h"
 
-
 enum MenuTag
 {
     Level1,
     Level2
 };
-
 
 class HelloWorld : public cocos2d::Layer
 {
@@ -31,10 +29,12 @@ private:
     
     Formation _leftFormation;
     Formation _rightFormation;
+	int _leftSquads;
+	int _rightSquads;
     SquadSide _whichSideWin;
     
 	void initBattle();
-    
+    void setFormationLabelText(SquadSide,int row,int col,Label*);
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
     static cocos2d::Scene* createScene();

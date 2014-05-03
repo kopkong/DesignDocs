@@ -89,5 +89,5 @@ std::string Resources::getFormationBoard()
 
 std::string Resources::getStartBattleButton()
 {
-    return _menuItemDirectory + "startBattle.png";
+    return _menuItemDirectory + "start.png";
 }

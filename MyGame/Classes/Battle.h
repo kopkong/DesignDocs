@@ -8,7 +8,7 @@
 
 USING_NS_CC;
 
-typedef SquadType Formation[5][4];
+typedef SquadType Formation[4][5];
 
 class Battle
 {

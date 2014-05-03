@@ -35,9 +35,9 @@ void Battle::initSquads(Formation leftFormation, Formation rightFormation)
 	char buff[100];
 	int indexCount = 0;
     
-    for(int row = 0; row<= 4 ; row ++)
+    for(int row = 0; row< 4 ; row ++)
     {
-        for(int col = 0; col <= 5; col ++)
+        for(int col = 0; col < 5; col ++)
         {
             // Create left side squads
             if(leftFormation[row][col] != SquadType::None)
