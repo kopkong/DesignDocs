@@ -10,6 +10,7 @@
 #define __MyGame__Resources__
 
 #include <iostream>
+#include "Squad.h"
 
 class Resources
 {
@@ -36,10 +37,14 @@ public:
     std::string getFormationBoard();
     std::string getStartBattleButton();
     std::string getStartBattleButton2();
+	std::string getRandomPlayerFormationButton();
+	std::string getRandomNPCFormationButton();
     std::string getMenuItem0();
     std::string getMenuItem1();
     std::string getMenuItem2();
     std::string getMenuItem3();
+
+	std::string getStringSquadType(SquadType);
 };
 
 #endif /* defined(__MyGame__Resources__) */

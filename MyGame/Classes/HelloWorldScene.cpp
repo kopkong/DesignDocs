@@ -1,10 +1,9 @@
-#include "HelloWorldScene.h"
+﻿#include "HelloWorldScene.h"
 #include "CCTexture2D.h"
 #include "Resources.h"
 USING_NS_CC;
 
 Size CellSize(80,100);
-std::string FormationSlotText[4] = {"空白","步兵","骑兵","弓兵"};
 
 Scene* HelloWorld::createScene()
 {
@@ -235,8 +234,17 @@ void HelloWorld::showFormationSelect()
     // Start battle 10 times button
     auto buttonItem2 = MenuItemImage::create(Resources::getInstance()->getStartBattleButton2(),Resources::getInstance()->getStartBattleButton2(),CC_CALLBACK_0(HelloWorld::menuStartBattle,this,10));
     buttonItem2->setPosition(_screenSize.width/2 + 100 , 100);
+
+	// Random formation for player
+	auto buttonItem3 = MenuItemImage::create(Resources::getInstance()->getRandomPlayerFormationButton(),Resources::getInstance()->getRandomPlayerFormationButton(),
+		CC_CALLBACK_0(HelloWorld::menuRandomFormation,this,true));
+	buttonItem3->setPosition(_screenSize.width/2 - 250, _screenSize.height - 140);
+
+	auto buttonItem4 = MenuItemImage::create(Resources::getInstance()->getRandomNPCFormationButton(),Resources::getInstance()->getRandomNPCFormationButton(),
+		CC_CALLBACK_0(HelloWorld::menuRandomFormation,this,false));
+	buttonItem4->setPosition(_screenSize.width/2 + 250, _screenSize.height - 140);
     
-    auto menu2 = Menu::create(buttonItem1,buttonItem2,NULL);
+    auto menu2 = Menu::create(buttonItem1,buttonItem2,buttonItem3,buttonItem4,NULL);
     
     menu2->setPosition(Point::ZERO);
     this->addChild(menu2,1,MenuTag::Level1);
@@ -254,22 +262,22 @@ void HelloWorld::menuItemCallback(int index)
         // Show subItems
         std::string png0 = Resources::getInstance()->getMenuItem0();
         auto item0 = MenuItemImage::create(png0,png0);
-        item0->setCallback(CC_CALLBACK_0(HelloWorld::menuSubItemCallback,this,0));
+        item0->setCallback(CC_CALLBACK_0(HelloWorld::menuSubItemCallback,this,SquadType::None));
         item0->setPosition(pos.x + 50, pos.y + 60);
         
         std::string png1 = Resources::getInstance()->getMenuItem1();
         auto item1 = MenuItemImage::create(png1,png1,
-            CC_CALLBACK_0(HelloWorld::menuSubItemCallback,this,1));
+            CC_CALLBACK_0(HelloWorld::menuSubItemCallback,this,SquadType::Footman));
         item1->setPosition(pos.x + 65, pos.y + 20);
         
         std::string png2 = Resources::getInstance()->getMenuItem2();
         auto item2 = MenuItemImage::create(png2,png2,
-            CC_CALLBACK_0(HelloWorld::menuSubItemCallback,this,2));
+            CC_CALLBACK_0(HelloWorld::menuSubItemCallback,this,SquadType::Knight));
         item2->setPosition(pos.x + 65, pos.y - 20);
         
         std::string png3 = Resources::getInstance()->getMenuItem3();
         auto item3 = MenuItemImage::create(png3,png3,
-            CC_CALLBACK_0(HelloWorld::menuSubItemCallback,this,3));
+            CC_CALLBACK_0(HelloWorld::menuSubItemCallback,this,SquadType::Archer));
         item3->setPosition(pos.x + 50, pos.y - 60);
         
         auto menu = Menu::create(item0,item1,item2,item3,NULL);
@@ -279,11 +287,11 @@ void HelloWorld::menuItemCallback(int index)
     
 }
 
-void HelloWorld::menuSubItemCallback(int subIndex)
+void HelloWorld::menuSubItemCallback(SquadType type)
 {
     if(_currentItemIndex >= 0)
     {
-        _menuLabels.at(_currentItemIndex)->setString(FormationSlotText[subIndex]);
+        _menuLabels.at(_currentItemIndex)->setString(Resources::getInstance()->getStringSquadType(type));
     }
     
     _currentItemIndex = -1;
@@ -348,21 +356,21 @@ void HelloWorld::menuStartBattle(int battleTimes)
 		for(int col = 0 ; col < 5 ; col ++)
 		{
 			std::string text = _menuLabels.at(index)->getString();
-			if(strcmp(text.c_str(), FormationSlotText[0].c_str()) != 0)
+			if(text.compare(Resources::getInstance()->getStringSquadType(SquadType::None)) != 0)
 			{
 				_leftSquads ++;
 				
-				if(strcmp(text.c_str(),FormationSlotText[1].c_str()) == 0)
+				if(text.compare(Resources::getInstance()->getStringSquadType(SquadType::Footman)) == 0)
 				{
 					_leftFormation[row][col] = SquadType::Footman;
 				}
 
-				if(strcmp(text.c_str(),FormationSlotText[2].c_str()) == 0)
+				if(text.compare(Resources::getInstance()->getStringSquadType(SquadType::Knight)) == 0)
 				{
 					_leftFormation[row][col] = SquadType::Knight;
 				}
 
-				if(strcmp(text.c_str(),FormationSlotText[3].c_str()) == 0)
+				if(text.compare(Resources::getInstance()->getStringSquadType(SquadType::Archer)) == 0)
 				{
 					_leftFormation[row][col] = SquadType::Archer;
 				}
@@ -383,21 +391,21 @@ void HelloWorld::menuStartBattle(int battleTimes)
 		for(int col = 0 ; col < 5 ; col ++)
 		{
 			std::string text = _menuLabels.at(index)->getString();
-			if(strcmp(text.c_str(), FormationSlotText[0].c_str()) != 0)
+			if(text.compare(Resources::getInstance()->getStringSquadType(SquadType::None)) != 0)
 			{
 				_rightSquads ++;
 
-				if(strcmp(text.c_str(),FormationSlotText[1].c_str()) == 0)
+				if(text.compare(Resources::getInstance()->getStringSquadType(SquadType::Footman)) == 0)
 				{
 					_rightFormation[row][col] = SquadType::Footman;
 				}
 
-				if(strcmp(text.c_str(),FormationSlotText[2].c_str()) == 0)
+				if(text.compare(Resources::getInstance()->getStringSquadType(SquadType::Knight)) == 0)
 				{
 					_rightFormation[row][col] = SquadType::Knight;
 				}
 
-				if(strcmp(text.c_str(),FormationSlotText[3].c_str()) == 0)
+				if(text.compare(Resources::getInstance()->getStringSquadType(SquadType::Archer)) == 0)
 				{
 					_rightFormation[row][col] = SquadType::Archer;
 				}
@@ -422,6 +430,31 @@ void HelloWorld::menuStartBattle(int battleTimes)
 	resetTest();
 }
 
+void HelloWorld::menuRandomFormation(bool isPlayer)
+{
+	int start  = 0;
+	int end = 20;
+
+	if(isPlayer)
+	{
+		// Label index is 0 - 19
+	}
+	else
+	{
+		// Label index is 20 -39
+		start = 20;
+		end = 39;
+	}
+
+	for(int i = start; i < end; i++)
+	{
+		int a = (int)(CCRANDOM_0_1() * 999999);
+		int r =  a % 3 + 1;
+		_menuLabels.at(i)->setString(Resources::getInstance()->getStringSquadType((SquadType)r));
+	}
+
+}
+
 void HelloWorld::setFormationLabelText(SquadSide side,int row,int col,Label* label)
 {
 	SquadType typeSquad = SquadType::None;
@@ -435,35 +468,8 @@ void HelloWorld::setFormationLabelText(SquadSide side,int row,int col,Label* lab
 		typeSquad = _rightFormation[row][col];
 	}
 
-	switch (typeSquad)
-	{
-	case SquadType::None:
-		{
-			label->setString(FormationSlotText[0]);
-			break;
-		}
-	case SquadType::Footman:
-		{
-			label->setString(FormationSlotText[1]);
-			break;
-		}
-	case SquadType::Knight:
-		{
-			label->setString(FormationSlotText[2]);
-			break;
-		}
-	case SquadType::Archer:
-		{
-			label->setString(FormationSlotText[3]);
-			break;
-		}
-	default:
-		{
-			label->setString(FormationSlotText[0]);
-			break;
-		}
-	}
 
+	label->setString(Resources::getInstance()->getStringSquadType(typeSquad));
 	label->setFontSize(24);
 	label->setColor(Color3B(1.0,0.0,0.0));
 }

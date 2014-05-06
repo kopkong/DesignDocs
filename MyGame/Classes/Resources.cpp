@@ -96,3 +96,31 @@ std::string Resources::getStartBattleButton2()
 {
     return _menuItemDirectory + "start10.png";
 }
+
+std::string Resources::getRandomNPCFormationButton()
+{
+	return _menuItemDirectory + "randomNPC.png";
+}
+
+std::string Resources::getRandomPlayerFormationButton()
+{
+	return _menuItemDirectory + "randomPlayer.png";
+}
+
+std::string Resources::getStringSquadType(SquadType type)
+{
+	switch (type)
+	{
+	case None:
+		return "空白";
+	case Footman:
+		return "步兵";
+	case Knight:
+		return "骑兵";
+	case Archer:
+		return "弓兵";
+	default:
+		return "空白";
+	}
+
+}

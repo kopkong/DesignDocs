@@ -46,10 +46,11 @@ public:
     virtual bool init();
     
     void menuItemCallback(int index);
-    void menuSubItemCallback(int subIndex);
+    void menuSubItemCallback(SquadType);
     
     void menuStartBattle(int battleTimes);
     void menuBackToLevelSelectCallback();
+	void menuRandomFormation(bool isPlayer);
         
     void update(float);
     
