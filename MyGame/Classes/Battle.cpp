@@ -130,13 +130,15 @@ void Battle::initSquadProperty(Squad * pSquad, SquadType type){
             pSquad->setSoldierType(SquadType::Footman);
             pSquad->setSpeed(basicUnitWidth);
             pSquad->setAttackRange(basicUnitWidth);
+            pSquad->setAttackInterval(1.0f);
             break;
         }
         case SquadType::Knight:
         {
             pSquad->setSoldierType(SquadType::Knight);
             pSquad->setSpeed(basicUnitWidth * 1.4);
-            pSquad->setAttackRange(basicUnitWidth);
+            pSquad->setAttackRange(basicUnitWidth * 1.2);
+            pSquad->setAttackInterval(1.0f);
             break;
         }
         case SquadType::Archer:
@@ -144,6 +146,7 @@ void Battle::initSquadProperty(Squad * pSquad, SquadType type){
             pSquad->setSoldierType(SquadType::Archer);
             pSquad->setSpeed(basicUnitWidth * 0.8);
             pSquad->setAttackRange(basicUnitWidth * 4);
+            pSquad->setAttackInterval(2.0f);
             break;
         }
         default:
@@ -155,14 +158,14 @@ void Battle::initSquadProperty(Squad * pSquad, SquadType type){
     // Set every hero's health
     int heroID = getHeroUnitID(pSquad->getIndex());
     
-	Unit u = Unit(heroID,pSquad->getHeroHealth(),1.0f);
+	Unit u = Unit(heroID,pSquad->getHeroHealth(),pSquad->getAttackInterval());
 	
 	_allUnits.insert(std::pair<int,Unit>(heroID,u));
     
     for(unsigned int i= 0 ; i < pSquad->getSoldierCount(); i ++){
         int soldierID = getSoldierUnitID(pSquad->getIndex(), i);
 
-		Unit s = Unit(soldierID,pSquad->getSoldierHealth(),1.0f);
+		Unit s = Unit(soldierID,pSquad->getSoldierHealth(),pSquad->getAttackInterval());
 
 		_allUnits.insert(std::pair<int,Unit>(soldierID,s));
     }

@@ -35,6 +35,7 @@ public:
     
     std::string getFormationBoard();
     std::string getStartBattleButton();
+    std::string getStartBattleButton2();
     std::string getMenuItem0();
     std::string getMenuItem1();
     std::string getMenuItem2();

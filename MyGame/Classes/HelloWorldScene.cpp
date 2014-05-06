@@ -61,14 +61,16 @@ void HelloWorld::update(float dt){
         if(Battle::getInstance()->sideWin(SquadSide::TeamA))
         {
             log("TeamA has won the battle!");
-            Battle::getInstance()->endBattle();
             _whichSideWin = SquadSide::TeamA;
+            _teamAWins ++;
+            Battle::getInstance()->endBattle();
         }
         if(Battle::getInstance()->sideWin(SquadSide::TeamB))
         {
             log("TeamB has won the battle!");
-            Battle::getInstance()->endBattle();
             _whichSideWin = SquadSide::TeamB;
+            _teamBWins ++;
+            Battle::getInstance()->endBattle();
         }
         
         for(unsigned int i = 0; i < squadNumbers; i++)
@@ -78,7 +80,7 @@ void HelloWorld::update(float dt){
             switch(sq->getState()){
                 case SquadState::Moving:
 					{
-						Battle::getInstance()->wholeSquadMove(sq,dt);
+						Battle::getInstance()->wholeSquadMove(sq,dt * _speedUpRate);
 						break;
 					}
                 case SquadState::BattleBegin:
@@ -93,7 +95,7 @@ void HelloWorld::update(float dt){
 					}
                 case SquadState::Fighting:
 					{
-						Battle::getInstance()->wholeSquadFight(sq,dt);
+						Battle::getInstance()->wholeSquadFight(sq,dt * _speedUpRate);
 						break;
 					}
 				case SquadState::Eliminated:
@@ -144,13 +146,13 @@ void HelloWorld::initBattle()
 	Sprite* pRepeatTex = Sprite::create("bg1.png");
 	pRepeatTex->setAnchorPoint(Point::ZERO);
 	
-	cocos2d::Texture2D::TexParams params={
+	Texture2D::TexParams params={
 		GL_LINEAR,//minFilter纹理缩小过滤器
 		GL_LINEAR,//magFilter纹理放大过滤器
 		GL_REPEAT,//wrapS横向纹理寻址模式
 		GL_REPEAT //wrapT纵向纹理寻址模式
 	};
-	pRepeatTex->getTexture()->setTexParameters(&params);
+	pRepeatTex->getTexture()->setTexParameters(params);
 	// 设置平铺的大小
 	pRepeatTex->setTextureRect(CCRectMake(0,0,64*16,64*12));
 	this->addChild(pRepeatTex,0);
@@ -227,11 +229,18 @@ void HelloWorld::showFormationSelect()
     this->addChild(menu,1,MenuTag::Level1);
     
 	// Start battle button
-    auto buttonItem1 = MenuItemImage::create(Resources::getInstance()->getStartBattleButton(),Resources::getInstance()->getStartBattleButton(),CC_CALLBACK_0(HelloWorld::menuStartBattle,this));
-    buttonItem1->setPosition(_screenSize.width/2 ,100);
-    auto menu2 = Menu::create(buttonItem1,NULL);
+    auto buttonItem1 = MenuItemImage::create(Resources::getInstance()->getStartBattleButton(),Resources::getInstance()->getStartBattleButton(),CC_CALLBACK_0(HelloWorld::menuStartBattle,this,1));
+    buttonItem1->setPosition(_screenSize.width/2 - 100 ,100);
+
+    // Start battle 10 times button
+    auto buttonItem2 = MenuItemImage::create(Resources::getInstance()->getStartBattleButton2(),Resources::getInstance()->getStartBattleButton2(),CC_CALLBACK_0(HelloWorld::menuStartBattle,this,10));
+    buttonItem2->setPosition(_screenSize.width/2 + 100 , 100);
+    
+    auto menu2 = Menu::create(buttonItem1,buttonItem2,NULL);
+    
     menu2->setPosition(Point::ZERO);
     this->addChild(menu2,1,MenuTag::Level1);
+    
 }
 
 void HelloWorld::menuItemCallback(int index)
@@ -288,13 +297,24 @@ void HelloWorld::showResults()
     _inDisplayResult = true;
     
     //this->removeAllChildren();
+    char buffer[100];
     
-    std::string winMessages[2] = {"队伍1获得了胜利！","队伍2获得了胜利！"};
+    //std::string winMessages[2] = {"队伍1获得了胜利！","队伍2获得了胜利！"};
+    sprintf(buffer,"已进行 %d 次战斗，玩家胜利 %d 次",_testTimes,_teamAWins);
+    std::string playerTeamMessage = buffer;
     
-    auto label = LabelTTF::create(winMessages[_whichSideWin], "HeiTi", 40);
-    label->setPosition(_screenSize.width/2, _screenSize.height/2);
+    auto label = LabelTTF::create(playerTeamMessage, "HeiTi", 40);
+    label->setPosition(_screenSize.width/2, _screenSize.height/2 + 100);
     label->setColor(Color3B(1.0,0.0,0.0));
     this->addChild(label,1);
+    
+    sprintf(buffer,"已进行 %d 次战斗，NPC胜利 %d 次",_testTimes,_teamBWins);
+    std::string npcTeamMessage = buffer;
+    
+    auto label2 = LabelTTF::create(npcTeamMessage,"HeiTi",40);
+    label2->setPosition(_screenSize.width/2, _screenSize.height/2);
+    label2->setColor(Color3B(1.0,0.0,0.0));
+    this->addChild(label2,1);
     
     auto item = MenuItemFont::create("返回选择界面", CC_CALLBACK_0(HelloWorld::menuBackToLevelSelectCallback,this));
     item->setPosition(_screenSize.width/2, _screenSize.height/2 - 200);
@@ -312,11 +332,14 @@ void HelloWorld::menuBackToLevelSelectCallback()
     showFormationSelect();
 }
 
-void HelloWorld::menuStartBattle()
+void HelloWorld::menuStartBattle(int battleTimes)
 {
 	// Left side
 	_leftSquads = 0;
 	_rightSquads = 0;
+    _teamAWins = 0;
+    _teamBWins = 0;
+    _speedUpRate = 1.0f;
 	int index = 0;
 
 	// Left Team
@@ -389,7 +412,12 @@ void HelloWorld::menuStartBattle()
 	}
 
 	_testTimes = 0;
-	_allTestTimes = 1;
+	_allTestTimes = battleTimes;
+    
+    // If fight times more than one, then speed up
+    if(_allTestTimes > 1)
+        _speedUpRate = 4.0f;
+    
 	_inFormationSelect = false;
 	resetTest();
 }

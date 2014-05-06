@@ -32,7 +32,10 @@ private:
 	int _leftSquads;
 	int _rightSquads;
     SquadSide _whichSideWin;
+    int _teamAWins;
+    int _teamBWins;
     
+    float _speedUpRate;
 	void initBattle();
     void setFormationLabelText(SquadSide,int row,int col,Label*);
 public:
@@ -45,7 +48,7 @@ public:
     void menuItemCallback(int index);
     void menuSubItemCallback(int subIndex);
     
-    void menuStartBattle();
+    void menuStartBattle(int battleTimes);
     void menuBackToLevelSelectCallback();
         
     void update(float);

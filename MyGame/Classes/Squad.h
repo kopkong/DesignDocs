@@ -76,6 +76,9 @@ public:
     // Soldier's defense point, hero = def * 2
     CC_SYNTHESIZE(float,_defensePoint,DefensePoint);
     
+    // Attack Interval, attack speed is slower with the bigger interval
+    CC_SYNTHESIZE(float,_attackInterval,AttackInterval);
+    
     // Hero's max HP
     CC_SYNTHESIZE(int, _heroHealth, HeroHealth);
     

@@ -91,3 +91,8 @@ std::string Resources::getStartBattleButton()
 {
     return _menuItemDirectory + "start.png";
 }
+
+std::string Resources::getStartBattleButton2()
+{
+    return _menuItemDirectory + "start10.png";
+}
