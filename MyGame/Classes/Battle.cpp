@@ -26,8 +26,8 @@ void Battle::reset()
 	_battleFinished = false;
 	_battleFieldSize = Size(1024,768);
 	_squadSize = Size(100,192);
-	_heroSize = Size(32,32);
-	_soldierSize = Size(24,24);
+	_heroSize = Size(64,64);
+	_soldierSize = Size(42,42);
 }
 
 void Battle::initSquads(Formation leftFormation, Formation rightFormation)
@@ -52,8 +52,7 @@ void Battle::initSquads(Formation leftFormation, Formation rightFormation)
                 
                 if(leftFormation[row][col] == SquadType::Footman)
                 {
-                    a.setSpriteTexture(Resources::getInstance()->getFootmanResourceA());
-                    a.setSpriteOrientation(Orientation::Left);
+                    a.setSoldierRes(Resources::getInstance()->getFootmanResourceA());
                     initSquadProperty(&a, SquadType::Footman);
                 }
                 
@@ -92,14 +91,12 @@ void Battle::initSquads(Formation leftFormation, Formation rightFormation)
                 
                 if(rightFormation[row][col] == SquadType::Footman)
                 {
-                    b.setSpriteTexture(Resources::getInstance()->getFootmanResourceB());
-                    b.setSpriteOrientation(Orientation::Left);
+                    b.setSoldierRes(Resources::getInstance()->getFootmanResourceB());
                     initSquadProperty(&b,Footman);
                 }
                 if(rightFormation[row][col] == SquadType::Knight)
                 {
                     b.setSpriteTexture(Resources::getInstance()->getKnightResourceB());
-                    b.setSpriteOrientation(Orientation::Left);
                     initSquadProperty(&b,Knight);
                 }
                 if(rightFormation[row][col] == SquadType::Archer)
@@ -175,12 +172,12 @@ void Battle::initSquadSprite(Squad* pSquad)
 {
 	// Texture rect
 	//2D-Cartoon Vector Characters/archer.png
-	Sprite* spriteHero = Sprite::create(pSquad->getSpriteTexture());
+	Sprite* spriteHero = Sprite::create(pSquad->getSoldierRes().Idle[0]);
 	float scale_x = _heroSize.width / spriteHero->getContentSize().width ;
 	float scale_y = _heroSize.height / spriteHero->getContentSize().height;
 	spriteHero->setScale(scale_x,scale_y);
 
-	if(pSquad->getFaceTo() != pSquad->getSpriteOrientation())
+	if(pSquad->getFaceTo() != Orientation::Right)
 	{
 		spriteHero->setFlippedX(true);
 	}
@@ -190,12 +187,12 @@ void Battle::initSquadSprite(Squad* pSquad)
 	_allUnits[hUnitID].setSprite(spriteHero);
 
 	for(unsigned int i = 0 ; i< pSquad->getSoldierCount();i++){
-		Sprite* spriteSoldier = Sprite::create(pSquad->getSpriteTexture());
+		Sprite* spriteSoldier = Sprite::create(pSquad->getSoldierRes().Idle[0]);
 		scale_x = _soldierSize.width / spriteSoldier->getContentSize().width ;
 		scale_y = _soldierSize.height / spriteSoldier->getContentSize().height;
 
 		spriteSoldier->setScale(scale_x,scale_y);
-		if(pSquad->getFaceTo() != pSquad->getSpriteOrientation())
+		if(pSquad->getFaceTo() != Orientation::Right)
 		{
 			spriteSoldier->setFlippedX(true);
 		}
@@ -234,6 +231,39 @@ void Battle::startBattle(Squad* pSelfSquad)
 
 void Battle::wholeSquadWaiting(Squad* pSelfSquad)
 {
+    // Play idle animation
+    
+    // Hero idle
+    int heroUnitID = getHeroUnitID(pSelfSquad->getIndex());
+	if(unitAlive(heroUnitID))
+	{
+        log("hero is in idle state");
+		Animation* animation = Animation::create();
+        for(int i=0;i<pSelfSquad->getSoldierRes().Idle.size();i++)
+        {
+            SpriteFrame * frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(pSelfSquad->getSoldierRes().Idle[i].c_str());
+            animation->addSpriteFrame(frame);
+        }
+        
+        animation->setDelayPerUnit(1/10.0f);
+        animation->setRestoreOriginalFrame(true);
+        
+        Action* idle = Sequence::create(
+              MoveBy::create(0,_allUnits[heroUnitID].getSprite()->getPosition()),
+              Animate::create(animation),
+              NULL,NULL);
+	}
+    
+	// Soldier idle
+	for(unsigned int i = 0 ; i< pSelfSquad->getSoldierCount();i++){
+		int soldierUnitID = getSoldierUnitID(pSelfSquad->getIndex(), i);
+        if(unitAlive(soldierUnitID))
+        {
+            
+        }
+		
+    }
+    
 	searchEnemy(pSelfSquad);
 }
 
@@ -697,6 +727,11 @@ unsigned int Battle::getSquadNumbersInBattle()
 void Battle::end()
 {
 
+}
+
+void Battle::actionIdleDone()
+{
+    
 }
 
 void Battle::printStats()

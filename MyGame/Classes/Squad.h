@@ -13,6 +13,12 @@
 #include "cocos2d.h"
 USING_NS_CC;
 
+struct CharacterRes
+{
+    std::vector<std::string> Idle;
+    std::vector<std::string> Move;
+};
+
 enum SquadState{
     BattleBegin,
     BattleEnd,
@@ -59,7 +65,8 @@ public:
     CC_SYNTHESIZE(SquadType, _type, SoldierType);
     CC_SYNTHESIZE(SquadSide, _side, SquadSide);
 
-    // Using which texture
+    // Resources
+    CC_SYNTHESIZE(CharacterRes,_SoldierRes,SoldierRes);
     CC_SYNTHESIZE(std::string,_spriteTexture,SpriteTexture);
     CC_SYNTHESIZE(Orientation, _spriteOrientation, SpriteOrientation);
     

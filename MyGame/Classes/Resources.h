@@ -12,11 +12,13 @@
 #include <iostream>
 #include "Squad.h"
 
+
 class Resources
 {
 private:
     std::string _2DCharacterDirectory;
     std::string _menuItemDirectory;
+    std::string _characterDirectory;
     
 protected:
 	Resources(void);
@@ -25,8 +27,8 @@ protected:
 public:
     static Resources* getInstance();
     
-    std::string getFootmanResourceA();
-    std::string getFootmanResourceB();
+    CharacterRes getFootmanResourceA();
+    CharacterRes getFootmanResourceB();
     
     std::string getKnightResourceA();
     std::string getKnightResourceB();
@@ -43,6 +45,8 @@ public:
     std::string getMenuItem1();
     std::string getMenuItem2();
     std::string getMenuItem3();
+    std::string getPlayIcon();
+    std::string getPauseIcon();
 
 	std::string getStringSquadType(SquadType);
 };

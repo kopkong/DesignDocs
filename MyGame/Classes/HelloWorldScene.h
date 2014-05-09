@@ -25,6 +25,7 @@ private:
     
     bool _inLeveltSelect;
     bool _inDisplayResult;
+    bool _isPaused;
     int _level;
     
     Formation _leftFormation;
@@ -51,6 +52,8 @@ public:
     void menuStartBattle(int battleTimes);
     void menuBackToLevelSelectCallback();
 	void menuRandomFormation(bool isPlayer);
+    void menuPlay();
+    void menuPause();
         
     void update(float);
     

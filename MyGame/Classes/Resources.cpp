@@ -8,6 +8,7 @@
 
 #include "Resources.h"
 #include <string>
+#include "Util.h"
 
 Resources::Resources()
 {
@@ -32,9 +33,33 @@ Resources* Resources::getInstance()
     return &s_Resources;
 }
 
-std::string Resources::getFootmanResourceA()
+CharacterRes Resources::getFootmanResourceA()
 {
-	return _2DCharacterDirectory + "dwarf_warrior.png";
+    CharacterRes r;
+	
+#ifdef WIN32
+    std::string dir = "Character/FootmanA/";
+#else
+    std::string dir = "";
+#endif
+    
+    std::vector<std::string> idles;
+    std::vector<std::string> moves;
+    
+    for(int i = 1; i <=4 ; i++)
+    {
+        idles.push_back(dir + Util::getInstance()->formatString("idle-%d.png",i));
+    }
+    
+    for(int i = 1; i <= 8 ;i ++)
+    {
+        moves.push_back(dir + Util::getInstance()->formatString("move-%d.png",i));
+    }
+    
+    r.Idle = idles;
+    r.Move = moves;
+    
+    return r;
 }
 
 std::string Resources::getKnightResourceA()
@@ -47,9 +72,34 @@ std::string Resources::getArcherResourceA()
     return _2DCharacterDirectory + "archer.png";
 }
 
-std::string Resources::getFootmanResourceB()
+CharacterRes Resources::getFootmanResourceB()
 {
-    return _2DCharacterDirectory + "orc.png";
+    CharacterRes r;
+	
+#ifdef WIN32
+    std::string dir = "Character/FootmanB/";
+#else
+    std::string dir = "";
+#endif
+    
+    std::vector<std::string> idles;
+    std::vector<std::string> moves;
+    
+    for(int i = 1; i <=4 ; i++)
+    {
+        idles.push_back(dir + Util::getInstance()->formatString("idle-%d.png",i));
+    }
+    
+    for(int i = 1; i <= 8 ;i ++)
+    {
+        moves.push_back(dir + Util::getInstance()->formatString("move-%d.png",i));
+    }
+    
+    r.Idle = idles;
+    r.Move = moves;
+    
+    return r;
+
 }
 
 std::string Resources::getKnightResourceB()
@@ -105,6 +155,16 @@ std::string Resources::getRandomNPCFormationButton()
 std::string Resources::getRandomPlayerFormationButton()
 {
 	return _menuItemDirectory + "randomPlayer.png";
+}
+
+std::string Resources::getPlayIcon()
+{
+    return _menuItemDirectory + "play1normal.png";
+}
+
+std::string Resources::getPauseIcon()
+{
+    return _menuItemDirectory + "pausenormal.png";
 }
 
 std::string Resources::getStringSquadType(SquadType type)

@@ -34,6 +34,7 @@ private:
 	bool targetSquadEliminated(Squad*);
 
 	void printStats();
+    void actionIdleDone();
 
 protected:
 	Battle(void);
