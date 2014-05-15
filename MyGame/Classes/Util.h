@@ -1,4 +1,4 @@
-//
+﻿//
 //  Util.h
 //  MyGame
 //
@@ -10,6 +10,7 @@
 #define __MyGame__Util__
 
 #include <iostream>
+#include <stdarg.h>
 
 class Util
 {

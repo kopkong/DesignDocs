@@ -239,7 +239,7 @@ void Battle::wholeSquadWaiting(Squad* pSelfSquad)
 	{
         log("hero is in idle state");
 		Animation* animation = Animation::create();
-        for(int i=0;i<pSelfSquad->getSoldierRes().Idle.size();i++)
+        for(unsigned int i=0;i<pSelfSquad->getSoldierRes().Idle.size();i++)
         {
             SpriteFrame * frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(pSelfSquad->getSoldierRes().Idle[i].c_str());
             animation->addSpriteFrame(frame);
