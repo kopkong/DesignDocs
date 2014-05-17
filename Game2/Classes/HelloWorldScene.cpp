@@ -2,6 +2,8 @@
 
 USING_NS_CC;
 
+static int m_WarDays;
+
 Scene* HelloWorld::createScene()
 {
     // 'scene' is an autorelease object
@@ -72,7 +74,28 @@ bool HelloWorld::init()
     // add the sprite as a child to this layer
     this->addChild(sprite, 0);
     
+    m_WarDays = 0;
+    m_PWar = new War(new ProphaseState());
+    this->schedule(schedule_selector(HelloWorld::onWar),2.0);
     return true;
+                   
+}
+
+void HelloWorld::onWar(float dt)
+{
+    m_WarDays ++;
+    
+    log("调用了onWar, wayDays = %d",m_WarDays);
+    if(!m_PWar->IsWarEnd())
+    {
+        m_WarDays += 5;
+        m_PWar->SimulateWar(m_WarDays);
+    }
+    else
+    {
+        this->unschedule(schedule_selector(HelloWorld::onWar));
+        //delete pWar;
+    }
 }
 
 
