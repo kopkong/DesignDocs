@@ -1,0 +1,36 @@
+//
+//  Resources.h
+//  Game2
+//
+//  Created by 孔 令锴 on 14-5-17.
+//
+//
+
+#ifndef __Game2__Resources__
+#define __Game2__Resources__
+
+#include <iostream>
+
+class Resources
+{
+private:
+    std::string _2DCharacterDirectory;
+    std::string _menuItemDirectory;
+    std::string _characterDirectory;
+    
+protected:
+	Resources(void);
+	~Resources();
+    
+public:
+    static Resources* getInstance();
+    
+    std::string getMenuLayerBackGround();
+    std::string getMenuButton1();
+    std::string getMenuButton2();
+    std::string getMenuButton3();
+    
+};
+
+
+#endif /* defined(__Game2__Resources__) */

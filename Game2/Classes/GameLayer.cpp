@@ -1,16 +1,14 @@
-#include "HelloWorldScene.h"
+#include "GameLayer.h"
 
 USING_NS_CC;
 
-static int m_WarDays;
-
-Scene* HelloWorld::createScene()
+Scene* GameLayer::createScene()
 {
     // 'scene' is an autorelease object
     auto scene = Scene::create();
     
     // 'layer' is an autorelease object
-    auto layer = HelloWorld::create();
+    auto layer = GameLayer::create();
 
     // add layer as a child to scene
     scene->addChild(layer);
@@ -20,7 +18,7 @@ Scene* HelloWorld::createScene()
 }
 
 // on "init" you need to initialize your instance
-bool HelloWorld::init()
+bool GameLayer::init()
 {
     //////////////////////////////
     // 1. super init first
@@ -40,7 +38,7 @@ bool HelloWorld::init()
     auto closeItem = MenuItemImage::create(
                                            "CloseNormal.png",
                                            "CloseSelected.png",
-                                           CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
+                                           CC_CALLBACK_1(GameLayer::menuCloseCallback, this));
     
 	closeItem->setPosition(Point(origin.x + visibleSize.width - closeItem->getContentSize().width/2 ,
                                 origin.y + closeItem->getContentSize().height/2));
@@ -65,41 +63,23 @@ bool HelloWorld::init()
     // add the label as a child to this layer
     this->addChild(label, 1);
 
-    // add "HelloWorld" splash screen"
-    auto sprite = Sprite::create("HelloWorld.png");
+    // add "GameLayer" splash screen"
+    auto sprite = Sprite::create("GameLayer.png");
 
     // position the sprite on the center of the screen
     sprite->setPosition(Point(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
 
     // add the sprite as a child to this layer
     this->addChild(sprite, 0);
-    
-    m_WarDays = 0;
-    m_PWar = new War(new ProphaseState());
-    this->schedule(schedule_selector(HelloWorld::onWar),2.0);
+
     return true;
                    
 }
 
-void HelloWorld::onWar(float dt)
-{
-    m_WarDays ++;
-    
-    log("调用了onWar, wayDays = %d",m_WarDays);
-    if(!m_PWar->IsWarEnd())
-    {
-        m_WarDays += 5;
-        m_PWar->SimulateWar(m_WarDays);
-    }
-    else
-    {
-        this->unschedule(schedule_selector(HelloWorld::onWar));
-        //delete pWar;
-    }
-}
 
 
-void HelloWorld::menuCloseCallback(Ref* pSender)
+
+void GameLayer::menuCloseCallback(Ref* pSender)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 	MessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
