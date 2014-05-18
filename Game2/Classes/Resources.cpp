@@ -7,11 +7,12 @@
 //
 
 #include "Resources.h"
+#include <string>
 
 Resources::Resources()
 {
 #ifdef WIN32
-    _menuItemDirectory = "Menu/";
+    _menuItemDirectory = "../Resources/";
 #else
     _menuItemDirectory = "";
 #endif
@@ -31,20 +32,35 @@ Resources* Resources::getInstance()
 
 std::string Resources::getMenuLayerBackGround()
 {
-    return "menuBg.jpg";
+    return _menuItemDirectory + "bg1.jpg";
 }
 
 std::string Resources::getMenuButton1()
 {
-    return "menuButton1.png";
+    return _menuItemDirectory + "btn-choose-level.png";
 }
 
 std::string Resources::getMenuButton2()
 {
-    return "menuButton2.png";
+    return _menuItemDirectory +"btn-history.png";
 }
 
 std::string Resources::getMenuButton3()
 {
-    return "menuButton3.png";
+    return _menuItemDirectory + "btn-help.png";
+}
+
+std::string Resources::getLevelButton1()
+{
+	return _menuItemDirectory + "menuLevel1.png";
+}
+
+std::string Resources::getLevelButton2()
+{
+	return _menuItemDirectory + "menuLevel2.png";
+}
+
+std::string Resources::getLevelButton3()
+{
+	return _menuItemDirectory + "menuLevel3.png";
 }

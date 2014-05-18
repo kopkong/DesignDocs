@@ -14,9 +14,7 @@
 class Resources
 {
 private:
-    std::string _2DCharacterDirectory;
     std::string _menuItemDirectory;
-    std::string _characterDirectory;
     
 protected:
 	Resources(void);
@@ -30,6 +28,9 @@ public:
     std::string getMenuButton2();
     std::string getMenuButton3();
     
+	std::string getLevelButton1();
+	std::string getLevelButton2();
+	std::string getLevelButton3();
 };
 
 

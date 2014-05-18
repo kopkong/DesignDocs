@@ -27,7 +27,7 @@ public:
     CREATE_FUNC(MenuLayer);
     
     void update(float dt);
-    void showLeveles();
+    void showLevels();
     void showHelp();
     void showRecords();
     

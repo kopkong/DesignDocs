@@ -27,7 +27,7 @@ public:
     CREATE_FUNC(LevelSelectLayer);
     
     void update(float dt);
-    void enterPuzzle();
+    void enterGame(int level);
     void backToMenu();
     
 };

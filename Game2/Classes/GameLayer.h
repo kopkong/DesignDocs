@@ -2,21 +2,20 @@
 #define __GameLayer_SCENE_H__
 
 #include "cocos2d.h"
+#include "SudokuFactory.h"
 
 class GameLayer : public cocos2d::Layer
 {
-public:
-    // there's no 'id' in cpp, so we recommend returning the class instance pointer
-    static cocos2d::Scene* createScene();
+private:
+	SudokuProduction _sudokuDataStruct;
 
-    // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
+public:
+    static cocos2d::Scene* createScene(int level);
+	CREATE_FUNC(GameLayer);
+
     virtual bool init();  
-    
-    // a selector callback
-    void menuCloseCallback(cocos2d::Ref* pSender);
-    
-    // implement the "static create()" method manually
-    CREATE_FUNC(GameLayer);
+	void update(float dt);
+	void loadLevel(int level);
     
 };
 
