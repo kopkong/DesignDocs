@@ -48,12 +48,12 @@ CharacterRes Resources::getFootmanResourceA()
     
     for(int i = 1; i <=4 ; i++)
     {
-        idles.push_back(dir + Util::getInstance()->formatString("idle-%d.png",i));
+        idles.push_back(dir + Util::getInstance()->formatString("1-%d.png",i));
     }
     
     for(int i = 1; i <= 8 ;i ++)
     {
-        moves.push_back(dir + Util::getInstance()->formatString("move-%d.png",i));
+        moves.push_back(dir + Util::getInstance()->formatString("2-%d.png",i));
     }
     
     r.Idle = idles;
@@ -62,14 +62,64 @@ CharacterRes Resources::getFootmanResourceA()
     return r;
 }
 
-std::string Resources::getKnightResourceA()
+CharacterRes Resources::getKnightResourceA()
 {
-    return _2DCharacterDirectory + "viking.png";
+    CharacterRes r;
+	
+#ifdef WIN32
+    std::string dir = "Character/KnightA/";
+#else
+    std::string dir = "";
+#endif
+    
+    std::vector<std::string> idles;
+    std::vector<std::string> moves;
+    
+    for(int i = 1; i <=4 ; i++)
+    {
+        idles.push_back(dir + Util::getInstance()->formatString("5-%d.png",i));
+    }
+    
+    for(int i = 1; i <= 8 ;i ++)
+    {
+        moves.push_back(dir + Util::getInstance()->formatString("6-%d.png",i));
+    }
+    
+    r.Idle = idles;
+    r.Move = moves;
+    
+    return r;
+    
+
 }
 
-std::string Resources::getArcherResourceA()
+CharacterRes Resources::getArcherResourceA()
 {
-    return _2DCharacterDirectory + "archer.png";
+    CharacterRes r;
+	
+#ifdef WIN32
+    std::string dir = "Character/ArcherA/";
+#else
+    std::string dir = "";
+#endif
+    
+    std::vector<std::string> idles;
+    std::vector<std::string> moves;
+    
+    for(int i = 1; i <=4 ; i++)
+    {
+        idles.push_back(dir + Util::getInstance()->formatString("9-%d.png",i));
+    }
+    
+    for(int i = 1; i <= 8 ;i ++)
+    {
+        moves.push_back(dir + Util::getInstance()->formatString("10-%d.png",i));
+    }
+    
+    r.Idle = idles;
+    r.Move = moves;
+    
+    return r;
 }
 
 CharacterRes Resources::getFootmanResourceB()
@@ -87,12 +137,12 @@ CharacterRes Resources::getFootmanResourceB()
     
     for(int i = 1; i <=4 ; i++)
     {
-        idles.push_back(dir + Util::getInstance()->formatString("idle-%d.png",i));
+        idles.push_back(dir + Util::getInstance()->formatString("3-%d.png",i));
     }
     
     for(int i = 1; i <= 8 ;i ++)
     {
-        moves.push_back(dir + Util::getInstance()->formatString("move-%d.png",i));
+        moves.push_back(dir + Util::getInstance()->formatString("4-%d.png",i));
     }
     
     r.Idle = idles;
@@ -102,14 +152,64 @@ CharacterRes Resources::getFootmanResourceB()
 
 }
 
-std::string Resources::getKnightResourceB()
+CharacterRes Resources::getKnightResourceB()
 {
-    return _2DCharacterDirectory + "centaur.png";
+    CharacterRes r;
+	
+#ifdef WIN32
+    std::string dir = "Character/KnightB/";
+#else
+    std::string dir = "";
+#endif
+    
+    std::vector<std::string> idles;
+    std::vector<std::string> moves;
+    
+    for(int i = 1; i <=4 ; i++)
+    {
+        idles.push_back(dir + Util::getInstance()->formatString("7-%d.png",i));
+    }
+    
+    for(int i = 1; i <= 8 ;i ++)
+    {
+        moves.push_back(dir + Util::getInstance()->formatString("8-%d.png",i));
+    }
+    
+    r.Idle = idles;
+    r.Move = moves;
+    
+    return r;
+    
+
 }
 
-std::string Resources::getArcherResourceB()
+CharacterRes Resources::getArcherResourceB()
 {
-    return _2DCharacterDirectory + "dragon.png";
+    CharacterRes r;
+	
+#ifdef WIN32
+    std::string dir = "Character/ArcherB/";
+#else
+    std::string dir = "";
+#endif
+    
+    std::vector<std::string> idles;
+    std::vector<std::string> moves;
+    
+    for(int i = 1; i <=4 ; i++)
+    {
+        idles.push_back(dir + Util::getInstance()->formatString("11-%d.png",i));
+    }
+    
+    for(int i = 1; i <= 8 ;i ++)
+    {
+        moves.push_back(dir + Util::getInstance()->formatString("12-%d.png",i));
+    }
+    
+    r.Idle = idles;
+    r.Move = moves;
+    
+    return r;
 }
 
 std::string Resources::getMenuItem0()

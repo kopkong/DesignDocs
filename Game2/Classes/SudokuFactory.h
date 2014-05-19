@@ -12,6 +12,7 @@
 #include <iostream>
 #include "Sudoku.h"
 #include "Cocos2d.h"
+USING_NS_CC;
 
 // Factory produce sudoku production that can be used in game
 struct SudokuProduction

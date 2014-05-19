@@ -76,13 +76,16 @@ SudokuProduction SudokuFactory::generateSudoku()
 		std::ostringstream os;
 		S->write(os);
 		production.Answers = os.str();
-		cout << os;
-
 		delete S;
 	} else {
-		cout << "No solution";
+        log("No solution");
 	}
-	cout << endl;
+    
+    log("Answer is %s,length is %d",production.Answers.c_str(),production.Answers.length());
+    
+    
+    CCASSERT(production.Initials.length()==81,"Initial length is not 81");
+    CCASSERT(production.Answers.length()==81,"Answer length is not 81");
 
 	return production;
 
@@ -95,13 +98,13 @@ int SudokuFactory::getAssignments()
 	switch (_workingLevel)
 	{
 	case 1:
-		return 28;
+		return 25;
 	case 2:
-		return 24;
+		return 21;
 	case 3:
-		return 20;
+		return 17;
 	default:
-		return 28;
+		return 25;
 	}
 
 	return 0;
@@ -141,7 +144,8 @@ string SudokuFactory::random_puzzle(int N)
 				uniqueDigits.insert(su.possible(*it1).val());
 			}
 		}
-
+        
+        log("Assignments is %d",alreadyGetAssignments);
 		if(alreadyGetAssignments >= N && uniqueDigits.size() >= 8)
 		{
 			for(int i =0;i<81;i++)

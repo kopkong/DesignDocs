@@ -31,6 +31,10 @@ public:
 	std::string getLevelButton1();
 	std::string getLevelButton2();
 	std::string getLevelButton3();
+    
+    std::string getGameLayerBackGround();
+    std::string getGrid();
+    
 };
 
 

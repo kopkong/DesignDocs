@@ -30,11 +30,11 @@ public:
     CharacterRes getFootmanResourceA();
     CharacterRes getFootmanResourceB();
     
-    std::string getKnightResourceA();
-    std::string getKnightResourceB();
+    CharacterRes getKnightResourceA();
+    CharacterRes getKnightResourceB();
     
-    std::string getArcherResourceA();
-    std::string getArcherResourceB();
+    CharacterRes getArcherResourceA();
+    CharacterRes getArcherResourceB();
     
     std::string getFormationBoard();
     std::string getStartBattleButton();

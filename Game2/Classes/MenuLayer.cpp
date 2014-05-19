@@ -58,6 +58,8 @@ bool MenuLayer::init()
     auto menu = Menu::create(buttonLevelSelect,buttonRecords,buttonHelp,NULL);
     menu->setPosition(Point::ZERO);
     this->addChild(menu,1);
+    
+    return true;
 }
 
 void MenuLayer::showLevels()

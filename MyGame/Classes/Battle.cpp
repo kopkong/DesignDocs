@@ -24,7 +24,7 @@ void Battle::reset()
 	_allSquads.clear();
 
 	_battleFinished = false;
-	_battleFieldSize = Size(1024,768);
+	_battleFieldSize = Size(2048,1080);
 	_squadSize = Size(100,192);
 	_heroSize = Size(64,64);
 	_soldierSize = Size(42,42);
@@ -58,15 +58,13 @@ void Battle::initSquads(Formation leftFormation, Formation rightFormation)
                 
                 if(leftFormation[row][col] == SquadType::Knight)
                 {
-                    a.setSpriteTexture(Resources::getInstance()->getKnightResourceA());
-                    a.setSpriteOrientation(Orientation::Right);
+                    a.setSoldierRes(Resources::getInstance()->getKnightResourceA());
                     initSquadProperty(&a, SquadType::Knight);
                 }
                 
                 if(leftFormation[row][col] == SquadType::Archer)
                 {
-                    a.setSpriteTexture(Resources::getInstance()->getArcherResourceA());
-                    a.setSpriteOrientation(Orientation::Right);
+                    a.setSoldierRes(Resources::getInstance()->getArcherResourceA());
                     initSquadProperty(&a, SquadType::Archer);
                 }
                 
@@ -96,13 +94,12 @@ void Battle::initSquads(Formation leftFormation, Formation rightFormation)
                 }
                 if(rightFormation[row][col] == SquadType::Knight)
                 {
-                    b.setSpriteTexture(Resources::getInstance()->getKnightResourceB());
+                    b.setSoldierRes(Resources::getInstance()->getKnightResourceB());
                     initSquadProperty(&b,Knight);
                 }
                 if(rightFormation[row][col] == SquadType::Archer)
                 {
-                    b.setSpriteTexture(Resources::getInstance()->getArcherResourceB());
-                    b.setSpriteOrientation(Orientation::Left);
+                    b.setSoldierRes(Resources::getInstance()->getArcherResourceB());
                     initSquadProperty(&b,Archer);
                 }
                 
@@ -248,10 +245,6 @@ void Battle::wholeSquadWaiting(Squad* pSelfSquad)
         animation->setDelayPerUnit(1/10.0f);
         animation->setRestoreOriginalFrame(true);
         
-        Action* idle = Sequence::create(
-              MoveBy::create(0,_allUnits[heroUnitID].getSprite()->getPosition()),
-              Animate::create(animation),
-              NULL,NULL);
 	}
     
 	// Soldier idle

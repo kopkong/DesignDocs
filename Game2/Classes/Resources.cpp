@@ -64,3 +64,13 @@ std::string Resources::getLevelButton3()
 {
 	return _menuItemDirectory + "menuLevel3.png";
 }
+
+std::string Resources::getGameLayerBackGround()
+{
+    return _menuItemDirectory + "bg.png";
+}
+
+std::string Resources::getGrid()
+{
+    return _menuItemDirectory + "grid.jpeg";
+}

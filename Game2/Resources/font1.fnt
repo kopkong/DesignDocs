@@ -5,9 +5,5 @@ chars count=4
 
 char id=1 x=0 y=0 width=30 height=35 xoffset=1 yoffset=4 xadvance=16 page=0 chnl=0 letter="+"
 char id=2 x=30 y=0 width=30 height=35 xoffset=1 yoffset=4 xadvance=16 page=0 chnl=0 letter="0"
-char id=3 x=60 y=0 width=19 height=28 xoffset=1 yoffset=4 xadvance=16 page=0 chnl=0 letter="1"
-char id=4 x=90 y=0 width=19 height=28 xoffset=1 yoffset=4 xadvance=16 page=0 chnl=0 letter="2"
-
-
-
-
+char id=3 x=60 y=0 width=30 height=35 xoffset=1 yoffset=4 xadvance=16 page=0 chnl=0 letter="1"
+char id=4 x=90 y=0 width=30 height=35 xoffset=1 yoffset=4 xadvance=16 page=0 chnl=0 letter="2"

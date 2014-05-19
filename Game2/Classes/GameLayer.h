@@ -8,7 +8,7 @@ class GameLayer : public cocos2d::Layer
 {
 private:
 	SudokuProduction _sudokuDataStruct;
-
+    Size _screenSize;
 public:
     static cocos2d::Scene* createScene(int level);
 	CREATE_FUNC(GameLayer);
@@ -16,6 +16,7 @@ public:
     virtual bool init();  
 	void update(float dt);
 	void loadLevel(int level);
+    void display();
     
 };
 

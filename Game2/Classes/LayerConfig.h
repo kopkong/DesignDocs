@@ -9,8 +9,5 @@
 #ifndef Game2_LayerConfig_h
 #define Game2_LayerConfig_h
 
-#include "cocos2d.h"
-USING_NS_CC;
-
 
 #endif
