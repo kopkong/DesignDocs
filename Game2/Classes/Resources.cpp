@@ -74,3 +74,8 @@ std::string Resources::getGrid()
 {
     return _menuItemDirectory + "grid.jpeg";
 }
+
+std::string Resources::getNumberFont()
+{
+	return _menuItemDirectory + "font1.fnt";
+}

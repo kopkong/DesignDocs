@@ -20,13 +20,6 @@ using namespace std;
 
 int myrandom (int i) { return std::rand()%i;}
 
-string intToStr(int i){
-	char buf[256];
-	sprintf(buf,"%d",i);
-	string s = buf;
-	return s;
-}
-
 SudokuFactory::~SudokuFactory()
 {
 }
@@ -63,11 +56,6 @@ SudokuProduction SudokuFactory::generateSudoku()
 
 	std::string line = random_puzzle(getAssignments());
 
-	//std::string test1 = "4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......";
-	//std::string test2 = "1....9.6.2......3.3.......14132...9.6..49.1..97..1..4.83.......7.9...6585........";
-	//size_t len1 = test1.length();
-	//size_t len2 = test2.length();
-
 	SudokuProduction production;
 	production.Initials = string(line);
 
@@ -98,7 +86,7 @@ int SudokuFactory::getAssignments()
 	switch (_workingLevel)
 	{
 	case 1:
-		return 25;
+		return 31;
 	case 2:
 		return 21;
 	case 3:

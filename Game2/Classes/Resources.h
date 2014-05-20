@@ -34,7 +34,7 @@ public:
     
     std::string getGameLayerBackGround();
     std::string getGrid();
-    
+    std::string getNumberFont();
 };
 
 
