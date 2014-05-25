@@ -64,6 +64,7 @@ public:
     CC_SYNTHESIZE(unsigned int,_soldierCount,SoldierCount);
     CC_SYNTHESIZE(SquadType, _type, SoldierType);
     CC_SYNTHESIZE(SquadSide, _side, SquadSide);
+    CC_SYNTHESIZE(unsigned int,_meleeSquads,MeleeSquads);
 
     // Resources
     CC_SYNTHESIZE(CharacterRes,_SoldierRes,SoldierRes);

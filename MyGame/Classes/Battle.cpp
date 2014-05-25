@@ -24,10 +24,10 @@ void Battle::reset()
 	_allSquads.clear();
 
 	_battleFinished = false;
-	_battleFieldSize = Size(2048,1080);
+	_battleFieldSize = Size(1024,768);
 	_squadSize = Size(100,192);
-	_heroSize = Size(64,64);
-	_soldierSize = Size(42,42);
+	_heroSize = Size(48,48);
+	_soldierSize = Size(32,32);
 }
 
 void Battle::initSquads(Formation leftFormation, Formation rightFormation)
@@ -223,6 +223,7 @@ void Battle::initSquadSprite(Squad* pSquad)
 
 void Battle::startBattle(Squad* pSelfSquad)
 {
+    battleStartSearch(pSelfSquad, SquadType (*targetFormation)[5])
 	pSelfSquad->setState(SquadState::Moving);
 }
 
@@ -357,9 +358,14 @@ void Battle::searchEnemy(Squad* pSquad)
 	for(unsigned int i = 0 ; i < _allSquads.size(); i++)
 	{
 		if(_allSquads[i].getSquadSide() != pSquad->getSquadSide() &&
-			_allSquads[i].getState() != SquadState::Eliminated)
+			_allSquads[i].getState() != SquadState::Eliminated
+           &&_allSquads[i].getMeleeSquads()<2)
+        {
 			rivalSquads.push_back(&_allSquads[i]);
+        }
 	}
+    
+    
 
 	float minDistance = _battleFieldSize.width * _battleFieldSize.width;
 	for(unsigned int i = 0; i< rivalSquads.size() ; i++)
@@ -373,6 +379,7 @@ void Battle::searchEnemy(Squad* pSquad)
 			// Locate the target and aim to it
 			pSquad->setTargetSquadIndex(rivalSquads[i]->getIndex());
 			pSquad->setTargetPosition(rivalSquads[i]->getPosition());
+            //rivalSquads[i]->setMeleeSquads(rivalSquads[i]->getMeleeSquads() + 1);
 
 			minDistance = distance;
 		}

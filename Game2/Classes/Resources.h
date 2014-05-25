@@ -35,6 +35,12 @@ public:
     std::string getGameLayerBackGround();
     std::string getGrid();
     std::string getNumberFont();
+    std::string getStartBattleButton();
+    
+    std::string getNumbersPlist();
+    std::string getNumbersImage();
+    std::string getNumberFrameName(std::string s);
+    std::string getEmptyFrameName();
 };
 
 

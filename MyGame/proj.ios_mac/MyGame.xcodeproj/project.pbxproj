@@ -130,6 +130,8 @@
 		891E6767192A2C6D000B086C /* 12-6.png in Resources */ = {isa = PBXBuildFile; fileRef = 891E671F192A2C6D000B086C /* 12-6.png */; };
 		891E6768192A2C6D000B086C /* 12-7.png in Resources */ = {isa = PBXBuildFile; fileRef = 891E6720192A2C6D000B086C /* 12-7.png */; };
 		891E6769192A2C6D000B086C /* 12-8.png in Resources */ = {isa = PBXBuildFile; fileRef = 891E6721192A2C6D000B086C /* 12-8.png */; };
+		891E6785192DFEFB000B086C /* SquadFormation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 891E6783192DFEFB000B086C /* SquadFormation.cpp */; };
+		891E678A192E0FE5000B086C /* SquadFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 891E6788192E0FE5000B086C /* SquadFactory.cpp */; };
 		89912113190DF1C2006C5590 /* Battle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89912111190DF1C2006C5590 /* Battle.cpp */; };
 		89912116190DF570006C5590 /* Resources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89912114190DF570006C5590 /* Resources.cpp */; };
 		89C1C0F3191C8A5000904D68 /* Icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C1C0CB191C8A5000904D68 /* Icon-120.png */; };
@@ -426,6 +428,10 @@
 		891E671F192A2C6D000B086C /* 12-6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "12-6.png"; sourceTree = "<group>"; };
 		891E6720192A2C6D000B086C /* 12-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "12-7.png"; sourceTree = "<group>"; };
 		891E6721192A2C6D000B086C /* 12-8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "12-8.png"; sourceTree = "<group>"; };
+		891E6783192DFEFB000B086C /* SquadFormation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SquadFormation.cpp; path = ../Classes/SquadFormation.cpp; sourceTree = "<group>"; };
+		891E6784192DFEFB000B086C /* SquadFormation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SquadFormation.h; path = ../Classes/SquadFormation.h; sourceTree = "<group>"; };
+		891E6788192E0FE5000B086C /* SquadFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SquadFactory.cpp; path = ../Classes/SquadFactory.cpp; sourceTree = "<group>"; };
+		891E6789192E0FE5000B086C /* SquadFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SquadFactory.h; path = ../Classes/SquadFactory.h; sourceTree = "<group>"; };
 		89912111190DF1C2006C5590 /* Battle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Battle.cpp; path = ../Classes/Battle.cpp; sourceTree = "<group>"; };
 		89912112190DF1C2006C5590 /* Battle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Battle.h; path = ../Classes/Battle.h; sourceTree = "<group>"; };
 		89912114190DF570006C5590 /* Resources.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Resources.cpp; path = ../Classes/Resources.cpp; sourceTree = "<group>"; };
@@ -544,6 +550,10 @@
 				89912115190DF570006C5590 /* Resources.h */,
 				89C1C123191CA6D200904D68 /* Util.cpp */,
 				89C1C124191CA6D200904D68 /* Util.h */,
+				891E6783192DFEFB000B086C /* SquadFormation.cpp */,
+				891E6784192DFEFB000B086C /* SquadFormation.h */,
+				891E6788192E0FE5000B086C /* SquadFactory.cpp */,
+				891E6789192E0FE5000B086C /* SquadFactory.h */,
 			);
 			name = Classes;
 			path = ../classes;
@@ -1144,6 +1154,8 @@
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				89912116190DF570006C5590 /* Resources.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
+				891E6785192DFEFB000B086C /* SquadFormation.cpp in Sources */,
+				891E678A192E0FE5000B086C /* SquadFactory.cpp in Sources */,
 				89F8C64B1906364200CF817A /* Squad.cpp in Sources */,
 				1AFAF8B716D35DE700DB1158 /* AppDelegate.cpp in Sources */,
 				89912113190DF1C2006C5590 /* Battle.cpp in Sources */,

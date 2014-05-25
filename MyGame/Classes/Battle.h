@@ -33,6 +33,7 @@ private:
 	void doAttack(int unitID, int targetID,Squad*,float);
 	bool targetSquadEliminated(Squad*);
 
+    void battleStartSearch(Squad*,Formation targetFormation);
 	void printStats();
     void actionIdleDone();
 

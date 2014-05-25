@@ -77,5 +77,30 @@ std::string Resources::getGrid()
 
 std::string Resources::getNumberFont()
 {
-	return _menuItemDirectory + "font1.fnt";
+	return _menuItemDirectory + "font.fnt";
+}
+
+std::string Resources::getStartBattleButton()
+{
+    return _menuItemDirectory + "start.png";
+}
+
+std::string Resources::getNumbersPlist()
+{
+    return _menuItemDirectory + "numbers.plist";
+}
+
+std::string Resources::getNumbersImage()
+{
+    return _menuItemDirectory + "numbers.png";
+}
+
+std::string Resources::getNumberFrameName(std::string s)
+{
+    return s + ".png";
+}
+
+std::string Resources::getEmptyFrameName()
+{
+    return "empty.png";
 }
