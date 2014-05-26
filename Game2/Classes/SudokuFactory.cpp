@@ -71,7 +71,6 @@ SudokuProduction SudokuFactory::generateSudoku()
     
     log("Answer is %s,length is %d",production.Answers.c_str(),production.Answers.length());
     
-    
     CCASSERT(production.Initials.length()==81,"Initial length is not 81");
     CCASSERT(production.Answers.length()==81,"Answer length is not 81");
 

@@ -15,6 +15,7 @@ class Resources
 {
 private:
     std::string _menuItemDirectory;
+	std::string _monsterDirectory;
     
 protected:
 	Resources(void);
@@ -41,6 +42,12 @@ public:
     std::string getNumbersImage();
     std::string getNumberFrameName(std::string s);
     std::string getEmptyFrameName();
+
+	std::string getMonsterImage(std::string index);
+	std::string getPlayerImage();
+
+	std::string getHPBar1();
+	std::string getHPBar2();
 };
 
 

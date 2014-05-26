@@ -13,8 +13,10 @@ Resources::Resources()
 {
 #ifdef WIN32
     _menuItemDirectory = "../Resources/";
+	_monsterDirectory = "../Resources/monsters/";
 #else
     _menuItemDirectory = "";
+	_monsterDirectory ="";
 #endif
     
 }
@@ -103,4 +105,24 @@ std::string Resources::getNumberFrameName(std::string s)
 std::string Resources::getEmptyFrameName()
 {
     return "empty.png";
+}
+
+std::string Resources::getMonsterImage(std::string i)
+{
+	return _monsterDirectory + i + ".png";
+}
+
+std::string Resources::getPlayerImage()
+{
+	return _monsterDirectory + "player.jpg";
+}
+
+std::string Resources::getHPBar1()
+{
+	return _menuItemDirectory + "hp-bar1.png";
+}
+
+std::string Resources::getHPBar2()
+{
+	return _menuItemDirectory + "hp-bar2.png";
 }

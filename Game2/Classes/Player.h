@@ -20,6 +20,7 @@ public:
     CC_SYNTHESIZE(std::string,_name,Name);
     CC_SYNTHESIZE(int, _hp,HP);
     CC_SYNTHESIZE(unsigned int, _maxHP,MAXHP);
+	CC_SYNTHESIZE(std::string,image,Image);
     
     Player(std::string s,unsigned int h){_name = s; _hp = h; _maxHP = h;}
     bool beAttacked(unsigned int);

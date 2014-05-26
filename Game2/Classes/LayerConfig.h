@@ -1,4 +1,4 @@
-//
+﻿//
 //  LayerConfig.h
 //  Game2
 //
@@ -10,11 +10,11 @@
 #define Game2_LayerConfig_h
 
 #define GAMELAYERBACKGROUNDTAG 0
-#define GAMELAYERGRIDTAG 1
-#define GAMELAYERNUMBERTAG 2
-#define GAMELAYERMESSAGETAG 3
-#define GAMELAYERUITAG 4
+#define GAMELAYERNUMBERTAG 1
+#define GAMELAYERUIBOTTOMTAG 2
+#define GAMELAYERUIMIDTAG 3
+#define GAMELAYERUITOPTAG 4
 
-#define ROUNDSTARTSTRING "回合开始"
+#define ROUNDSTARTSTRING "Round Start"
 
 #endif

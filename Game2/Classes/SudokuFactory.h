@@ -19,6 +19,13 @@ struct SudokuProduction
 {
 	std::string Initials;
 	std::string Answers;
+
+	std::string getAnswerAtIndex(int i)
+	{
+		string s ;
+		s.insert(s.begin(),Answers[i]);
+		return s;
+	}
 };
 
 class SudokuFactory
