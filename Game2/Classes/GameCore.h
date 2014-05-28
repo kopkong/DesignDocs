@@ -11,21 +11,28 @@
 
 #include <iostream>
 #include <memory>
-#include "Monster.h"
 #include "Player.h"
 
 using namespace std;
+
+enum CoreGameState
+{
+    NotStarted,
+    Running,
+    Finishing,
+    End
+};
 
 class CoreGame
 {
 private:
     unsigned int _gameRound;
-    Player* _pPlayer;
-    Monster* _pMonster;
-    unsigned int _playerSelectedNumber;
-    unsigned int _monsterSelectedNumber;
+    int _playerSelectedNumber;
+    int _monsterSelectedNumber;
+    Player* _player;
+    Monster* _monster;
     bool _isEnd;
-    
+    CoreGameState _state;
     
 protected:
     CoreGame();
@@ -38,10 +45,19 @@ public:
     unsigned int getCurrentRound();
     void roundEnd();
     void reset();
-    void addPlayer(Player*);
-    void addMonster(Monster*);
-    void playerSelectNumber(unsigned int);
-    void monsterSelectNumber(unsigned int);
+    
+    CoreGameState getState();
+    
+    void setPlayerWin();
+    void setMonsterWin();
+    
+    void addPlayer( Player*);
+    void addMonster( Monster*);
+    void monsterAttack();
+    void playerAttack();
+    
+    void playerSelectNumber( int);
+    void monsterSelectNumber( int);
     void end();
 };
 

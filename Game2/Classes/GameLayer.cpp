@@ -2,6 +2,8 @@
 #include "Resources.h"
 #include "GameCore.h"
 #include "LayerConfig.h"
+#include "Particle.h"
+#include "Animation.h"
 #include <string>
 USING_NS_CC;
 
@@ -11,8 +13,6 @@ GameLayer::~GameLayer()
 {
 	delete _player;
 	delete _monster;
-	_roundInfo->release();
-	_countDownMsg->release();
 	_gameBatchNode->release();
 }
 
@@ -46,6 +46,8 @@ bool GameLayer::init()
     _screenSize = Director::getInstance()->getVisibleSize();
 
 	loadLevel(_currentLevel);
+    
+    this->schedule(schedule_selector(GameLayer::update));
 
     return true;
 }
@@ -61,14 +63,24 @@ void GameLayer::loadLevel(int level)
 	_gameStarted = false;
 
 	// Create Player
-    _player = new Player("KLK",100);
+    _player = new Player("Player",100);
 	_player->setImage(Resources::getInstance()->getPlayerImage());
+    _player->setImageGrayScale(Resources::getInstance()->getPlayerImageGrayScale());
+    _player->setAttackInterval(9);
     CoreGame::getInstance()->addPlayer(_player);
-    
+
     // Create Monster
     _monster = new Monster("Monster",25);
 	_monster->setImage(Resources::getInstance()->getMonsterImage("1"));
+    _monster->setImageGrayScale(Resources::getInstance()->getMonsterImageGrayScale("1"));
+    _monster->setAttackInterval(8);
     CoreGame::getInstance()->addMonster(_monster);
+    
+    _player->setPosition(100,_screenSize.height - 100);
+    this->addChild(_player,GAMELAYERUIBOTTOMTAG);
+    
+    _monster->setPosition(_screenSize.width - 100 , _screenSize.height - 100);
+    this->addChild(_monster,GAMELAYERUIBOTTOMTAG);
 
 	initScreen();
 }
@@ -77,75 +89,13 @@ void GameLayer::resetGame()
 {
 	_gameStarted = true;
     CoreGame::getInstance()->reset();
-        
-    _countDown = 9;
+
+    _playerAttackAvailable = false;
+    _monsterAttackAvailable = false;
     
-    this->schedule(schedule_selector(GameLayer::updateInRound),1.0);
-}
-
-void GameLayer::displayRound()
-{
-    __String* s1 = __String::createWithFormat("Round %d",CoreGame::getInstance()->getCurrentRound());
-    _roundInfo->setString(s1->getCString());
-    
-    __String* s2 = __String::createWithFormat("%d",_countDown);
-    log("Count down %d",_countDown);
-    _countDownMsg->setString(s2->getCString());
-}
-
-void GameLayer::displayCharacters()
-{
-	// display player
-	auto playerIcon = Sprite::create(_player->getImage());
-	playerIcon->setPosition(100,_screenSize.height - 100);
-	this->addChild(playerIcon,GAMELAYERUITOPTAG);
-
-	// display monster
-	auto monsterIcon = Sprite::create(_monster->getImage());
-	monsterIcon->setPosition(_screenSize.width - 100 , _screenSize.height - 100);
-	this->addChild(monsterIcon,GAMELAYERUITOPTAG);
-
-	// Init Player HP bar 
-	// first show the bottom
-	auto playerHPBarBottom = Sprite::create(Resources::getInstance()->getHPBar2());
-	Point posPlayerHPbar(playerIcon->getPositionX() ,playerIcon->getPositionY() - playerIcon->getContentSize().height/2);
-	playerHPBarBottom->setPosition(posPlayerHPbar);
-	this->addChild(playerHPBarBottom,GAMELAYERUIBOTTOMTAG);
-
-	_playerHPbar = Sprite::create(Resources::getInstance()->getHPBar1());
-	_playerHPbar->setPosition(posPlayerHPbar);
-	this->addChild(_playerHPbar,GAMELAYERUITOPTAG);
-
-	// Init Monster HP bar here
-	auto monsterHPBarBottom = Sprite::create(Resources::getInstance()->getHPBar2());
-	Point posMonsterHPbar(monsterIcon->getPositionX() ,monsterIcon->getPositionY() - monsterIcon->getContentSize().height/2);
-	monsterHPBarBottom->setPosition(posMonsterHPbar);
-	this->addChild(monsterHPBarBottom,GAMELAYERUIBOTTOMTAG);
-
-	_monsterHPbar = Sprite::create(Resources::getInstance()->getHPBar1());
-	_monsterHPbar->setPosition(posMonsterHPbar);
-	this->addChild(_monsterHPbar,GAMELAYERUITOPTAG);
-}
-
-void GameLayer::displayHP()
-{
-
-
-}
-
-void GameLayer::initLabelUI()
-{
-	 // Create label
-    _roundInfo = Label::create();
-    _roundInfo->setPosition(_screenSize.width/2 - 50, _screenSize.height - 50);
-    _roundInfo->setString(ROUNDSTARTSTRING);
-    this->addChild(_roundInfo,GAMELAYERUITOPTAG);
-    
-    // Create CountDown Message
-    _countDownMsg = Label::createWithBMFont(Resources::getInstance()->getNumberFont(),"9");
-    _countDownMsg->setPosition(_screenSize.width/2 +50 , _screenSize.height - 50);
-    this->addChild(_countDownMsg,GAMELAYERUITOPTAG);
-
+    // 为玩家和怪物分别添加计时器
+    this->schedule(schedule_selector(GameLayer::updatePlayerCoolDown),1.0);
+    this->schedule(schedule_selector(GameLayer::updateMonsterCoolDown),1.0);
 }
 
 void GameLayer::initScreen()
@@ -213,32 +163,119 @@ void GameLayer::initScreen()
     menu->setPosition(Point::ZERO);
     this->addChild(menu,GAMELAYERUITOPTAG);
 
-	initLabelUI();
-	displayCharacters();
 }
 
 void GameLayer::update(float dt)
 {
+    if(CoreGame::getInstance()->getState() == CoreGameState::Finishing)
+    {
+        log("Game needs to end");
+        
+        endGame();
+    }
+}
+
+void GameLayer::updatePlayerCoolDown(float dt)
+{
+    if(_playerAttackAvailable)
+    {
+        log("Waiting for player to attack");
+    }
+    else
+    {
+        if(_player->getCoolDown() == 0)
+            _playerAttackAvailable = true;
+        else
+        {
+            _player->updateCoolDown();
+        }
+    }
+}
+
+void GameLayer::updateMonsterCoolDown(float dt)
+{
+    if(_monsterAttackAvailable)
+    {
+        monsterAIAttack();
+    }
+    else
+    {
+        if(_monster->getCoolDown() ==0)
+            _monsterAttackAvailable = true;
+        else
+        {
+            _monster->updateCoolDown();
+        }
+    }
+}
+
+void GameLayer::monsterAIAttack()
+{
+    vector<int> keys = _emptyItems.keys();
+    random_shuffle(keys.begin(),keys.end());
+    int i = keys[0];
+    
+    MenuItemImage* cell = _emptyItems.at(i);
+    cell->setScale(-0.83,0.83);
+    
+    Action* flipNumber;
+    CKAnimation::getFlipNumberAnimation(1.0,CC_CALLBACK_0(GameLayer::callBack_ChangeImage,this,i),flipNumber);
+    
+	// flip number animation
+	cell->runAction(flipNumber);
+    
+    // set selected number
+    int n = atoi(_sudokuDataStruct.getAnswerAtIndex(i).c_str());
+    CoreGame::getInstance()->monsterSelectNumber(n);
+    
+    // fire to monster
+    firePlayer(cell->getPosition());
+    
+    // reset player cooldown
+    _monsterAttackAvailable = false;
+    _monster->refreshCoolDown();
 
 }
 
-void GameLayer::updateInRound(float dt)
+void GameLayer::fireMonster(Point pos)
 {
-    _countDown--;
-    displayRound();
+    FireBall* f = new FireBall();
+    f->setPosition(pos - Point(_screenSize.width/2, _screenSize.height/2));
     
-    if(_countDown ==0)
-        roundCountDownOver();
+    Action* fireMonster;
+    CKAnimation::getParticleMoveAnimation(1.5,_monster->getPosition(), CC_CALLBACK_0(GameLayer::callBack_FireMonsterEnd,this), fireMonster);
+    
+    this->addChild(f,GAMELAYERPARTICLETAG);
+    f->runAction(fireMonster);
 }
 
-void GameLayer::roundCountDownOver()
+void GameLayer::firePlayer(Point pos)
 {
-    CoreGame::getInstance()->monsterSelectNumber(0);
-    CoreGame::getInstance()->playerSelectNumber(0);
-    CoreGame::getInstance()->roundEnd();
+    IceBall* ice = new IceBall();
+    ice->setPosition(pos - Point(_screenSize.width/2, _screenSize.height/2));
     
-    // reset count down
-    _countDown = 10;
+    Action* firePlayer;
+    CKAnimation::getParticleMoveAnimation(1.5, _player->getPosition(), CC_CALLBACK_0(GameLayer::callBack_FirePlayerEnd, this), firePlayer);
+    this->addChild(ice,GAMELAYERPARTICLETAG);
+    ice->runAction(firePlayer);
+}
+
+void GameLayer::endGame()
+{
+    unschedule(schedule_selector(GameLayer::updatePlayerCoolDown));
+    unschedule(schedule_selector(GameLayer::updateMonsterCoolDown));
+    
+    CoreGame::getInstance()->end();
+}
+
+void GameLayer::callBack_FireMonsterEnd()
+{
+    CoreGame::getInstance()->playerAttack();
+}
+
+void GameLayer::callBack_FirePlayerEnd()
+{
+    CoreGame::getInstance()->monsterAttack();
 }
 
 void GameLayer::callBack_StartGame()
@@ -254,21 +291,32 @@ void GameLayer::callBack_SelectNumber(int i)
 		log("Game is not started yet!");
 		return;
 	}
+    
+    if(!_playerAttackAvailable)
+    {
+        //log("Can't attack now, waiting for cool down");
+        return;
+    }
 
 	MenuItemImage* cell = _emptyItems.at(i);
+    cell->setScale(-0.83,0.83);
     
-	OrbitCamera *orbit = OrbitCamera::create(2,0.5,0,0,180,0,0);
-	DelayTime *delay = DelayTime::create(1);
-	FiniteTimeAction *sequence = Sequence::create(delay,
-		CallFuncN::create(CC_CALLBACK_0(GameLayer::callBack_ChangeImage,this,i))
-		,NULL);
-	FiniteTimeAction *spawn = Spawn::create(orbit,sequence,NULL);
+    Action* flipNumber;
+    CKAnimation::getFlipNumberAnimation(1.0,CC_CALLBACK_0(GameLayer::callBack_ChangeImage,this,i),flipNumber);
 
-	// Play Rotate Z animation
-	cell->runAction(spawn);
-
-	// disable menuItme
-	cell->setEnabled(false);
+	// flip number animation
+	cell->runAction(flipNumber);
+    
+    // set selected number
+    int n = atoi(_sudokuDataStruct.getAnswerAtIndex(i).c_str());
+    CoreGame::getInstance()->playerSelectNumber(n);
+    
+    // fire to monster
+    fireMonster(cell->getPosition());
+    
+    // reset player cooldown
+    _playerAttackAvailable = false;
+    _player->refreshCoolDown();
 }
 
 void GameLayer::callBack_ChangeImage(int i)
@@ -277,6 +325,11 @@ void GameLayer::callBack_ChangeImage(int i)
 
 	SpriteFrame* frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(Resources::getInstance()->getNumberFrameName(_sudokuDataStruct.getAnswerAtIndex(i)));
 	
-	cell->setScale(-0.83,0.83);	cell->setNormalSpriteFrame(frame);
-
+    cell->setNormalSpriteFrame(frame);
+    
+    // disable menuItem
+	cell->setEnabled(false);
+    
+    // remove cell from dict
+    _emptyItems.erase(i);
 }

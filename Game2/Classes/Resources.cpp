@@ -14,9 +14,11 @@ Resources::Resources()
 #ifdef WIN32
     _menuItemDirectory = "../Resources/";
 	_monsterDirectory = "../Resources/monsters/";
+    _particleDirectory = "../Resources/Particle/";
 #else
     _menuItemDirectory = "";
-	_monsterDirectory ="";
+	_monsterDirectory = "";
+    _particleDirectory = "";
 #endif
     
 }
@@ -112,9 +114,19 @@ std::string Resources::getMonsterImage(std::string i)
 	return _monsterDirectory + i + ".png";
 }
 
+std::string Resources::getMonsterImageGrayScale(std::string i)
+{
+    return _monsterDirectory + i + "-grayscale.png";
+}
+
 std::string Resources::getPlayerImage()
 {
-	return _monsterDirectory + "player.jpg";
+	return _monsterDirectory + "player.png";
+}
+
+std::string Resources::getPlayerImageGrayScale()
+{
+    return _monsterDirectory + "player-grayscale.png";
 }
 
 std::string Resources::getHPBar1()
@@ -125,4 +137,9 @@ std::string Resources::getHPBar1()
 std::string Resources::getHPBar2()
 {
 	return _menuItemDirectory + "hp-bar2.png";
+}
+
+std::string Resources::getFireImage()
+{
+    return _particleDirectory + "fire.png";
 }

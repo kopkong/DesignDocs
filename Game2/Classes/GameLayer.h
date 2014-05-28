@@ -4,7 +4,6 @@
 #include "cocos2d.h"
 #include "SudokuFactory.h"
 #include "Player.h"
-#include "Monster.h"
 #include <vector>
 
 USING_NS_CC;
@@ -16,21 +15,23 @@ private:
     Size _screenSize;
 	bool _gameStarted;
 
-    Label* _roundInfo;
-    Label* _countDownMsg;
-    int _countDown;
-
+    bool _playerAttackAvailable;
+    bool _monsterAttackAvailable;
 
     SpriteBatchNode* _gameBatchNode;
     Map<int,MenuItemImage*> _emptyItems;
 	Vector<MenuItem*> _menuItems;
 
-
 	Player* _player;
 	Monster* _monster;
-	Sprite* _playerHPbar;
-	Sprite* _monsterHPbar;
+    
+    void monsterAIAttack();
+    
+    void fireMonster(Point);
+    void firePlayer(Point);
 
+    void callBack_FireMonsterEnd();
+    void callBack_FirePlayerEnd();
 	void callBack_StartGame();
 	void callBack_SelectNumber(int i);
 	void callBack_ChangeImage(int i);
@@ -52,17 +53,12 @@ public:
     
     void initScreen();
     
-    void displayRound();
-
-	void displayCharacters();
-
-	void displayHP();
+    void updatePlayerCoolDown(float dt);
     
-    void updateInRound(float dt);
-
-	void initLabelUI();
+    void updateMonsterCoolDown(float dt);
     
-    void roundCountDownOver();
+    void endGame();
+    
 };
 
 #endif // __GameLayer_SCENE_H__

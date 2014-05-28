@@ -9,11 +9,12 @@
 #ifndef Game2_LayerConfig_h
 #define Game2_LayerConfig_h
 
-#define GAMELAYERBACKGROUNDTAG 0
-#define GAMELAYERNUMBERTAG 1
-#define GAMELAYERUIBOTTOMTAG 2
-#define GAMELAYERUIMIDTAG 3
-#define GAMELAYERUITOPTAG 4
+const static int GAMELAYERBACKGROUNDTAG = 0;
+const static int GAMELAYERNUMBERTAG = 1;
+const static int GAMELAYERUIBOTTOMTAG = 2;
+const static int GAMELAYERUIMIDTAG = 3;
+const static int GAMELAYERUITOPTAG = 4;
+const static int GAMELAYERPARTICLETAG = 10;
 
 #define ROUNDSTARTSTRING "Round Start"
 

@@ -10,24 +10,32 @@
 
 auto_ptr<CoreGame> CoreGame::_instance;
 
+
 CoreGame::CoreGame()
 {
-    
+    _state = CoreGameState::NotStarted;
 }
 
 CoreGame::~CoreGame()
 {
-    delete _pPlayer;
-    delete _pMonster;
+    log("~CoreGame");
+    delete _player;
+    delete _monster;
 }
 
 CoreGame* CoreGame::getInstance()
 {
     if(0 == _instance.get())
     {
+        log("Core game try to get new instance");
         _instance.reset(new CoreGame);
     }
     return _instance.get();
+}
+
+CoreGameState CoreGame::getState()
+{
+    return _state;
 }
 
 void CoreGame::reset()
@@ -35,51 +43,48 @@ void CoreGame::reset()
     _gameRound = 0;
     _playerSelectedNumber = 0;
     _monsterSelectedNumber = 0;
-    _pPlayer = NULL;
-    _pMonster = NULL;
-    _isEnd = false;
+    _state = CoreGameState::Running;
+    //_isEnd = false;
 }
 
 void CoreGame::addMonster(Monster* m)
 {
-    _pMonster = m;
+    _monster = m;
 }
 
-void CoreGame::addPlayer(Player* p)
+void CoreGame::addPlayer(Player *p)
 {
-    _pPlayer = p;
+    _player = p;
 }
 
-void CoreGame::playerSelectNumber(unsigned int n)
+void CoreGame::monsterAttack()
+{
+    CCASSERT(_monsterSelectedNumber > 0, "Select number should between 1 and 9");
+    _player->beAttacked(_monster, _monsterSelectedNumber);
+    _monsterSelectedNumber = 0;
+    
+    if(_player->getDead())
+        end();
+}
+
+void CoreGame::playerAttack()
+{
+    CCASSERT(_playerSelectedNumber > 0, "Select number should between 1 and 9");
+    _monster->beAttacked(_player, _playerSelectedNumber);
+    _playerSelectedNumber = 0;
+    
+    if(_player->getDead())
+        end();
+}
+
+void CoreGame::playerSelectNumber( int n)
 {
     _playerSelectedNumber = n;
 }
 
-void CoreGame::monsterSelectNumber(unsigned int n)
+void CoreGame::monsterSelectNumber( int n)
 {
     _monsterSelectedNumber = n;
-}
-
-void CoreGame::roundEnd()
-{
-    if(_isEnd)
-    {
-        _gameRound = 0;
-    }
-    else
-    {
-        _gameRound ++;
-        
-        // compute the damage
-        if(_playerSelectedNumber > _monsterSelectedNumber)
-            _pMonster->beAttacked(_playerSelectedNumber - _monsterSelectedNumber);
-        else if(_monsterSelectedNumber > _playerSelectedNumber)
-            _pPlayer->beAttacked(_monsterSelectedNumber - _playerSelectedNumber);
-        
-        // clear the number
-        _playerSelectedNumber = 0;
-        _monsterSelectedNumber = 0;
-    }
 }
 
 unsigned int CoreGame::getCurrentRound()
@@ -87,8 +92,19 @@ unsigned int CoreGame::getCurrentRound()
     return _gameRound;
 }
 
+void CoreGame::setPlayerWin()
+{
+    _state = CoreGameState::Finishing;
+}
+
+void CoreGame::setMonsterWin()
+{
+    _state = CoreGameState::Finishing;
+}
+
 void CoreGame::end()
 {
-    _isEnd = true;
+    _state = CoreGameState::End;
+    //_isEnd = true;
 }
 

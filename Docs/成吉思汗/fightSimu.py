@@ -12,5 +12,11 @@ class Squad:
 class Team:
 	'Team properties'
 
+def attack(A,B):
+	point = max(a.a - b.d,a.a/2)
+	a.hp -= point
+
+
 if __name__ == '__main__':
+
 	

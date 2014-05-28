@@ -14,16 +14,48 @@
 
 USING_NS_CC;
 
-class Player
+class Fighter : public cocos2d::Node
 {
+protected:
+    Sprite* _icon;
+    Sprite* _hpTop;
+    Label* _coolDownMsg;
+    
 public:
-    CC_SYNTHESIZE(std::string,_name,Name);
+    CC_SYNTHESIZE(std::string,_fighterName,FighterName);
     CC_SYNTHESIZE(int, _hp,HP);
     CC_SYNTHESIZE(unsigned int, _maxHP,MAXHP);
-	CC_SYNTHESIZE(std::string,image,Image);
+	CC_SYNTHESIZE(std::string,_image,Image);
+    CC_SYNTHESIZE(std::string,_imageGrayScale,ImageGrayScale);
+    CC_SYNTHESIZE(unsigned int,_attackPoint,AttackPoint);
+    CC_SYNTHESIZE(int,_attackInterval,AttackInterval);
+    CC_SYNTHESIZE(bool,_isDead,Dead);
+    CC_SYNTHESIZE(int,_coolDown,CoolDown);
     
-    Player(std::string s,unsigned int h){_name = s; _hp = h; _maxHP = h;}
-    bool beAttacked(unsigned int);
+    virtual void onEnter() override;
     
+    virtual void updateHPLabel();
+    
+    virtual void updateCoolDown();
+    
+    virtual void refreshCoolDown();
+    
+    virtual void beAttacked(const Fighter*, unsigned int);
+    
+    virtual void die();
+};
+
+class Player:public Fighter
+{
+public:
+    Player(const Player& p);
+    Player(std::string s,unsigned int h){_fighterName = s; _hp = h; _maxHP = h;_attackPoint = 1;_isDead = false;}
+};
+
+class Monster: public Fighter
+{
+public:
+    Monster(const Monster& m);
+    Monster(std::string s,unsigned int h){_fighterName = s; _hp = h; _maxHP = h;_attackPoint = 1;_isDead= false;}
 };
 #endif /* defined(__Game2__Player__) */

@@ -16,7 +16,7 @@ class Resources
 private:
     std::string _menuItemDirectory;
 	std::string _monsterDirectory;
-    
+    std::string _particleDirectory;
 protected:
 	Resources(void);
 	~Resources();
@@ -44,10 +44,14 @@ public:
     std::string getEmptyFrameName();
 
 	std::string getMonsterImage(std::string index);
+    std::string getMonsterImageGrayScale(std::string index);
 	std::string getPlayerImage();
+    std::string getPlayerImageGrayScale();
 
 	std::string getHPBar1();
 	std::string getHPBar2();
+    
+    std::string getFireImage();
 };
 
 
