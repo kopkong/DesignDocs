@@ -10,6 +10,18 @@
     <Filter Include="resource">
       <UniqueIdentifier>{715254bc-d70b-4ec5-bf29-467dd3ace079}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEntity">
+      <UniqueIdentifier>{bd4522c2-dc79-4380-bb86-c3e2a8bf6ad8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Soldier">
+      <UniqueIdentifier>{753f9be1-0214-4d72-a5a3-ca27feebd7fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Skill">
+      <UniqueIdentifier>{8060df3f-94e4-4d9f-b7af-fc62aec19f56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{9b6576bb-977b-4b5b-949f-f389a00ae764}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -21,6 +33,15 @@
     <ClCompile Include="..\Classes\HelloWorldScene.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\GameBaseEntity.cpp">
+      <Filter>GameEntity</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BaseSoldier.cpp">
+      <Filter>Soldier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\NormalAttack.cpp">
+      <Filter>Skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -31,6 +52,27 @@
     </ClInclude>
     <ClInclude Include="..\Classes\HelloWorldScene.h">
       <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameBaseEntity.h">
+      <Filter>GameEntity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BaseSoldier.h">
+      <Filter>Soldier</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BaseState.h">
+      <Filter>GameEntity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BaseStateMachine.h">
+      <Filter>GameEntity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BaseSoldierState.h">
+      <Filter>Soldier</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BaseSkill.h">
+      <Filter>Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\NormalAttack.h">
+      <Filter>Skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
