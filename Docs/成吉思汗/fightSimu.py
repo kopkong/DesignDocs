@@ -3,20 +3,21 @@ import random,time
 class Fighter:
 	'Store fighter properties'
 
-class Hero:
-	'Hero properties'
 
-class Squad:
-	'Squad properties'
+F1 = Fighter()
+F1.name= "player"
+F1.a = 100
+F1.d = 25
+F1.hp = 200
 
-class Team:
-	'Team properties'
+def getDamage(A,B):
+	point = max(A.a - B.d,A.a/2)
+	A.hp -= point
 
-def attack(A,B):
-	point = max(a.a - b.d,a.a/2)
-	a.hp -= point
+def levelUp(U):
+	U.a += 
 
 
 if __name__ == '__main__':
-
+	
 	
