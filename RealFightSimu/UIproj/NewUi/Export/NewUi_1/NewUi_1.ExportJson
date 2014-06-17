@@ -58,7 +58,7 @@
               "sizeType": 0,
               "tag": 27,
               "touchAble": true,
-              "useMergedTexture": false,
+              "useMergedTexture": true,
               "visible": true,
               "width": 100,
               "x": 275,
@@ -80,7 +80,7 @@
               "normalData": {
                 "path": "NewUI/menu_lineup.png",
                 "plistFile": "",
-                "resourceType": 0
+                "resourceType": 1
               },
               "pressed": null,
               "pressedData": {
@@ -131,7 +131,7 @@
               "sizeType": 0,
               "tag": 30,
               "touchAble": true,
-              "useMergedTexture": false,
+              "useMergedTexture": true,
               "visible": true,
               "width": 100,
               "x": 926,
@@ -153,7 +153,7 @@
               "normalData": {
                 "path": "NewUI/menu_bag.png",
                 "plistFile": "",
-                "resourceType": 0
+                "resourceType": 1
               },
               "pressed": null,
               "pressedData": {
@@ -204,7 +204,7 @@
               "sizeType": 0,
               "tag": 31,
               "touchAble": true,
-              "useMergedTexture": false,
+              "useMergedTexture": true,
               "visible": true,
               "width": 100,
               "x": 1035,
@@ -226,7 +226,7 @@
               "normalData": {
                 "path": "NewUI/menu_maincity.png",
                 "plistFile": "",
-                "resourceType": 0
+                "resourceType": 1
               },
               "pressed": null,
               "pressedData": {
@@ -277,7 +277,7 @@
               "sizeType": 0,
               "tag": 32,
               "touchAble": true,
-              "useMergedTexture": false,
+              "useMergedTexture": true,
               "visible": true,
               "width": 100,
               "x": 381,
@@ -299,7 +299,7 @@
               "normalData": {
                 "path": "NewUI/menu_map_world.png",
                 "plistFile": "",
-                "resourceType": 0
+                "resourceType": 1
               },
               "pressed": null,
               "pressedData": {
@@ -350,7 +350,7 @@
               "sizeType": 0,
               "tag": 33,
               "touchAble": true,
-              "useMergedTexture": false,
+              "useMergedTexture": true,
               "visible": true,
               "width": 100,
               "x": 178,
@@ -372,7 +372,7 @@
               "normalData": {
                 "path": "NewUI/menu_battle.png",
                 "plistFile": "",
-                "resourceType": 0
+                "resourceType": 1
               },
               "pressed": null,
               "pressedData": {
@@ -423,7 +423,7 @@
               "sizeType": 0,
               "tag": 36,
               "touchAble": true,
-              "useMergedTexture": false,
+              "useMergedTexture": true,
               "visible": true,
               "width": 100,
               "x": 606,
@@ -445,7 +445,7 @@
               "normalData": {
                 "path": "NewUI/menu_soul.png",
                 "plistFile": "",
-                "resourceType": 0
+                "resourceType": 1
               },
               "pressed": null,
               "pressedData": {
@@ -496,7 +496,7 @@
               "sizeType": 0,
               "tag": 37,
               "touchAble": true,
-              "useMergedTexture": false,
+              "useMergedTexture": true,
               "visible": true,
               "width": 100,
               "x": 822,
@@ -518,7 +518,7 @@
               "normalData": {
                 "path": "NewUI/menu_training.png",
                 "plistFile": "",
-                "resourceType": 0
+                "resourceType": 1
               },
               "pressed": null,
               "pressedData": {
@@ -569,7 +569,7 @@
               "sizeType": 0,
               "tag": 39,
               "touchAble": true,
-              "useMergedTexture": false,
+              "useMergedTexture": true,
               "visible": true,
               "width": 100,
               "x": 708,
@@ -591,7 +591,7 @@
               "normalData": {
                 "path": "NewUI/menu_talent.png",
                 "plistFile": "",
-                "resourceType": 0
+                "resourceType": 1
               },
               "pressed": null,
               "pressedData": {
@@ -639,7 +639,7 @@
           "sizeType": 0,
           "tag": 26,
           "touchAble": true,
-          "useMergedTexture": false,
+          "useMergedTexture": true,
           "visible": true,
           "width": 1136,
           "x": 0,
@@ -700,7 +700,7 @@
       "sizeType": 0,
       "tag": 22,
       "touchAble": true,
-      "useMergedTexture": false,
+      "useMergedTexture": true,
       "visible": true,
       "width": 1136,
       "x": 0,

@@ -1,5 +1,7 @@
 #include "HelloWorldScene.h"
 #include "player.h"
+#include "CocosGUI.h"
+#include "cocostudio/CocoStudio.h"
 USING_NS_CC;
 
 
@@ -31,23 +33,18 @@ bool HelloWorld::init()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Point origin = Director::getInstance()->getVisibleOrigin();
 
-    /////////////////////////////
-    // 2. add a menu item with "X" image, which is clicked to quit the program
-    //    you may modify it.
+	//TouchGroup* ul =TouchGroup::create();
+	
+	//this->addWidget(GUIReader::shareReader()->widgetFromJsonFile("UIEditorTest_1.json"));
 
-    // add a "close" icon to exit the progress. it's an autorelease object
-    auto closeItem = MenuItemImage::create(
-                                           "CloseNormal.png",
-                                           "CloseSelected.png",
-                                           CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
-    
-	closeItem->setPosition(Point(origin.x + visibleSize.width - closeItem->getContentSize().width/2 ,
-                                origin.y + closeItem->getContentSize().height/2));
+	cocos2d::ui::Layout* _layout = static_cast<cocos2d::ui::Layout*>(
+		cocostudio::GUIReader::getInstance()->widgetFromJsonFile("../Resources/NewUi_1/NewUi_1.ExportJson"));
+	Size screenSize = CCDirector::getInstance()->getWinSize();
+	Size rootSize = _layout->getSize();
+	this->setPosition(Point((screenSize.width - rootSize.width) / 2,
+		(screenSize.height - rootSize.height) / 2));
+	this->addChild(_layout);
 
-    // create menu, it's an autorelease object
-    auto menu = Menu::create(closeItem, NULL);
-    menu->setPosition(Point::ZERO);
-    this->addChild(menu, 1);
 
 	PlayerDataMgr::Instance().initPlayerData();
 	PlayerDataMgr::Instance().savePlayerData();

@@ -16,8 +16,12 @@
   <filePath>D:\DesignDocs\RealFightSimu\UIproj\NewUi\NewUi.xml.ui</filePath>
   <ProjectType>UIProject</ProjectType>
   <ResRelativePath />
-  <imageFileList />
-  <imagePngList />
+  <imageFileList>
+    <string>NewUi0.plist</string>
+  </imageFileList>
+  <imagePngList>
+    <string>NewUi0.png</string>
+  </imagePngList>
   <JsonSuffix>.json</JsonSuffix>
-  <CurrentUIJson />
+  <CurrentUIJson>NewUi_1.json</CurrentUIJson>
 </UIProject>
