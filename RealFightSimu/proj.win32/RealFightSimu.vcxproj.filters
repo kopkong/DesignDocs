@@ -22,6 +22,9 @@
     <Filter Include="Scene">
       <UniqueIdentifier>{9b6576bb-977b-4b5b-949f-f389a00ae764}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{22d9bcba-3fa6-46aa-a746-82f173455022}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -41,6 +44,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\NormalAttack.cpp">
       <Filter>Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\player.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PlayerDataMgr.cpp">
+      <Filter>Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +82,15 @@
     </ClInclude>
     <ClInclude Include="..\Classes\NormalAttack.h">
       <Filter>Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\player.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\playerGlobalConfig.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\playerDataKeyConfig.h">
+      <Filter>Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

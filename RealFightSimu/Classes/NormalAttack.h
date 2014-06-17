@@ -8,9 +8,12 @@ class NormalAttack: public BaseSkill
 
 public:
 	NormalAttack(BaseSoldier* p){
-		m_Name = "NormalAttack";
-		m_pOwner = p;
+		setName("NormalAttack");
+		setOwner(p);
+		//m_Name = "NormalAttack";
+		//m_pOwner = p;
 	}
+
 	~NormalAttack();
 
 	virtual void setTargets();

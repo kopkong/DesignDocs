@@ -28,6 +28,11 @@ private:
 	// 
 
 public:
+	void setName(std::string s);
+
+	void setCoolDown(int c);
+
+	void setOwner(BaseSoldier* pSoldier);
 
 	// 决定技能施放的目标对象是谁
 	virtual void setTargets() =0;
