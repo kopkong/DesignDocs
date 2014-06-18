@@ -2,6 +2,8 @@
 #include "player.h"
 #include "CocosGUI.h"
 #include "cocostudio/CocoStudio.h"
+
+#include "AssertConfigs.h"
 USING_NS_CC;
 
 
@@ -29,22 +31,15 @@ bool HelloWorld::init()
     {
         return false;
     }
-    
-    Size visibleSize = Director::getInstance()->getVisibleSize();
-    Point origin = Director::getInstance()->getVisibleOrigin();
 
-	//TouchGroup* ul =TouchGroup::create();
-	
-	//this->addWidget(GUIReader::shareReader()->widgetFromJsonFile("UIEditorTest_1.json"));
 
 	cocos2d::ui::Layout* _layout = static_cast<cocos2d::ui::Layout*>(
-		cocostudio::GUIReader::getInstance()->widgetFromJsonFile("../Resources/NewUi_1/NewUi_1.ExportJson"));
+        cocostudio::GUIReader::getInstance()->widgetFromJsonFile(UILAYTOU_MAIN_CONFIG.c_str()));
 	Size screenSize = CCDirector::getInstance()->getWinSize();
 	Size rootSize = _layout->getSize();
 	this->setPosition(Point((screenSize.width - rootSize.width) / 2,
 		(screenSize.height - rootSize.height) / 2));
 	this->addChild(_layout);
-
 
 	PlayerDataMgr::Instance().initPlayerData();
 	PlayerDataMgr::Instance().savePlayerData();
