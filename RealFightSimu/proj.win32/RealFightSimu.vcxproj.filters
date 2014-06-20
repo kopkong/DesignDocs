@@ -25,6 +25,12 @@
     <Filter Include="Player">
       <UniqueIdentifier>{22d9bcba-3fa6-46aa-a746-82f173455022}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Slots">
+      <UniqueIdentifier>{2d7dd1ec-80ca-4d8d-9f0a-d0df2131bf3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Config">
+      <UniqueIdentifier>{f8838851-6cf9-4b1f-8f6f-9f567e92a37a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -50,6 +56,24 @@
     </ClCompile>
     <ClCompile Include="..\Classes\PlayerDataMgr.cpp">
       <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ConfigDataMgr.cpp">
+      <Filter>Config</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Slot.cpp">
+      <Filter>Slots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SlotHero.cpp">
+      <Filter>Slots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SlotMgr.cpp">
+      <Filter>Slots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocos2d\cocos\editor-support\spine\extension.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocos2d\cocos\editor-support\spine\Json.cpp">
+      <Filter>Classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +115,33 @@
     </ClInclude>
     <ClInclude Include="..\Classes\playerDataKeyConfig.h">
       <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Marco.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Utility.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ConfigDataMgr.h">
+      <Filter>Config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Slot.h">
+      <Filter>Slots</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SlotGlobalConfig.h">
+      <Filter>Slots</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SlotHero.h">
+      <Filter>Slots</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SlotMgr.h">
+      <Filter>Slots</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AssertConfigs.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ConfigStruct.h">
+      <Filter>Config</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

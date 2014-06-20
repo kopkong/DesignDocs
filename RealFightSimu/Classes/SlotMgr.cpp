@@ -1,4 +1,4 @@
-//
+﻿//
 //  SlotMgr.cpp
 //  RealFightSimu
 //
@@ -69,8 +69,8 @@ void SlotsMgr::loadSlots(SLOTTYPE type)
     if (dataString.size() > 0 && m_SlotsSize[type] >= 0) {
         // 解析数据,本来是字符串
         
-        string* items;
-        splitString(dataString, ';', &items, m_SlotsSize[type]);
+        string items[MAXSLOTDATASIZE];
+        splitString(dataString, ';', &items[0], m_SlotsSize[type]);
         
         for(int p = 0; p< m_SlotsSize[type] ; ++ p)
         {
@@ -129,6 +129,7 @@ void SlotsMgr::addSlot(SLOTTYPE type, Slot& slot)
     
     if (availableSlot != NOSLOT) {
         slot.updateSlotIndex(availableSlot);
+		m_SlotsContainer[type].insert(std::pair<SLOTINDEX,Slot>(slot.m_Index,slot));
     }
     else
     {

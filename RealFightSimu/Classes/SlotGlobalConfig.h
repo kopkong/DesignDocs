@@ -35,6 +35,7 @@ static const char* SLOT_DATAKEY_ARMYMATDATA = "SLOTARMYMATDATA";
 
 
 static const std::string PLAYER_DEFAULT_HERODATASTRING = "1,1,1,1,1";
+static const int MAXSLOTDATASIZE = 20;
 static const int SLOTHERO_ONFIELD = 1;
 static const int SLOTHERO_OFFFIELD = 0;
 

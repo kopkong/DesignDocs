@@ -1,4 +1,4 @@
-//
+﻿//
 //  SlotHero.cpp
 //  RealFightSimu
 //
@@ -18,10 +18,10 @@ void SlotHero::parserStringData()
 {
     if(m_DataString.size() > 0)
     {
-        std::string* value;
-        splitString(m_DataString, ',', &value, m_SlotDataLength);
+        std::string value[MAXSLOTDATASIZE];
+        splitString(m_DataString, ',', &value[0], m_SlotDataLength);
         
-        CC_ASSERT(m_SlotDataLength == value->size() && "Data String size incorrect!");
+        //CC_ASSERT(m_SlotDataLength == value->size() && "Data String size incorrect!");
         
         for(int p = 0; p< m_SlotDataLength; ++p)
         {

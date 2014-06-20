@@ -69,7 +69,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\Classes;..;$(EngineRoot)cocos\editor-support;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\Classes;..;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\editor-support\spine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -135,26 +135,41 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\BaseSoldier.cpp" />
+    <ClCompile Include="..\Classes\ConfigDataMgr.cpp" />
     <ClCompile Include="..\Classes\GameBaseEntity.cpp" />
     <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
     <ClCompile Include="..\Classes\NormalAttack.cpp" />
     <ClCompile Include="..\Classes\player.cpp" />
     <ClCompile Include="..\Classes\PlayerDataMgr.cpp" />
+    <ClCompile Include="..\Classes\Slot.cpp" />
+    <ClCompile Include="..\Classes\SlotHero.cpp" />
+    <ClCompile Include="..\Classes\SlotMgr.cpp" />
+    <ClCompile Include="..\cocos2d\cocos\editor-support\spine\extension.cpp" />
+    <ClCompile Include="..\cocos2d\cocos\editor-support\spine\Json.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
+    <ClInclude Include="..\Classes\AssertConfigs.h" />
     <ClInclude Include="..\Classes\BaseSkill.h" />
     <ClInclude Include="..\Classes\BaseSoldier.h" />
     <ClInclude Include="..\Classes\BaseSoldierState.h" />
     <ClInclude Include="..\Classes\BaseState.h" />
     <ClInclude Include="..\Classes\BaseStateMachine.h" />
+    <ClInclude Include="..\Classes\ConfigDataMgr.h" />
+    <ClInclude Include="..\Classes\ConfigStruct.h" />
     <ClInclude Include="..\Classes\GameBaseEntity.h" />
     <ClInclude Include="..\Classes\HelloWorldScene.h" />
+    <ClInclude Include="..\Classes\Marco.h" />
     <ClInclude Include="..\Classes\NormalAttack.h" />
     <ClInclude Include="..\Classes\player.h" />
     <ClInclude Include="..\Classes\playerDataKeyConfig.h" />
     <ClInclude Include="..\Classes\playerGlobalConfig.h" />
+    <ClInclude Include="..\Classes\Slot.h" />
+    <ClInclude Include="..\Classes\SlotGlobalConfig.h" />
+    <ClInclude Include="..\Classes\SlotHero.h" />
+    <ClInclude Include="..\Classes\SlotMgr.h" />
+    <ClInclude Include="..\Classes\Utility.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>

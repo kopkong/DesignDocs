@@ -5,6 +5,7 @@
 #include "cocostudio/CocoStudio.h"
 
 #include "AssertConfigs.h"
+#include "ConfigDataMgr.h"
 USING_NS_CC;
 
 
@@ -35,7 +36,7 @@ bool HelloWorld::init()
 
 
 	cocos2d::ui::Layout* _layout = static_cast<cocos2d::ui::Layout*>(
-        cocostudio::GUIReader::getInstance()->widgetFromJsonFile(UILAYTOU_MAIN_CONFIG.c_str()));
+        cocostudio::GUIReader::getInstance()->widgetFromJsonFile(UI_LAYTOU_MAIN.c_str()));
 	Size screenSize = CCDirector::getInstance()->getWinSize();
 	Size rootSize = _layout->getSize();
 	this->setPosition(Point((screenSize.width - rootSize.width) / 2,

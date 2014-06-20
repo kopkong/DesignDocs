@@ -1,4 +1,4 @@
-//
+﻿//
 //  SlotHero.h
 //  RealFightSimu
 //

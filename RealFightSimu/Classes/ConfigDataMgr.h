@@ -10,24 +10,24 @@
 #define __RealFightSimu__ConfigDataMgr__
 
 #include <iostream>
-
-enum ConfigType
-{
-    HERO,
-    ARMOR,
-    ARMY,
-    ARMORMAT,
-    ARMYMAT
-};
-
+#include <map>
+#include "ConfigStruct.h"
+#include "json.h"
 
 class ConfigDataMgr
 {
+private:
+	Json* getRootJson(const char* szFileName);
+	void parseHeroConfig(Json*);
+
 protected:
     ~ConfigDataMgr();
     
 public:
-    
+	std::map<int,StructHeroConfig> m_HeroConfigMap;
+
+    static ConfigDataMgr& Instance();
+	void initAllConfigs();
 };
 
 #endif /* defined(__RealFightSimu__ConfigDataMgr__) */

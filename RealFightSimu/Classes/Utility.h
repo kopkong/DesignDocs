@@ -1,4 +1,4 @@
-//
+﻿//
 //  utility.h
 //  RealFightSimu
 //
@@ -12,7 +12,7 @@
 #include <string>
 using namespace std;
 
-inline void splitString(const string inputStr,char delim,string** outputArray,int arrayLength)
+inline void splitString(const string inputStr,char delim,string* outputArray,int arrayLength)
 {
 	string newStr = inputStr;
     
@@ -25,7 +25,7 @@ inline void splitString(const string inputStr,char delim,string** outputArray,in
 	while( delimPos != string::npos && i< arrayLength)
 	{
 		tmpStr = newStr.substr(startPos,delimPos - startPos);
-		*outputArray[i] = tmpStr.c_str();
+		outputArray[i] = tmpStr.c_str();
         
 		startPos = delimPos + 1;
 		delimPos = newStr.find(delim,startPos);
