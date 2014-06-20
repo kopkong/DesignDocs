@@ -68,8 +68,8 @@
 		89F74EAA195132F900E1B063 /* GameBaseEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89F74E9E195132F900E1B063 /* GameBaseEntity.cpp */; };
 		89F74EAB195132F900E1B063 /* NormalAttack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89F74EA0195132F900E1B063 /* NormalAttack.cpp */; };
 		89F74EAC195132F900E1B063 /* NormalAttack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89F74EA0195132F900E1B063 /* NormalAttack.cpp */; };
-		89F74EAD195132F900E1B063 /* player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89F74EA2195132F900E1B063 /* player.cpp */; };
-		89F74EAE195132F900E1B063 /* player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89F74EA2195132F900E1B063 /* player.cpp */; };
+		89F74EAD195132F900E1B063 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89F74EA2195132F900E1B063 /* Player.cpp */; };
+		89F74EAE195132F900E1B063 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89F74EA2195132F900E1B063 /* Player.cpp */; };
 		89F74EAF195132F900E1B063 /* PlayerDataMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89F74EA5195132F900E1B063 /* PlayerDataMgr.cpp */; };
 		89F74EB0195132F900E1B063 /* PlayerDataMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89F74EA5195132F900E1B063 /* PlayerDataMgr.cpp */; };
 		89F74EB8195133B800E1B063 /* NewUi0.plist in Resources */ = {isa = PBXBuildFile; fileRef = 89F74EB5195133B800E1B063 /* NewUi0.plist */; };
@@ -79,6 +79,14 @@
 		89F74EBC195133B800E1B063 /* NewUi_1.ExportJson in Resources */ = {isa = PBXBuildFile; fileRef = 89F74EB7195133B800E1B063 /* NewUi_1.ExportJson */; };
 		89F74EBD195133B800E1B063 /* NewUi_1.ExportJson in Resources */ = {isa = PBXBuildFile; fileRef = 89F74EB7195133B800E1B063 /* NewUi_1.ExportJson */; };
 		89F74EC019513ED900E1B063 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89F74EBF19513ED900E1B063 /* Cocoa.framework */; };
+		89F74EC919516DF500E1B063 /* SlotMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89F74EC719516DF500E1B063 /* SlotMgr.cpp */; };
+		89F74ECA19516DF500E1B063 /* SlotMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89F74EC719516DF500E1B063 /* SlotMgr.cpp */; };
+		89F74ECD1951A1F300E1B063 /* SlotHero.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89F74ECB1951A1F300E1B063 /* SlotHero.cpp */; };
+		89F74ECE1951A1F300E1B063 /* SlotHero.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89F74ECB1951A1F300E1B063 /* SlotHero.cpp */; };
+		89F74ED31951A71200E1B063 /* ConfigDataMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89F74ED11951A71200E1B063 /* ConfigDataMgr.cpp */; };
+		89F74ED41951A71200E1B063 /* ConfigDataMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89F74ED11951A71200E1B063 /* ConfigDataMgr.cpp */; };
+		89F74EE11953CC8400E1B063 /* Slot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89F74EDF1953CC8400E1B063 /* Slot.cpp */; };
+		89F74EE21953CC8400E1B063 /* Slot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89F74EDF1953CC8400E1B063 /* Slot.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -287,16 +295,27 @@
 		89F74E9F195132F900E1B063 /* GameBaseEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameBaseEntity.h; path = ../Classes/GameBaseEntity.h; sourceTree = "<group>"; };
 		89F74EA0195132F900E1B063 /* NormalAttack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NormalAttack.cpp; path = ../Classes/NormalAttack.cpp; sourceTree = "<group>"; };
 		89F74EA1195132F900E1B063 /* NormalAttack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NormalAttack.h; path = ../Classes/NormalAttack.h; sourceTree = "<group>"; };
-		89F74EA2195132F900E1B063 /* player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = player.cpp; path = ../Classes/player.cpp; sourceTree = "<group>"; };
-		89F74EA3195132F900E1B063 /* player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = player.h; path = ../Classes/player.h; sourceTree = "<group>"; };
-		89F74EA4195132F900E1B063 /* playerDataKeyConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = playerDataKeyConfig.h; path = ../Classes/playerDataKeyConfig.h; sourceTree = "<group>"; };
+		89F74EA2195132F900E1B063 /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Player.cpp; path = ../Classes/Player.cpp; sourceTree = "<group>"; };
+		89F74EA3195132F900E1B063 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Player.h; path = ../Classes/Player.h; sourceTree = "<group>"; };
+		89F74EA4195132F900E1B063 /* PlayerDataKeyConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayerDataKeyConfig.h; path = ../Classes/PlayerDataKeyConfig.h; sourceTree = "<group>"; };
 		89F74EA5195132F900E1B063 /* PlayerDataMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PlayerDataMgr.cpp; path = ../Classes/PlayerDataMgr.cpp; sourceTree = "<group>"; };
-		89F74EA6195132F900E1B063 /* playerGlobalConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = playerGlobalConfig.h; path = ../Classes/playerGlobalConfig.h; sourceTree = "<group>"; };
+		89F74EA6195132F900E1B063 /* PlayerGlobalConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayerGlobalConfig.h; path = ../Classes/PlayerGlobalConfig.h; sourceTree = "<group>"; };
 		89F74EB5195133B800E1B063 /* NewUi0.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = NewUi0.plist; sourceTree = "<group>"; };
 		89F74EB6195133B800E1B063 /* NewUi0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NewUi0.png; sourceTree = "<group>"; };
 		89F74EB7195133B800E1B063 /* NewUi_1.ExportJson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NewUi_1.ExportJson; sourceTree = "<group>"; };
 		89F74EBE1951351500E1B063 /* AssertConfigs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AssertConfigs.h; path = ../Classes/AssertConfigs.h; sourceTree = "<group>"; };
 		89F74EBF19513ED900E1B063 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		89F74EC61951666400E1B063 /* SlotGlobalConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SlotGlobalConfig.h; path = ../Classes/SlotGlobalConfig.h; sourceTree = "<group>"; };
+		89F74EC719516DF500E1B063 /* SlotMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SlotMgr.cpp; path = ../Classes/SlotMgr.cpp; sourceTree = "<group>"; };
+		89F74ECB1951A1F300E1B063 /* SlotHero.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SlotHero.cpp; path = ../Classes/SlotHero.cpp; sourceTree = "<group>"; };
+		89F74ED11951A71200E1B063 /* ConfigDataMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ConfigDataMgr.cpp; path = ../Classes/ConfigDataMgr.cpp; sourceTree = "<group>"; };
+		89F74ED21951A71200E1B063 /* ConfigDataMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConfigDataMgr.h; path = ../Classes/ConfigDataMgr.h; sourceTree = "<group>"; };
+		89F74ED51951C6C300E1B063 /* SlotHero.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SlotHero.h; path = ../Classes/SlotHero.h; sourceTree = "<group>"; };
+		89F74ED71952A0D100E1B063 /* Marco.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Marco.h; path = ../Classes/Marco.h; sourceTree = "<group>"; };
+		89F74EDA1952EF5300E1B063 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utility.h; path = ../Classes/Utility.h; sourceTree = "<group>"; };
+		89F74EDC1953CB0400E1B063 /* SlotMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SlotMgr.h; path = ../Classes/SlotMgr.h; sourceTree = "<group>"; };
+		89F74EDF1953CC8400E1B063 /* Slot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Slot.cpp; path = ../Classes/Slot.cpp; sourceTree = "<group>"; };
+		89F74EE01953CC8400E1B063 /* Slot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Slot.h; path = ../Classes/Slot.h; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -374,15 +393,19 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				89F74ED01951A6FA00E1B063 /* Config */,
 				89F74EB31951337300E1B063 /* GameEntity */,
 				89F74EB21951330F00E1B063 /* Skill */,
 				89F74EB11951330200E1B063 /* Soldier */,
 				89F74E95195132B600E1B063 /* Player */,
+				89F74EC219514D2000E1B063 /* Slots */,
 				1AFAF8B316D35DE700DB1158 /* AppDelegate.cpp */,
 				1AFAF8B416D35DE700DB1158 /* AppDelegate.h */,
 				1AFAF8B516D35DE700DB1158 /* HelloWorldScene.cpp */,
 				1AFAF8B616D35DE700DB1158 /* HelloWorldScene.h */,
 				89F74EBE1951351500E1B063 /* AssertConfigs.h */,
+				89F74ED71952A0D100E1B063 /* Marco.h */,
+				89F74EDA1952EF5300E1B063 /* Utility.h */,
 			);
 			name = Classes;
 			path = ../classes;
@@ -511,11 +534,11 @@
 		89F74E95195132B600E1B063 /* Player */ = {
 			isa = PBXGroup;
 			children = (
-				89F74EA2195132F900E1B063 /* player.cpp */,
-				89F74EA3195132F900E1B063 /* player.h */,
-				89F74EA4195132F900E1B063 /* playerDataKeyConfig.h */,
+				89F74EA2195132F900E1B063 /* Player.cpp */,
+				89F74EA3195132F900E1B063 /* Player.h */,
+				89F74EA4195132F900E1B063 /* PlayerDataKeyConfig.h */,
 				89F74EA5195132F900E1B063 /* PlayerDataMgr.cpp */,
-				89F74EA6195132F900E1B063 /* playerGlobalConfig.h */,
+				89F74EA6195132F900E1B063 /* PlayerGlobalConfig.h */,
 			);
 			name = Player;
 			sourceTree = "<group>";
@@ -559,6 +582,29 @@
 				89F74EB7195133B800E1B063 /* NewUi_1.ExportJson */,
 			);
 			path = NewUi_1;
+			sourceTree = "<group>";
+		};
+		89F74EC219514D2000E1B063 /* Slots */ = {
+			isa = PBXGroup;
+			children = (
+				89F74EC61951666400E1B063 /* SlotGlobalConfig.h */,
+				89F74ECB1951A1F300E1B063 /* SlotHero.cpp */,
+				89F74ED51951C6C300E1B063 /* SlotHero.h */,
+				89F74EDC1953CB0400E1B063 /* SlotMgr.h */,
+				89F74EC719516DF500E1B063 /* SlotMgr.cpp */,
+				89F74EDF1953CC8400E1B063 /* Slot.cpp */,
+				89F74EE01953CC8400E1B063 /* Slot.h */,
+			);
+			name = Slots;
+			sourceTree = "<group>";
+		};
+		89F74ED01951A6FA00E1B063 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				89F74ED11951A71200E1B063 /* ConfigDataMgr.cpp */,
+				89F74ED21951A71200E1B063 /* ConfigDataMgr.h */,
+			);
+			name = Config;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -772,15 +818,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
+				89F74ED31951A71200E1B063 /* ConfigDataMgr.cpp in Sources */,
 				89F74EAF195132F900E1B063 /* PlayerDataMgr.cpp in Sources */,
+				89F74EE11953CC8400E1B063 /* Slot.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
-				89F74EAD195132F900E1B063 /* player.cpp in Sources */,
+				89F74EAD195132F900E1B063 /* Player.cpp in Sources */,
 				89F74EAB195132F900E1B063 /* NormalAttack.cpp in Sources */,
+				89F74ECD1951A1F300E1B063 /* SlotHero.cpp in Sources */,
 				89F74EA9195132F900E1B063 /* GameBaseEntity.cpp in Sources */,
 				1AFAF8B716D35DE700DB1158 /* AppDelegate.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				1AFAF8B816D35DE700DB1158 /* HelloWorldScene.cpp in Sources */,
 				89F74EA7195132F900E1B063 /* BaseSoldier.cpp in Sources */,
+				89F74EC919516DF500E1B063 /* SlotMgr.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -789,12 +839,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				89F74EAA195132F900E1B063 /* GameBaseEntity.cpp in Sources */,
+				89F74ECE1951A1F300E1B063 /* SlotHero.cpp in Sources */,
+				89F74ECA19516DF500E1B063 /* SlotMgr.cpp in Sources */,
+				89F74EE21953CC8400E1B063 /* Slot.cpp in Sources */,
 				5087E75717EB910900C73F5D /* AppDelegate.cpp in Sources */,
+				89F74ED41951A71200E1B063 /* ConfigDataMgr.cpp in Sources */,
 				89F74EA8195132F900E1B063 /* BaseSoldier.cpp in Sources */,
 				5087E75817EB910900C73F5D /* HelloWorldScene.cpp in Sources */,
 				89F74EAC195132F900E1B063 /* NormalAttack.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
-				89F74EAE195132F900E1B063 /* player.cpp in Sources */,
+				89F74EAE195132F900E1B063 /* Player.cpp in Sources */,
 				89F74EB0195132F900E1B063 /* PlayerDataMgr.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

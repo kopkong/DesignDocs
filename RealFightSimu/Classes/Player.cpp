@@ -64,14 +64,14 @@ void Player::upgrade()
 	{
 		// Notify player upgrade
 
-		// Éý¼¶
+		// å‡çº§
 		m_Level = m_Level + 1 ;
 	}
 }
 
 void Player::addEnergy(int energy)
 {
-	CC_ASSERT(energy > 0 && "ENerty must bigger than 0");
+	CC_ASSERT(energy > 0 && "Energy must bigger than 0");
 
 	int newValue = m_Energy + energy;
 

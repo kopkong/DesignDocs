@@ -1,11 +1,7 @@
 #include "player.h"
 #include "cocos2d.h"
 #include "playerDataKeyConfig.h"
-
-#define GetIntergerByKey(x) cocos2d::UserDefault::getInstance()->getIntegerForKey(x) 
-#define GetStringByKey(x) cocos2d::UserDefault::getInstance()->getStringForKey(x)
-#define SetIntergerByKey(x,v) cocos2d::UserDefault::getInstance()->setIntegerForKey(x,v)
-#define SetStringByKey(x,v) cocos2d::UserDefault::getInstance()->setStringForKey(x,v)
+#include "Marco.h"
 
 PlayerDataMgr& PlayerDataMgr::Instance()
 {

@@ -6,13 +6,13 @@
 class GameBaseEntity : public cocos2d::Node
 {
 private:
-	// Ã¿Ò»¸öÊµÌå¶¼±ØĞëÓĞÒ»¸öÎ¨Ò»µÄID
+	// å”¯ä¸€çš„ID
 	int m_ID;
 
-	// ÏÂÒ»¸öÓĞĞ§ID£¬Ã¿´ÎÊµÀı»¯Ê±»á¸üĞÂÕâ¸öÖµ
+	// ä¸‹ä¸€ä¸ªæœ‰æ•ˆçš„ID
 	static int m_NextValidID;
 
-	// ÔÚ¹¹Ôìº¯ÊıÖĞµ÷ÓÃÕâ¸ö·½·¨È·±£Ã¿´Î¶¼ÄÜÕıÈ·µÄÉèÖÃID
+	// è®¾ç½®ID
 	void setID(int val);
 
 
@@ -24,7 +24,7 @@ public:
 
 	virtual ~GameBaseEntity(){}
 
-	// Ã¿Ò»¸öÊµÀı±ØĞë×Ô¼ºÊµÏÖupdateº¯Êı
+	// æ¯ä¸€ä¸ªå­ç±»éƒ½è¦å®ç°è¿™ä¸ªå‡½æ•°
 	virtual void update() = 0;
 
 

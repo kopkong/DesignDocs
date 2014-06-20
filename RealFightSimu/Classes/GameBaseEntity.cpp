@@ -4,11 +4,11 @@
 int GameBaseEntity::m_NextValidID = 0;
 
 
-// 在构造函数中调用这个方法确保每次都能正确的设置ID
+// 璁剧疆ID
 void GameBaseEntity::setID(int val)
 {
-	// 确保每一个ID不小于下一个有效ID
-	CC_ASSERT( (val >= m_NextValidID) && "Invalid ID, ID小于下一个有效ID");
+	// 妫�鏌D鏄惁鏈夋晥
+	CC_ASSERT( (val >= m_NextValidID) && "Invalid ID");
 
 	m_ID = val;
 

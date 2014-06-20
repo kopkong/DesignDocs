@@ -1,5 +1,6 @@
 #include "HelloWorldScene.h"
-#include "player.h"
+#include "Player.h"
+#include "SlotMgr.h"
 #include "CocosGUI.h"
 #include "cocostudio/CocoStudio.h"
 
@@ -43,6 +44,9 @@ bool HelloWorld::init()
 
 	PlayerDataMgr::Instance().initPlayerData();
 	PlayerDataMgr::Instance().savePlayerData();
+    
+    SlotsMgr::Instance().initPlayerSlots();
+    SlotsMgr::Instance().savePlayerSlots();
     return true;
 }
 
