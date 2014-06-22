@@ -39,27 +39,6 @@ private:
     
     // 属性数据
     
-    // 初始数据
-    float m_InitialHP;
-    float m_InitialATK;
-    float m_InitialDEF;
-    
-    // 成长率
-    float m_GrowthHP;
-    float m_GrowthATK;
-    float m_GrowthDEF;
-    
-    // 进阶成长倍率
-    float m_PromoteRateHP;
-    float m_PromoteRateATK;
-    float m_PromoteRateDEF;
-    
-    // 闪避几率
-    float m_DodgeRate;
-    
-    // 爆击几率
-    float m_CriticalRate;
-    
 public:
     SlotHero(std::string s):Slot((int)HEROSLOTENUMRATION_ALL)
     {

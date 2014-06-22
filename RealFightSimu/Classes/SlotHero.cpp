@@ -8,6 +8,8 @@
 
 #include "SlotHero.h"
 #include "Utility.h"
+#include "ConfigDataMgr.h"
+#include "ConfigStruct.h"
 
 void SlotHero::init()
 {
@@ -31,6 +33,8 @@ void SlotHero::parserStringData()
                 {
                     m_ConfigID = atoi(value[p].c_str());
                     m_SlotData.push_back(m_ConfigID);
+
+					CC_ASSERT(ConfigDataMgr::Instance().validConfigID(CONFIG_TYPE_HERO,m_ConfigID));
                     break;
                 }
                 case HEROSLOTENUMRATION_SLOTINDEX:
@@ -98,5 +102,31 @@ void SlotHero::updateIsOnTheField(int isOnField)
     m_SlotData[HEROSLOTENUMRATION_ISONTHEFIELD] = isOnField;
 }
 
+float SlotHero::computeHP()
+{
+	float hp;
+	StructHeroConfig config = ConfigDataMgr::Instance().m_HeroConfigMap[m_ConfigID];
+	hp = (config.InitialHP + m_Level * config.GrowthHP) * ( 1 * config.RankUpRateHP * (m_Rank - 1));
+
+	return hp;
+}
+
+float SlotHero::computeATK()
+{
+	float atk;
+	StructHeroConfig config = ConfigDataMgr::Instance().m_HeroConfigMap[m_ConfigID];
+	atk =  (config.InitialATK + m_Level * config.GrowthATK) * ( 1 * config.RankUpRateATK * (m_Rank - 1));
+
+	return atk;
+}
+
+float SlotHero::computeDEF()
+{
+	float def;
+	StructHeroConfig config = ConfigDataMgr::Instance().m_HeroConfigMap[m_ConfigID];
+	def =  (config.InitialDEF + m_Level * config.GrowthDEF) * ( 1 * config.RankUpRateDEF * (m_Rank - 1));
+
+	return def;
+}
 
 

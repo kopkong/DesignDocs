@@ -38,6 +38,13 @@ struct StructHeroConfig
 	float RankUpRateDEF;
 	std::string SpecialArmor;
 	int Souls;
+
+	static StructHeroConfig getEmptyInstance()
+	{
+		StructHeroConfig c;
+		c.ID = 0;
+		return c;
+	}
 };
 
 #endif

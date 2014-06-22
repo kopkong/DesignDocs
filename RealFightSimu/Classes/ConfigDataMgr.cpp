@@ -89,3 +89,32 @@ void ConfigDataMgr::parseHeroConfig( Json* jJson )
 	}
 	Json_dispose(jJson);
 }
+
+bool ConfigDataMgr::validConfigID(ConfigType type,int id)
+{
+	if(id <= 0 )
+	{
+		return false;
+	}
+	
+	switch(type)
+	{
+		case CONFIG_TYPE_HERO:
+			{
+				std::map<int,StructHeroConfig>::iterator it = m_HeroConfigMap.find(id);
+				if(it == m_HeroConfigMap.end())
+				{
+					// 没找到
+					return false;
+				}
+				else
+				{
+					return true;
+				}
+			}
+
+		default:
+			return false;
+	}
+
+}

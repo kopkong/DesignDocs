@@ -6,6 +6,7 @@
 
 #include "AssertConfigs.h"
 #include "ConfigDataMgr.h"
+#include "ConfigDataMgr.h"
 USING_NS_CC;
 
 
@@ -34,7 +35,6 @@ bool HelloWorld::init()
         return false;
     }
 
-
 	cocos2d::ui::Layout* _layout = static_cast<cocos2d::ui::Layout*>(
         cocostudio::GUIReader::getInstance()->widgetFromJsonFile(UI_LAYTOU_MAIN.c_str()));
 	Size screenSize = CCDirector::getInstance()->getWinSize();
@@ -43,11 +43,15 @@ bool HelloWorld::init()
 		(screenSize.height - rootSize.height) / 2));
 	this->addChild(_layout);
 
+	ConfigDataMgr::Instance().initAllConfigs();
+
 	PlayerDataMgr::Instance().initPlayerData();
 	PlayerDataMgr::Instance().savePlayerData();
     
     SlotsMgr::Instance().initPlayerSlots();
     SlotsMgr::Instance().savePlayerSlots();
+
+
     return true;
 }
 
