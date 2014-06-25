@@ -60,8 +60,6 @@ public:
     
     void updateIsOnTheField(int);
     
-    void generateDataString();
-    
     bool isInPlayerFormation();
     
     float computeHP();

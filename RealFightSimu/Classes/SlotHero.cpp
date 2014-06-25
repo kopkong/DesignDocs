@@ -57,7 +57,7 @@ void SlotHero::parserStringData()
                 }
                 case HEROSLOTENUMRATION_ISONTHEFIELD:
                 {
-                    m_IsOnField = value[p] == "0" ? false:true;
+                    m_IsOnField = atoi(value[p].c_str());
                     m_SlotData.push_back(m_IsOnField);
                     break;
                 }

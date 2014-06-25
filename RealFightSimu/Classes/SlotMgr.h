@@ -21,8 +21,9 @@ class SlotsMgr
 private:
 	Player* m_Player;
     
-    SlotItems m_SlotsContainer[SLOTTYPE::ALL];
-    int m_SlotsSize[SLOTTYPE::ALL];
+    SlotItems m_SlotsContainer[SLOTTYPE_ALL];
+    int m_SlotsSize[SLOTTYPE_ALL];
+	const char* getSlotDataKeyByType(SLOTTYPE);
     
 protected:
 	~SlotsMgr();

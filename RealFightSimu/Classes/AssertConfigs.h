@@ -24,9 +24,12 @@ using namespace std;
 static const string UI_LAYTOU_MAIN = RESOURCES_PATH + "NewUi_1/NewUi_1.ExportJson";
 
 
-
-static const string CONFIG_FILE_WUJIANG = RESOURCES_PATH + "Config/wujiang.json";
-static const string CONFIG_FILE_SOLDIER = RESOURCES_PATH + "Config/soldier.json";
+static const string CONFIG_FILE_WUJIANG			=	RESOURCES_PATH	+ "Config/general.json";
+static const string CONFIG_FILE_SOLDIER			=	RESOURCES_PATH	+ "Config/soldier.json";
+static const string CONFIG_FILE_ARMOR			=	RESOURCES_PATH	+ "Config/armor.json";
+static const string CONFIG_FILE_ITEM			=	RESOURCES_PATH	+ "Config/item.json";
+static const string CONFIG_FILE_SOLDIERMATERIAL	=	RESOURCES_PATH	+ "Config/soldierMaterial.json";
+static const string CONFIG_FILE_ARMORMATERIAL	=	RESOURCES_PATH	+ "Config/armroMaterial.json";
 
 #endif
 

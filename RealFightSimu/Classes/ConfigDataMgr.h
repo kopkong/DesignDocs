@@ -19,9 +19,9 @@ enum ConfigType
 	CONFIG_TYPE_HERO,
 	CONFIG_TYPE_ITME,
 	CONFIG_TYPE_ARMOR,
-	CONFIG_TYPE_ARMY,
+	CONFIG_TYPE_SOLDIER,
 	CONFIG_TYPE_ARMORMAT,
-	CONFIG_TYPE_ARMYMAT
+	CONFIG_TYPE_SOLDIERMAT
 };
 
 class ConfigDataMgr
@@ -29,12 +29,19 @@ class ConfigDataMgr
 private:
 	Json* getRootJson(const char* szFileName);
 	void parseHeroConfig(Json*);
+	void parseSoldierConfig(Json*);
+	void parseArmorConfig(Json*);
+	void parseItemConfig(Json*);
+	void parseSoldierMaterialConfig(Json*);
+	void parseArmorMaterialConfig(Json*);
 
 protected:
     ~ConfigDataMgr();
     
 public:
 	std::map<int,StructHeroConfig> m_HeroConfigMap;
+	std::map<int,StructSoldierConfig> m_SoldierConfigMap;
+	std::map<int,StructArmorConfig> m_ArmorConfigMap;
 
     static ConfigDataMgr& Instance();
 	void initAllConfigs();

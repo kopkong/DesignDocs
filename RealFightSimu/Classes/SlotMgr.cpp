@@ -26,45 +26,35 @@ void SlotsMgr::initPlayerSlots()
 {
     
     // 先加载每个SlotContainer的Size
-    m_SlotsSize[SLOTTYPE::HERO] = GetIntergerByKey(SLOT_DATAKEY_HEROSIZE);
-    m_SlotsSize[SLOTTYPE::ITEM] = GetIntergerByKey(SLOT_DATAKEY_ITEMSIZE);
-    m_SlotsSize[SLOTTYPE::ARMOR] = GetIntergerByKey(SLOT_DATAKEY_ARMORSIZE);
-    m_SlotsSize[SLOTTYPE::ARMY] = GetIntergerByKey(SLOT_DATAKEY_ARMYSIZE);
-    m_SlotsSize[SLOTTYPE::ARMORMAT] = GetIntergerByKey(SLOT_DATAKEY_ARMORMATSIZE);
-    m_SlotsSize[SLOTTYPE::ARMYMAT] = GetIntergerByKey(SLOT_DATAKEY_ARMYMATSIZE);
+    m_SlotsSize[SLOTTYPE_HERO] = GetIntergerByKey(SLOT_DATAKEY_HEROSIZE);
+    m_SlotsSize[SLOTTYPE_ITEM] = GetIntergerByKey(SLOT_DATAKEY_ITEMSIZE);
+    m_SlotsSize[SLOTTYPE_ARMOR] = GetIntergerByKey(SLOT_DATAKEY_ARMORSIZE);
+    m_SlotsSize[SLOTTYPE_SOLDIER] = GetIntergerByKey(SLOT_DATAKEY_SOLDIERSIZE);
+    m_SlotsSize[SLOTTYPE_ARMORMAT] = GetIntergerByKey(SLOT_DATAKEY_ARMORMATSIZE);
+    m_SlotsSize[SLOTTYPE_SOLDIERMAT] = GetIntergerByKey(SLOT_DATAKEY_SOLDIERMATSIZE);
     
-    loadSlots(SLOTTYPE::HERO);
+    loadSlots(SLOTTYPE_HERO);
+	loadSlots(SLOTTYPE_SOLDIER);
 }
 
 void SlotsMgr::savePlayerSlots()
 {
     // save Slot Size
-    SetIntergerByKey(SLOT_DATAKEY_HEROSIZE, m_SlotsSize[SLOTTYPE::HERO]);
-    SetIntergerByKey(SLOT_DATAKEY_ITEMSIZE, m_SlotsSize[SLOTTYPE::ITEM]);
-    SetIntergerByKey(SLOT_DATAKEY_ARMORSIZE, m_SlotsSize[SLOTTYPE::ARMOR]);
-    SetIntergerByKey(SLOT_DATAKEY_ARMYSIZE, m_SlotsSize[SLOTTYPE::ARMY]);
-    SetIntergerByKey(SLOT_DATAKEY_ARMORMATSIZE, m_SlotsSize[SLOTTYPE::ARMORMAT]);
-    SetIntergerByKey(SLOT_DATAKEY_ARMYMATSIZE, m_SlotsSize[SLOTTYPE::ARMYMAT]);
+    SetIntergerByKey(SLOT_DATAKEY_HEROSIZE, m_SlotsSize[SLOTTYPE_HERO]);
+    SetIntergerByKey(SLOT_DATAKEY_ITEMSIZE, m_SlotsSize[SLOTTYPE_ITEM]);
+    SetIntergerByKey(SLOT_DATAKEY_ARMORSIZE, m_SlotsSize[SLOTTYPE_ARMOR]);
+    SetIntergerByKey(SLOT_DATAKEY_SOLDIERSIZE, m_SlotsSize[SLOTTYPE_SOLDIER]);
+    SetIntergerByKey(SLOT_DATAKEY_ARMORMATSIZE, m_SlotsSize[SLOTTYPE_ARMORMAT]);
+    SetIntergerByKey(SLOT_DATAKEY_SOLDIERMATSIZE, m_SlotsSize[SLOTTYPE_SOLDIERMAT]);
     
-    saveSlots(SLOTTYPE::HERO);
+    saveSlots(SLOTTYPE_HERO);
+	saveSlots(SLOTTYPE_SOLDIER);
 }
 
 
 void SlotsMgr::loadSlots(SLOTTYPE type)
 {
-    string dataString;
-
-    switch(type)
-    {
-        case SLOTTYPE::HERO:
-            dataString = GetStringByKey(SLOT_DATAKEY_HERODATA);
-            break;
-        case SLOTTYPE::ITEM:
-            dataString = GetStringByKey(SLOT_DATAKEY_ITEMDATA);
-            break;
-        default:
-            break;
-    }
+    string dataString = GetStringByKey(getSlotDataKeyByType(type));
     
     if (dataString.size() > 0 && m_SlotsSize[type] >= 0) {
         // 解析数据,本来是字符串
@@ -76,7 +66,7 @@ void SlotsMgr::loadSlots(SLOTTYPE type)
         {
             switch(type)
             {
-                case SLOTTYPE::HERO:
+                case SLOTTYPE_HERO:
                 {
                     SlotHero s(items[p]);
                     m_SlotsContainer[type].insert(std::pair<SLOTINDEX,Slot>(s.m_Index,s));
@@ -88,12 +78,12 @@ void SlotsMgr::loadSlots(SLOTTYPE type)
     }
     else
     {
-        if (type == SLOTTYPE::HERO)
+        if (type == SLOTTYPE_HERO)
         {
             // 给玩家一个初始的默认英雄
             SlotHero s(PLAYER_DEFAULT_HERODATASTRING);
             
-            addSlot(SLOTTYPE::HERO, s);
+            addSlot(SLOTTYPE_HERO, s);
         }
     }
 }
@@ -108,15 +98,8 @@ void SlotsMgr::saveSlots(SLOTTYPE type)
         allItems += it->second.m_DataString + ";";
     }
     
-    switch (type) {
-        case SLOTTYPE::HERO:
-        {
-            SetStringByKey(SLOT_DATAKEY_HERODATA, allItems);
-            break;
-        }
-        default:
-            break;
-    }
+	SetStringByKey(getSlotDataKeyByType(type), allItems);
+    
 }
 
 void SlotsMgr::addSlot(SLOTTYPE type, Slot& slot)
@@ -166,4 +149,11 @@ void SlotsMgr::removeSlot(SLOTTYPE type, SLOTINDEX index)
         m_SlotsSize[type] = m_SlotsSize[type] - 1;
     }
 
+}
+
+const char* SlotsMgr::getSlotDataKeyByType(SLOTTYPE type)
+{
+	std::string datakeyArray[(int)SLOTTYPE_ALL] = {SLOT_DATAKEY_HERODATA,SLOT_DATAKEY_ITEMDATA,SLOT_DATAKEY_ARMORDATA,SLOT_DATAKEY_SOLDIERDATA,SLOT_DATAKEY_ARMORMATDATA,SLOT_DATAKEY_SOLDIERMATDATA,SLOT_DATAKEY_FORMATIONDATA};
+
+	return datakeyArray[(int)type].c_str();
 }
