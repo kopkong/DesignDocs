@@ -32,7 +32,7 @@ void SlotSoldier::parserStringData()
 					m_ConfigID = atoi(value[p].c_str());
 					m_SlotData.push_back(m_ConfigID);
 
-					CC_ASSERT(ConfigDataMgr::Instance().validConfigID(CONFIG_TYPE_SOLDIER,m_ConfigID));
+					CC_ASSERT(ConfigDataMgr::Instance().validConfigID(CONFIG_TYPE_SOLDIER,m_ConfigID) ,"ConfigID ²»ºÏ·¨");
 					break;
 				}
 			case SOLDIERSLOTENUMRATION_SLOTINDEX:
@@ -51,12 +51,6 @@ void SlotSoldier::parserStringData()
 				{
 					m_Rank  = atoi(value[p].c_str());
 					m_SlotData.push_back(m_Rank);
-					break;
-				}
-			case SOLDIERSLOTENUMRATION_BINDHEROSLOT:
-				{
-					m_BindHeroSlot = (SLOTINDEX)atoi(value[p].c_str());
-					m_SlotData.push_back(m_BindHeroSlot);
 					break;
 				}
 			default:
@@ -87,12 +81,6 @@ void SlotSoldier::updateSlotIndex(SLOTINDEX index)
 {
 	m_Index = index;
 	m_SlotData[SOLDIERSLOTENUMRATION_SLOTINDEX] = (int)index;
-}
-
-void SlotSoldier::updateHeroBind(SLOTINDEX index)
-{
-	m_BindHeroSlot = index;
-	m_SlotData[SOLDIERSLOTENUMRATION_BINDHEROSLOT] = (int)index;
 }
 
 float SlotSoldier::computeHP()

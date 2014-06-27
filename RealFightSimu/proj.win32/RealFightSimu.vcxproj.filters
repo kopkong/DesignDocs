@@ -31,6 +31,9 @@
     <Filter Include="Layer">
       <UniqueIdentifier>{14fa67d1-5abd-4b53-b78b-3d567a8742d9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DB">
+      <UniqueIdentifier>{f3d8e2c1-d994-4d48-a572-780a85d2ecbd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -77,6 +80,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\SlotSoldier.cpp">
       <Filter>Slots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\sqlite-amalgamation-3080500\sqlite3.c">
+      <Filter>DB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\DatabaseHelper.cpp">
+      <Filter>DB</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +157,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\SlotSoldier.h">
       <Filter>Slots</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\DatabaseHelper.h">
+      <Filter>DB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\sqlite-amalgamation-3080500\sqlite3.h">
+      <Filter>DB</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

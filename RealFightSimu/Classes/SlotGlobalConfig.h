@@ -2,7 +2,7 @@
 //  slotGlobalConfig.h
 //  RealFightSimu
 //
-//  Created by å­” ä»¤é”´ on 14-6-18.
+//  Created by ¿× ÁîïÇ on 14-6-18.
 //
 //
 
@@ -35,7 +35,8 @@ static const char* SLOT_DATAKEY_SOLDIERMATDATA = "SLOTSOLDIERMATDATA";
 static const char* SLOT_DATAKEY_FORMATIONDATA  = "SLOTFORMATIONDATA";
 
 
-static const std::string PLAYER_DEFAULT_HERODATASTRING = "1,1,1,1,1";
+static const std::string PLAYER_DEFAULT_HERODATASTRING = "1,1,1,1,1,1";
+static const std::string PLAYER_DEFAULT_SOLDIERDATASTRING = "1,1,1,1";
 static const int MAXSLOTDATASIZE = 20;
 static const int SLOTHERO_ONFIELD = 1;
 static const int SLOTHERO_OFFFIELD = 0;

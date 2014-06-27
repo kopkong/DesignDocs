@@ -2,10 +2,12 @@
 #define __PLAYER_H__
 
 #include <string>
+#include <map>
 
 class Player
 {
 public:
+	int m_ID;
 	std::string m_Name;
 	int m_Level;
 	int m_EXP;
@@ -70,12 +72,19 @@ class PlayerDataMgr
 {
 private:
 	Player* m_Player;
+	std::map<const char*,std::string> m_DataMember; 
 
 protected:
 	~PlayerDataMgr();
 
 public:
 	static PlayerDataMgr& Instance();
+
+	void setIntByKey(const char*,int);
+	void setStringByKey(const char*,std::string);
+
+	int getIntByKey(const char*);
+	std::string getStringByKey(const char*);
 
 	// ¥”Œƒº˛≥ı ºªØÕÊº“ ˝æ›
 	void initPlayerData();

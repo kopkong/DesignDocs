@@ -8,6 +8,7 @@
 
 #include "SlotHero.h"
 #include "Utility.h"
+#include "SlotMgr.h"
 #include "ConfigDataMgr.h"
 #include "ConfigStruct.h"
 
@@ -30,37 +31,43 @@ void SlotHero::parserStringData()
             switch((HEROSLOTENUMRATION)p)
             {
                 case HEROSLOTENUMRATION_CONFIGID:
-                {
-                    m_ConfigID = atoi(value[p].c_str());
-                    m_SlotData.push_back(m_ConfigID);
+					{
+						m_ConfigID = atoi(value[p].c_str());
+						m_SlotData.push_back(m_ConfigID);
 
-					CC_ASSERT(ConfigDataMgr::Instance().validConfigID(CONFIG_TYPE_HERO,m_ConfigID));
-                    break;
-                }
+						CC_ASSERT(ConfigDataMgr::Instance().validConfigID(CONFIG_TYPE_HERO,m_ConfigID));
+						break;
+					}
                 case HEROSLOTENUMRATION_SLOTINDEX:
-                {
-                    m_Index = (SLOTINDEX)atoi(value[p].c_str());
-                    m_SlotData.push_back(m_Index);
-                    break;
-                }
+					{
+						m_Index = (SLOTINDEX)atoi(value[p].c_str());
+						m_SlotData.push_back(m_Index);
+						break;
+					}
                 case HEROSLOTENUMRATION_LEVEL:
-                {
-                    m_Level = atoi(value[p].c_str());
-                    m_SlotData.push_back(m_Level);
-                    break;
-                }
+					{
+						m_Level = atoi(value[p].c_str());
+						m_SlotData.push_back(m_Level);
+						break;
+					}
                 case HEROSLOTENUMRATION_RANK:
-                {
-                    m_Rank  = atoi(value[p].c_str());
-                    m_SlotData.push_back(m_Rank);
-                    break;
-                }
+					{
+						m_Rank  = atoi(value[p].c_str());
+						m_SlotData.push_back(m_Rank);
+						break;
+					}
+				case HEROSLOTENUMRATION_BINDSOLDIERINDEX:
+					{
+						m_SoldierIndex = (SLOTINDEX)atoi(value[p].c_str());
+						m_SlotData.push_back(m_SoldierIndex);
+						break;
+					}
                 case HEROSLOTENUMRATION_ISONTHEFIELD:
-                {
-                    m_IsOnField = atoi(value[p].c_str());
-                    m_SlotData.push_back(m_IsOnField);
-                    break;
-                }
+					{
+						m_IsOnField = atoi(value[p].c_str());
+						m_SlotData.push_back(m_IsOnField);
+						break;
+					}
                 default:
                     break;
             }
@@ -100,6 +107,15 @@ void SlotHero::updateIsOnTheField(int isOnField)
 {
     m_IsOnField = isOnField;
     m_SlotData[HEROSLOTENUMRATION_ISONTHEFIELD] = isOnField;
+}
+
+void SlotHero::updateSoldierIndex(SLOTINDEX index)
+{
+	if(SlotsMgr::Instance().isSlotExists(SLOTTYPE_SOLDIER,index))
+	{
+		m_SoldierIndex = index;
+		m_SlotData[HEROSLOTENUMRATION_BINDSOLDIERINDEX] = index;
+	}
 }
 
 float SlotHero::computeHP()

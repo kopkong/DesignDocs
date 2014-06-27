@@ -26,7 +26,7 @@ void ConfigDataMgr::initAllConfigs()
 {
 	parseHeroConfig(getRootJson(CONFIG_FILE_WUJIANG.c_str()));
 	parseSoldierConfig(getRootJson(CONFIG_FILE_SOLDIER.c_str()));
-	parseSoldierConfig(getRootJson(CONFIG_FILE_ARMOR.c_str()));
+	parseArmorConfig(getRootJson(CONFIG_FILE_ARMOR.c_str()));
 }
 
 Json* ConfigDataMgr::getRootJson(const char* szFileName)
@@ -69,7 +69,7 @@ void ConfigDataMgr::parseHeroConfig( Json* jJson )
 					config.AttackSpeed				= Json_getInt(prJson,"AttackSpeed",0);
 					config.AttackRange				= Json_getInt(prJson,"AttackRange",0);
 					config.SkillID					= Json_getString(prJson,"SkillID","");
-					config.TalentID					= Json_getString(prJson,"TalentID","");
+					config.TalentID					= Json_getInt(prJson,"TalentID",0);
 					config.GrowthHP					= Json_getInt(prJson,"HPGrowth",0);
 					config.GrowthATK				= Json_getInt(prJson,"ATKGrowth",0);
 					config.GrowthDEF				= Json_getInt(prJson,"DEFGrowth",0);
@@ -125,7 +125,7 @@ void ConfigDataMgr::parseSoldierConfig(Json* json)
 					config.AttackSpeed				= Json_getInt(prJson,"AttackSpeed",0);
 					config.AttackRange				= Json_getInt(prJson,"AttackRange",0);
 					config.SkillID					= Json_getString(prJson,"SkillID","");
-					config.AIID						= Json_getString(prJson,"AIID","");
+					config.AIID						= Json_getInt(prJson,"AIID",0);
 					config.GrowthHP					= Json_getInt(prJson,"HPGrowth",0);
 					config.GrowthATK				= Json_getInt(prJson,"ATKGrowth",0);
 					config.GrowthDEF				= Json_getInt(prJson,"DEFGrowth",0);
@@ -207,7 +207,6 @@ void ConfigDataMgr::parseArmorMaterialConfig(Json* json)
 
 }
 
-
 bool ConfigDataMgr::validConfigID(ConfigType type,int id)
 {
 	if(id <= 0 )
@@ -230,7 +229,30 @@ bool ConfigDataMgr::validConfigID(ConfigType type,int id)
 					return true;
 				}
 			}
-
+		case CONFIG_TYPE_SOLDIER:
+			{
+				std::map<int,StructSoldierConfig>::iterator it = m_SoldierConfigMap.find(id);
+				if(it == m_SoldierConfigMap.end())
+				{
+					return false;
+				}
+				else
+				{
+					return true;
+				}
+			}
+		case CONFIG_TYPE_ARMOR:
+			{
+				std::map<int,StructArmorConfig>::iterator it = m_ArmorConfigMap.find(id);
+				if(it == m_ArmorConfigMap.end())
+				{
+					return false;
+				}
+				else
+				{
+					return true;
+				}
+			}
 		default:
 			return false;
 	}

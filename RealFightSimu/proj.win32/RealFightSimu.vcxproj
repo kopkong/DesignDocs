@@ -136,6 +136,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\BaseSoldier.cpp" />
     <ClCompile Include="..\Classes\ConfigDataMgr.cpp" />
+    <ClCompile Include="..\Classes\DatabaseHelper.cpp" />
     <ClCompile Include="..\Classes\GameBaseEntity.cpp" />
     <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
     <ClCompile Include="..\Classes\NormalAttack.cpp" />
@@ -145,6 +146,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClCompile Include="..\Classes\SlotHero.cpp" />
     <ClCompile Include="..\Classes\SlotMgr.cpp" />
     <ClCompile Include="..\Classes\SlotSoldier.cpp" />
+    <ClCompile Include="..\Classes\sqlite-amalgamation-3080500\sqlite3.c" />
     <ClCompile Include="..\cocos2d\cocos\editor-support\spine\extension.cpp" />
     <ClCompile Include="..\cocos2d\cocos\editor-support\spine\Json.cpp" />
     <ClCompile Include="main.cpp" />
@@ -159,6 +161,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClInclude Include="..\Classes\BaseStateMachine.h" />
     <ClInclude Include="..\Classes\ConfigDataMgr.h" />
     <ClInclude Include="..\Classes\ConfigStruct.h" />
+    <ClInclude Include="..\Classes\DatabaseHelper.h" />
     <ClInclude Include="..\Classes\GameBaseEntity.h" />
     <ClInclude Include="..\Classes\HelloWorldScene.h" />
     <ClInclude Include="..\Classes\Marco.h" />
@@ -171,6 +174,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClInclude Include="..\Classes\SlotHero.h" />
     <ClInclude Include="..\Classes\SlotMgr.h" />
     <ClInclude Include="..\Classes\SlotSoldier.h" />
+    <ClInclude Include="..\Classes\sqlite-amalgamation-3080500\sqlite3.h" />
     <ClInclude Include="..\Classes\Utility.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>

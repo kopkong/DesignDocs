@@ -34,6 +34,8 @@ public:
     void initPlayerSlots();
     
     void savePlayerSlots();
+
+	bool isSlotExists(SLOTTYPE type,SLOTINDEX index);
     
     void loadSlots(SLOTTYPE);
     

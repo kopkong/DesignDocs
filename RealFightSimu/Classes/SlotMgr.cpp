@@ -10,6 +10,8 @@
 #include "Marco.h"
 #include "Utility.h"
 #include "SlotHero.h"
+#include "SlotSoldier.h"
+#include "DatabaseHelper.h"
 
 SlotsMgr::~SlotsMgr()
 {
@@ -40,6 +42,7 @@ void SlotsMgr::initPlayerSlots()
 void SlotsMgr::savePlayerSlots()
 {
     // save Slot Size
+	//cocos2d::UserDefault::getInstance()->setIntegerForKey(SLOT_DATAKEY_HEROSIZE, m_SlotsSize[SLOTTYPE_HERO]);
     SetIntergerByKey(SLOT_DATAKEY_HEROSIZE, m_SlotsSize[SLOTTYPE_HERO]);
     SetIntergerByKey(SLOT_DATAKEY_ITEMSIZE, m_SlotsSize[SLOTTYPE_ITEM]);
     SetIntergerByKey(SLOT_DATAKEY_ARMORSIZE, m_SlotsSize[SLOTTYPE_ARMOR]);
@@ -50,7 +53,6 @@ void SlotsMgr::savePlayerSlots()
     saveSlots(SLOTTYPE_HERO);
 	saveSlots(SLOTTYPE_SOLDIER);
 }
-
 
 void SlotsMgr::loadSlots(SLOTTYPE type)
 {
@@ -85,9 +87,14 @@ void SlotsMgr::loadSlots(SLOTTYPE type)
             
             addSlot(SLOTTYPE_HERO, s);
         }
+		if(type == SLOTTYPE_SOLDIER)
+		{
+			SlotSoldier s(PLAYER_DEFAULT_SOLDIERDATASTRING);
+
+			addSlot(SLOTTYPE_SOLDIER,s);
+		}
     }
 }
-
 
 void SlotsMgr::saveSlots(SLOTTYPE type)
 {
@@ -98,6 +105,7 @@ void SlotsMgr::saveSlots(SLOTTYPE type)
         allItems += it->second.m_DataString + ";";
     }
     
+	//cocos2d::log("Saving datakey %s",getSlotDataKeyByType(type));
 	SetStringByKey(getSlotDataKeyByType(type), allItems);
     
 }
@@ -139,16 +147,28 @@ SLOTINDEX SlotsMgr::findAvailableSlot(SLOTTYPE type)
 
 void SlotsMgr::removeSlot(SLOTTYPE type, SLOTINDEX index)
 {
-    std::map<SLOTINDEX,Slot>::iterator it = m_SlotsContainer[type].find(index);
-    
-    if( it != m_SlotsContainer[type].end())
-    {
-        // 找到了并删除它
+	SlotItems::iterator it = m_SlotsContainer[type].find(index);
+
+	if(it!= m_SlotsContainer[type].end())
+	{
+		// 找到了并删除它
         m_SlotsContainer[type].erase(it);
         
         m_SlotsSize[type] = m_SlotsSize[type] - 1;
     }
 
+}
+
+bool SlotsMgr::isSlotExists(SLOTTYPE type, SLOTINDEX index)
+{
+	SlotItems::iterator it = m_SlotsContainer[type].find(index);
+
+	if(it!= m_SlotsContainer[type].end())
+	{
+		return true;
+	}
+
+	return false;
 }
 
 const char* SlotsMgr::getSlotDataKeyByType(SLOTTYPE type)

@@ -17,6 +17,7 @@ enum HEROSLOTENUMRATION
     HEROSLOTENUMRATION_SLOTINDEX,
     HEROSLOTENUMRATION_LEVEL,
     HEROSLOTENUMRATION_RANK,
+	HEROSLOTENUMRATION_BINDSOLDIERINDEX,
     HEROSLOTENUMRATION_ISONTHEFIELD, // 是否上阵 0或者1
     HEROSLOTENUMRATION_ALL
 };
@@ -37,8 +38,10 @@ private:
     // 是否已上阵
     int m_IsOnField;
     
-    // 属性数据
-    
+    // 绑定的士兵ID
+    SLOTINDEX m_SoldierIndex;
+
+
 public:
     SlotHero(std::string s):Slot((int)HEROSLOTENUMRATION_ALL)
     {
@@ -61,6 +64,8 @@ public:
     void updateIsOnTheField(int);
     
     bool isInPlayerFormation();
+
+	void updateSoldierIndex(SLOTINDEX index);
     
     float computeHP();
     

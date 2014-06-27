@@ -1,7 +1,9 @@
 #include "player.h"
 #include "cocos2d.h"
 #include "playerDataKeyConfig.h"
+#include "AssertConfigs.h"
 #include "Marco.h"
+#include "Utility.h"
 
 PlayerDataMgr& PlayerDataMgr::Instance()
 {
@@ -39,6 +41,7 @@ void PlayerDataMgr::initPlayerData()
 
 void PlayerDataMgr::savePlayerData()
 {
+	//cocos2d::UserDefault::getInstance()->setStringForKey(PLAYER_DATAKEY_NAME,m_Player->m_Name);
 	SetStringByKey(PLAYER_DATAKEY_NAME,m_Player->m_Name);
 	SetIntergerByKey(PLAYER_DATAKEY_LEVEL,m_Player->m_Level);
 	SetIntergerByKey(PLAYER_DATAKEY_EXP,m_Player->m_EXP);

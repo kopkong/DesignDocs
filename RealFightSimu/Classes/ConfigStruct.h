@@ -30,7 +30,7 @@ struct StructHeroConfig
 	int AttackSpeed;
 	int AttackRange;
 	std::string SkillID;
-	std::string TalentID;
+	int TalentID;
 	int GrowthHP;
 	int GrowthATK;
 	int GrowthDEF;
@@ -60,7 +60,7 @@ struct StructSoldierConfig
 	int AttackSpeed;
 	int AttackRange;
 	std::string SkillID;
-	std::string AIID;
+	int AIID;
 	int GrowthHP;
 	int GrowthATK;
 	int GrowthDEF;

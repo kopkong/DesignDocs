@@ -31,5 +31,7 @@ static const string CONFIG_FILE_ITEM			=	RESOURCES_PATH	+ "Config/item.json";
 static const string CONFIG_FILE_SOLDIERMATERIAL	=	RESOURCES_PATH	+ "Config/soldierMaterial.json";
 static const string CONFIG_FILE_ARMORMATERIAL	=	RESOURCES_PATH	+ "Config/armroMaterial.json";
 
+static const string USER_DEFAULT_DATAFILE		=	RESOURCES_PATH  + "UserData/data";
+static const string DATABASE_FILE				=	RESOURCES_PATH	+ "UserData/user.db";
 #endif
 

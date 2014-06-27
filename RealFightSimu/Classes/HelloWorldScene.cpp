@@ -7,6 +7,7 @@
 #include "AssertConfigs.h"
 #include "ConfigDataMgr.h"
 #include "ConfigDataMgr.h"
+#include "DatabaseHelper.h"
 USING_NS_CC;
 
 
@@ -44,13 +45,14 @@ bool HelloWorld::init()
 	this->addChild(_layout);
 
 	ConfigDataMgr::Instance().initAllConfigs();
+	DataBaseHelper::Instance().initDataBase();
+	DataBaseHelper::Instance().addNewPlayer("´ó¿×ÊñÊò");
 
 	PlayerDataMgr::Instance().initPlayerData();
 	PlayerDataMgr::Instance().savePlayerData();
     
     SlotsMgr::Instance().initPlayerSlots();
     SlotsMgr::Instance().savePlayerSlots();
-
 
     return true;
 }
