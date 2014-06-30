@@ -11,7 +11,6 @@ void Player::addCoin(int coin)
 	{
 		m_CurrentCoin = newCoins;
 	}
-
 }
 
 void Player::minusCoin(int coin)

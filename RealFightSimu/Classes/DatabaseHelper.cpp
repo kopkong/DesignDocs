@@ -35,7 +35,7 @@ void DataBaseHelper::addNewPlayer(std::string name)
 	}
 }
 
-void DataBaseHelper::updatePlayerProperty()
+void DataBaseHelper::updatePlayerProperty(Player* pPlayer)
 {
 
 }

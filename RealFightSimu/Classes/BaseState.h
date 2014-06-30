@@ -6,8 +6,6 @@ class BaseState
 {
 public:
 
-	virtual ~State(){}
-
 	// 刚进入状态时执行
 	virtual void enter(entity_type*) = 0;
 
@@ -17,8 +15,6 @@ public:
 	// 退出状态时执行
 	virtual void exit(entity_type*) = 0;
 
-}
-
-
+};
 
 #endif

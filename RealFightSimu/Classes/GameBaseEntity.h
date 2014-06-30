@@ -15,7 +15,6 @@ private:
 	// 设置ID
 	void setID(int val);
 
-
 public:
 	GameBaseEntity(int id)
 	{
@@ -26,7 +25,6 @@ public:
 
 	// 每一个子类都要实现这个函数
 	virtual void update() = 0;
-
 
 	int ID() const {return m_ID;}
 };

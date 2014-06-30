@@ -34,6 +34,9 @@
     <Filter Include="DB">
       <UniqueIdentifier>{f3d8e2c1-d994-4d48-a572-780a85d2ecbd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Battle">
+      <UniqueIdentifier>{2fdd22f5-50f8-4ffa-a85d-e8d7566ee281}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -163,6 +166,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\sqlite-amalgamation-3080500\sqlite3.h">
       <Filter>DB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BattleField.h">
+      <Filter>Battle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BattleFieldState.h">
+      <Filter>Battle</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

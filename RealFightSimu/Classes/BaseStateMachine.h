@@ -68,9 +68,9 @@ public:
 		return typeid(*m_pCurrentState) = typeid(st);
 	}
 
-	BaseState<entity_type>* CurrentState const{return m_pCurrentState;}
-	BaseState<entity_type>* GlobalState const{return m_pGlobalState;}
-	BaseState<entity_type>* PreviousState const{return m_pPreviousState;}
+	BaseState<entity_type>* CurrentState() const{return m_pCurrentState;}
+	BaseState<entity_type>* GlobalState() const{return m_pGlobalState;}
+	BaseState<entity_type>* PreviousState() const{return m_pPreviousState;}
 };
 
 
