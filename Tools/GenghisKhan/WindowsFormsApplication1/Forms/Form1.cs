@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Threading;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,17 +50,53 @@ namespace WindowsFormsApplication1
         IDictionary<int, Item> _MapItem;
         IDictionary<int, Angel> _MapAngel;
 
+        private delegate void BeginInvokeDelegate();
+
+        Thread uiThread = null;
+
         private void button1_Click(object sender, EventArgs e)
         {
             StringBuilder message = new StringBuilder();
 
             message.Append(checkFileExists());
-            
+
             message.Append(checkAllConfigJson());
             message.Append(checkWujiangJson());
             message.Append(checkSoldierJson());
             message.Append(checkAngelJson());
             textBox1.Text = message.ToString();
+
+            //uiThread = new Thread(new ThreadStart(this.updateLabel));
+            //uiThread.Start();
+
+            //Thread.Sleep(1000);
+            //uiThread.Abort();
+            
+        }
+
+        private void updateLabel()
+        {
+            for (int i = 10; i < 100; i++)
+            {
+                Thread.Sleep(100);
+                this.Invoke(new Action<int>(this.testA), i);
+            }
+
+            this.Invoke(new Action(this.testB));
+            
+        }
+
+        private void testA(int v)
+        {
+            this.label1.Text = v.ToString();
+        }
+
+        private void testB()
+        {
+            // Finish thread
+            uiThread.Abort();
+
+            textBox1.Text += "TestA done" + Environment.NewLine;
         }
 
         private string checkFileExists()
@@ -375,8 +412,11 @@ namespace WindowsFormsApplication1
             string[] files = Directory.GetFiles(System.Environment.CurrentDirectory, "*.json");
             string path1 = @"D:\DesignDocs\RealFightSimu\Resources\Config";
             string path2 = @"D:\GenghisKhan\client\Resources\Jsonconfig";
+            string path3 = @"D:\GenghisKhan\server\Resource\GameConfig";
+
             bool path1Exists = true;
             bool path2Exists = true;
+            bool path3Exists = true;
 
             if(!Directory.Exists(path1))
             {
@@ -390,6 +430,12 @@ namespace WindowsFormsApplication1
                 path2Exists = false;
             }
 
+            if (!Directory.Exists(path3))
+            {
+                textBox1.Text = "找不到路径" + path3;
+                path3Exists = false;
+            }
+
             foreach (string f in files)
             {
                 FileInfo file = new FileInfo(f);
@@ -398,6 +444,9 @@ namespace WindowsFormsApplication1
 
                 if(path2Exists)
                     File.Copy(f, Path.Combine(path2, file.Name), true);
+
+                if (path3Exists)
+                    File.Copy(f, Path.Combine(path3, file.Name), true);
             }
 
             textBox1.Text = "拷贝完成";
