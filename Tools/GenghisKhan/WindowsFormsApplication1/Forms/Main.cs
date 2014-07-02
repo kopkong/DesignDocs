@@ -75,5 +75,12 @@ namespace WindowsFormsApplication1
                     break;
             }
         }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            Form1 form = new Form1();
+
+            form.Show();
+        }
     }
 }

@@ -72,6 +72,7 @@
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.button17 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -367,6 +368,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.button17);
             this.tabPage1.Controls.Add(this.button16);
             this.tabPage1.Controls.Add(this.button15);
             this.tabPage1.Controls.Add(this.button14);
@@ -430,7 +432,7 @@
             // 
             // button11
             // 
-            this.button11.Location = new System.Drawing.Point(847, 347);
+            this.button11.Location = new System.Drawing.Point(718, 333);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(110, 112);
             this.button11.TabIndex = 2;
@@ -501,6 +503,16 @@
             this.tabPage6.Text = "任务";
             this.tabPage6.UseVisualStyleBackColor = true;
             // 
+            // button17
+            // 
+            this.button17.Location = new System.Drawing.Point(847, 333);
+            this.button17.Name = "button17";
+            this.button17.Size = new System.Drawing.Size(110, 112);
+            this.button17.TabIndex = 8;
+            this.button17.Text = "配置检查工具";
+            this.button17.UseVisualStyleBackColor = true;
+            this.button17.Click += new System.EventHandler(this.button17_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -569,5 +581,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox TB_Energy;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button button17;
     }
 }

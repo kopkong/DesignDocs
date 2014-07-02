@@ -20,6 +20,23 @@ namespace WindowsFormsApplication1
     }
 
     [DataContract]
+    public class Experience
+    {
+        [DataMember]
+        public int ID { get; set; }
+
+        public int Lv { get; set; }
+
+        public int PlayerStart { get; set; }
+
+        public int PlayerEnd { get; set; }
+
+        public int GeneralStart { get; set; }
+
+        public int GeneralEnd { get; set; }
+    }
+
+    [DataContract]
     public class General
     {
         [DataMember]
@@ -196,6 +213,9 @@ namespace WindowsFormsApplication1
 
         [DataMember]
         public float DEFRankRate { get; set; }
+
+        [DataMember]
+        public int InitialCount { get; set; }
     }
 
     [DataContract]

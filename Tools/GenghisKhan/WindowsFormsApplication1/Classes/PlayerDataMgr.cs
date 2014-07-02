@@ -78,7 +78,7 @@ namespace WindowsFormsApplication1
                 index = playerBags[SlotType.SlotType_General].Keys.Max() + 1;
             }
 
-            Slot s = new Slot(SlotType.SlotType_General,index,id);
+            SlotGeneral s = new SlotGeneral(SlotType.SlotType_General, index, id);
             playerBags[SlotType.SlotType_General].Add(s.Index, s);
             
             // Add default soldier for general
@@ -94,7 +94,7 @@ namespace WindowsFormsApplication1
                 index = playerBags[SlotType.SlotType_Soldier].Keys.Max() + 1;
             }
 
-            Slot s = new Slot(SlotType.SlotType_Soldier, index, id);
+            SlotSoldier s = new SlotSoldier(SlotType.SlotType_Soldier, index, id);
             s.BindGeneralSlot = generalIndex;
 
             playerBags[SlotType.SlotType_Soldier].Add(s.Index, s);

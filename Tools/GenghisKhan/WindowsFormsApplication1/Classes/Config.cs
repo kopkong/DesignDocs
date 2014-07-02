@@ -46,6 +46,7 @@ namespace WindowsFormsApplication1
         const string SOLDIERLMATERIAL_CONFIG = "soldierMaterial.json";
         const string ARMORMATERIAL_CONFIG = "armorMaterial.json";
         const string ANGEL_CONFIG = "angel.json";
+        const string EXP_CONFIG = "experience.json";
 
         List<AllConfig> _ListAllConfig;
         List<General> _ListGeneral;
@@ -53,6 +54,7 @@ namespace WindowsFormsApplication1
         List<Armor> _ListArmor;
         List<Item> _ListItem;
         List<Angel> _ListAngel;
+        List<Experience> _ListExperience;
 
         public IDictionary<int, AllConfig> _MapAllConfig;
         public IDictionary<int, General> _MapGeneral;
@@ -60,6 +62,7 @@ namespace WindowsFormsApplication1
         public IDictionary<int, Armor> _MapArmor;
         public IDictionary<int, Item> _MapItem;
         public IDictionary<int, Angel> _MapAngel;
+        public IDictionary<int, Experience> _MapExperience;
 
         public void Init()
         {
@@ -200,6 +203,24 @@ namespace WindowsFormsApplication1
                         sb.AppendLine(ANGEL_CONFIG + MESSAGE_DUPLICATEID);
                     else
                         _MapAngel.Add(g.ID, g);
+                });
+            }
+
+            if (!File.Exists(EXP_CONFIG))
+            {
+                allSuccess = false;
+                sb.AppendLine("没有经验配置");
+            }
+            else
+            {
+                _MapExperience = new Dictionary<int, Experience>();
+                JsonHelper.GetJsonStringArray<Experience>(EXP_CONFIG, ref _ListExperience);
+                _ListExperience.ForEach(delegate(Experience e)
+                {
+                    if (_MapExperience.ContainsKey(e.ID))
+                        sb.AppendLine(EXP_CONFIG + MESSAGE_DUPLICATEID);
+                    else
+                        _MapExperience.Add(e.ID, e);
                 });
             }
 
