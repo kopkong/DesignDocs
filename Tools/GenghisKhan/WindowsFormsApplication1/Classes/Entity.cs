@@ -309,4 +309,85 @@ namespace WindowsFormsApplication1
         [DataMember]
         public string SkillID { get; set; }
     }
+
+    [DataContract]
+    public class Chapter
+    {
+        [DataMember]
+        public int ID { get; set; }
+
+        [DataMember]
+        public string Name { get; set; }
+
+        [DataMember]
+        public string IconID { get; set; }
+
+        [DataMember]
+        public int NextChapterID { get; set; }
+
+        [DataMember]
+        public string RewardRule { get; set; }
+
+    }
+
+    [DataContract]
+    public class Level
+    {
+        [DataMember]
+        public int ID { get; set; }
+
+        [DataMember]
+        public string Name { get; set; }
+
+        [DataMember]
+        public int ChapterID { get; set; }
+
+        [DataMember]
+        public string IconID { get; set; }
+
+        [DataMember]
+        public string BackGround { get; set; }
+
+        [DataMember]
+        public string Enemy { get; set; }
+
+        [DataMember]
+        public string LevelReward { get; set; }
+
+        [DataMember]
+        public int MoneyReward { get; set; }
+
+        [DataMember]
+        public int GeneralExpReward { get; set; }
+
+        [DataMember]
+        public string ClientShowRewards { get; set; }
+
+        [DataMember]
+        public int ConsumeEnergy { get; set; }
+
+        [DataMember]
+        public int DefaultLocked { get; set; }
+
+        [DataMember]
+        public int UnlockNextLevelID { get; set; }
+
+        [DataMember]
+        public int UnlockChapter { get; set; }
+
+        [DataMember]
+        public int DailyMostTimes { get; set; }
+
+        [DataMember]
+        public int Star1Time { get; set; }
+
+        [DataMember]
+        public int Star2Time { get; set; }
+
+        [DataMember]
+        public int Star3Time { get; set; }
+
+        [DataMember]
+        public int FailTime { get; set; }
+    }
 }

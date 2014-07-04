@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApplication1;
+using WindowsFormsApplication1.Forms;
 
 namespace WindowsFormsApplication1
 {
@@ -54,7 +55,11 @@ namespace WindowsFormsApplication1
                     {
                         break;
                     }
-                case 1:
+                case 1: // 仓库， 装备、部队、道具背包
+                    {
+                        break;
+                    }
+                case 2: // 合成， 碎片背包
                     {
                         break;
                     }
@@ -66,7 +71,27 @@ namespace WindowsFormsApplication1
                         ucGeneralBag.InitList();
                         break;
                     }
-                case 4:
+                case 4: // 阵容
+                    {
+                        UCFormation ucFormation = new UCFormation();
+                        tabControl1.SelectedTab.Controls.Add(ucFormation);
+                        ucFormation.InitPlayerFormation();
+                        break;
+                    }
+                case 5: // 任务
+                    {
+                        break;
+                    }
+                case 6: //  战役
+                    {
+                        UCChapters ucChapter = new UCChapters();
+                        tabControl1.SelectedTab.Controls.Add(ucChapter);
+                        ucChapter.Dock = DockStyle.Fill;
+                        ucChapter.InitChapter();
+
+                        break;
+                    }
+                case 7: // 探索
                     {
                         break;
                     }

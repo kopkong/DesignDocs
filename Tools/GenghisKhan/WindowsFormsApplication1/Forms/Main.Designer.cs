@@ -59,20 +59,20 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.button16 = new System.Windows.Forms.Button();
-            this.button15 = new System.Windows.Forms.Button();
-            this.button14 = new System.Windows.Forms.Button();
-            this.button13 = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
+            this.button17 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.button17 = new System.Windows.Forms.Button();
+            this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.tabPage10 = new System.Windows.Forms.TabPage();
+            this.tabPage11 = new System.Windows.Forms.TabPage();
+            this.tabPage12 = new System.Windows.Forms.TabPage();
+            this.tabPage13 = new System.Windows.Forms.TabPage();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -354,6 +354,13 @@
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Controls.Add(this.tabPage6);
+            this.tabControl1.Controls.Add(this.tabPage7);
+            this.tabControl1.Controls.Add(this.tabPage8);
+            this.tabControl1.Controls.Add(this.tabPage9);
+            this.tabControl1.Controls.Add(this.tabPage10);
+            this.tabControl1.Controls.Add(this.tabPage11);
+            this.tabControl1.Controls.Add(this.tabPage12);
+            this.tabControl1.Controls.Add(this.tabPage13);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.ItemSize = new System.Drawing.Size(60, 60);
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
@@ -369,14 +376,7 @@
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.button17);
-            this.tabPage1.Controls.Add(this.button16);
-            this.tabPage1.Controls.Add(this.button15);
-            this.tabPage1.Controls.Add(this.button14);
-            this.tabPage1.Controls.Add(this.button13);
-            this.tabPage1.Controls.Add(this.button12);
             this.tabPage1.Controls.Add(this.button11);
-            this.tabPage1.Controls.Add(this.button10);
-            this.tabPage1.Controls.Add(this.button9);
             this.tabPage1.Location = new System.Drawing.Point(4, 4);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -385,77 +385,24 @@
             this.tabPage1.Text = "主城";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // button16
+            // button17
             // 
-            this.button16.Location = new System.Drawing.Point(718, 122);
-            this.button16.Name = "button16";
-            this.button16.Size = new System.Drawing.Size(110, 112);
-            this.button16.TabIndex = 7;
-            this.button16.Text = "军团";
-            this.button16.UseVisualStyleBackColor = true;
-            // 
-            // button15
-            // 
-            this.button15.Location = new System.Drawing.Point(206, 122);
-            this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(110, 112);
-            this.button15.TabIndex = 6;
-            this.button15.Text = "探索";
-            this.button15.UseVisualStyleBackColor = true;
-            // 
-            // button14
-            // 
-            this.button14.Location = new System.Drawing.Point(847, 122);
-            this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(110, 112);
-            this.button14.TabIndex = 5;
-            this.button14.Text = "竞技场";
-            this.button14.UseVisualStyleBackColor = true;
-            // 
-            // button13
-            // 
-            this.button13.Location = new System.Drawing.Point(70, 347);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(110, 112);
-            this.button13.TabIndex = 4;
-            this.button13.Text = "爵位";
-            this.button13.UseVisualStyleBackColor = true;
-            // 
-            // button12
-            // 
-            this.button12.Location = new System.Drawing.Point(206, 347);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(110, 112);
-            this.button12.TabIndex = 3;
-            this.button12.Text = "守护神";
-            this.button12.UseVisualStyleBackColor = true;
+            this.button17.Location = new System.Drawing.Point(24, 49);
+            this.button17.Name = "button17";
+            this.button17.Size = new System.Drawing.Size(110, 112);
+            this.button17.TabIndex = 8;
+            this.button17.Text = "配置检查工具";
+            this.button17.UseVisualStyleBackColor = true;
+            this.button17.Click += new System.EventHandler(this.button17_Click);
             // 
             // button11
             // 
-            this.button11.Location = new System.Drawing.Point(718, 333);
+            this.button11.Location = new System.Drawing.Point(154, 49);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(110, 112);
             this.button11.TabIndex = 2;
             this.button11.Text = "商店";
             this.button11.UseVisualStyleBackColor = true;
-            // 
-            // button10
-            // 
-            this.button10.Location = new System.Drawing.Point(334, 122);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(110, 112);
-            this.button10.TabIndex = 1;
-            this.button10.Text = "远征";
-            this.button10.UseVisualStyleBackColor = true;
-            // 
-            // button9
-            // 
-            this.button9.Location = new System.Drawing.Point(70, 122);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(110, 112);
-            this.button9.TabIndex = 0;
-            this.button9.Text = "战役";
-            this.button9.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
@@ -503,15 +450,68 @@
             this.tabPage6.Text = "任务";
             this.tabPage6.UseVisualStyleBackColor = true;
             // 
-            // button17
+            // tabPage7
             // 
-            this.button17.Location = new System.Drawing.Point(847, 333);
-            this.button17.Name = "button17";
-            this.button17.Size = new System.Drawing.Size(110, 112);
-            this.button17.TabIndex = 8;
-            this.button17.Text = "配置检查工具";
-            this.button17.UseVisualStyleBackColor = true;
-            this.button17.Click += new System.EventHandler(this.button17_Click);
+            this.tabPage7.Location = new System.Drawing.Point(4, 4);
+            this.tabPage7.Name = "tabPage7";
+            this.tabPage7.Size = new System.Drawing.Size(1011, 605);
+            this.tabPage7.TabIndex = 6;
+            this.tabPage7.Text = "战役";
+            this.tabPage7.UseVisualStyleBackColor = true;
+            // 
+            // tabPage8
+            // 
+            this.tabPage8.Location = new System.Drawing.Point(4, 4);
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.Size = new System.Drawing.Size(1011, 605);
+            this.tabPage8.TabIndex = 7;
+            this.tabPage8.Text = "探索";
+            this.tabPage8.UseVisualStyleBackColor = true;
+            // 
+            // tabPage9
+            // 
+            this.tabPage9.Location = new System.Drawing.Point(4, 4);
+            this.tabPage9.Name = "tabPage9";
+            this.tabPage9.Size = new System.Drawing.Size(1011, 605);
+            this.tabPage9.TabIndex = 8;
+            this.tabPage9.Text = "远征";
+            this.tabPage9.UseVisualStyleBackColor = true;
+            // 
+            // tabPage10
+            // 
+            this.tabPage10.Location = new System.Drawing.Point(4, 4);
+            this.tabPage10.Name = "tabPage10";
+            this.tabPage10.Size = new System.Drawing.Size(1011, 605);
+            this.tabPage10.TabIndex = 9;
+            this.tabPage10.Text = "军团";
+            this.tabPage10.UseVisualStyleBackColor = true;
+            // 
+            // tabPage11
+            // 
+            this.tabPage11.Location = new System.Drawing.Point(4, 4);
+            this.tabPage11.Name = "tabPage11";
+            this.tabPage11.Size = new System.Drawing.Size(1011, 605);
+            this.tabPage11.TabIndex = 10;
+            this.tabPage11.Text = "竞技场";
+            this.tabPage11.UseVisualStyleBackColor = true;
+            // 
+            // tabPage12
+            // 
+            this.tabPage12.Location = new System.Drawing.Point(4, 4);
+            this.tabPage12.Name = "tabPage12";
+            this.tabPage12.Size = new System.Drawing.Size(1011, 605);
+            this.tabPage12.TabIndex = 11;
+            this.tabPage12.Text = "爵位";
+            this.tabPage12.UseVisualStyleBackColor = true;
+            // 
+            // tabPage13
+            // 
+            this.tabPage13.Location = new System.Drawing.Point(4, 4);
+            this.tabPage13.Name = "tabPage13";
+            this.tabPage13.Size = new System.Drawing.Size(1011, 605);
+            this.tabPage13.TabIndex = 12;
+            this.tabPage13.Text = "守护神";
+            this.tabPage13.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -548,14 +548,7 @@
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.Button button16;
-        private System.Windows.Forms.Button button15;
-        private System.Windows.Forms.Button button14;
-        private System.Windows.Forms.Button button13;
-        private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Button button11;
-        private System.Windows.Forms.Button button10;
-        private System.Windows.Forms.Button button9;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage4;
@@ -582,5 +575,12 @@
         private System.Windows.Forms.TextBox TB_Energy;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button button17;
+        private System.Windows.Forms.TabPage tabPage7;
+        private System.Windows.Forms.TabPage tabPage8;
+        private System.Windows.Forms.TabPage tabPage9;
+        private System.Windows.Forms.TabPage tabPage10;
+        private System.Windows.Forms.TabPage tabPage11;
+        private System.Windows.Forms.TabPage tabPage12;
+        private System.Windows.Forms.TabPage tabPage13;
     }
 }

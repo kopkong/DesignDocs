@@ -29,11 +29,19 @@ namespace WindowsFormsApplication1
             }
         }
 
+        public string ErrorMessage
+        {
+            get
+            {
+                return message.ToString();
+            }
+        }
+
+        StringBuilder message = new StringBuilder();
+
         const string MESSAGE_DUPLICATEID = "有重复的ID";
         const string MESSAGE_PASS = "通过了检查";
         const string MESSAGE_NOCONTENT = "配置没有内容!";
-
-        StringBuilder message = new StringBuilder();
 
         // 不能使用这个字符串作为数据列名
         const string INVALID_DATAMEMBER_NAME = "ConfigType";
@@ -47,6 +55,8 @@ namespace WindowsFormsApplication1
         const string ARMORMATERIAL_CONFIG = "armorMaterial.json";
         const string ANGEL_CONFIG = "angel.json";
         const string EXP_CONFIG = "experience.json";
+        const string CHAPTER_CONFIG = "chapter.json";
+        const string LEVEL_CONFIG = "level.json";
 
         List<AllConfig> _ListAllConfig;
         List<General> _ListGeneral;
@@ -55,6 +65,8 @@ namespace WindowsFormsApplication1
         List<Item> _ListItem;
         List<Angel> _ListAngel;
         List<Experience> _ListExperience;
+        List<Chapter> _ListChapter;
+        List<Level> _ListLevel;
 
         public IDictionary<int, AllConfig> _MapAllConfig;
         public IDictionary<int, General> _MapGeneral;
@@ -63,6 +75,8 @@ namespace WindowsFormsApplication1
         public IDictionary<int, Item> _MapItem;
         public IDictionary<int, Angel> _MapAngel;
         public IDictionary<int, Experience> _MapExperience;
+        public IDictionary<int, Chapter> _MapChapter;
+        public IDictionary<int, Level> _MapLevel;
 
         public void Init()
         {
@@ -206,6 +220,7 @@ namespace WindowsFormsApplication1
                 });
             }
 
+            // experience.json
             if (!File.Exists(EXP_CONFIG))
             {
                 allSuccess = false;
@@ -213,6 +228,7 @@ namespace WindowsFormsApplication1
             }
             else
             {
+                _ListExperience = new List<Experience>();
                 _MapExperience = new Dictionary<int, Experience>();
                 JsonHelper.GetJsonStringArray<Experience>(EXP_CONFIG, ref _ListExperience);
                 _ListExperience.ForEach(delegate(Experience e)
@@ -221,6 +237,47 @@ namespace WindowsFormsApplication1
                         sb.AppendLine(EXP_CONFIG + MESSAGE_DUPLICATEID);
                     else
                         _MapExperience.Add(e.ID, e);
+                });
+            }
+
+            // chapter.json
+            if (!File.Exists(CHAPTER_CONFIG))
+            {
+                allSuccess = false;
+                sb.AppendLine("没有章节配置");
+            }
+            else
+            {
+                _ListChapter = new List<Chapter>();
+                _MapChapter = new Dictionary<int, Chapter>();
+                JsonHelper.GetJsonStringArray<Chapter>(CHAPTER_CONFIG, ref _ListChapter);
+                _ListChapter.ForEach(delegate(Chapter config)
+                {
+                    if (_MapChapter.ContainsKey(config.ID))
+                        sb.AppendLine(CHAPTER_CONFIG + MESSAGE_DUPLICATEID);
+                    else
+                        _MapChapter.Add(config.ID, config);
+                });
+            }
+
+
+            // level.json
+            if (!File.Exists(LEVEL_CONFIG))
+            {
+                allSuccess = false;
+                sb.AppendLine("没有关卡配置");
+            }
+            else
+            {
+                _ListLevel = new List<Level>();
+                _MapLevel = new Dictionary<int, Level>();
+                JsonHelper.GetJsonStringArray<Level>(LEVEL_CONFIG, ref _ListLevel);
+                _ListLevel.ForEach(delegate(Level config)
+                {
+                    if (_MapLevel.ContainsKey(config.ID))
+                        sb.AppendLine(LEVEL_CONFIG + MESSAGE_DUPLICATEID);
+                    else
+                        _MapLevel.Add(config.ID, config);
                 });
             }
 

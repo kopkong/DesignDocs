@@ -1,1 +1,1 @@
-[{"Type":1,"File":"general.json"},{"Type":2,"File":"item.json"},{"Type":3,"File":"armor.json"},{"Type":4,"File":"armorMaterial.json"},{"Type":5,"File":"soldier.json"},{"Type":6,"File":"soldierMaterial.json"}]
+[{"Type":1,"File":"general.json"},{"Type":2,"File":"item.json"},{"Type":3,"File":"armor.json"},{"Type":4,"File":"armorMaterial.json"},{"Type":5,"File":"soldier.json"},{"Type":6,"File":"soldierMaterial.json"},{"Type":7,"File":"experience.json"},{"Type":8,"File":"task.json"},{"Type":9,"File":"angel.json"},{"Type":10,"File":"chapter.json"},{"Type":11,"File":"level.json"}]

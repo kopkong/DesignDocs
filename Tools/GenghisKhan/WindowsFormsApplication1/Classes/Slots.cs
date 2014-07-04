@@ -26,6 +26,15 @@ namespace WindowsFormsApplication1
         None
     }
 
+    public enum FormationPosition
+    {
+        OFF = 0,
+        A1 = 1, A2, A3, A4, A5,
+        B1, B2, B3, B4, B5,
+        C1, C2, C3, C4, C5,
+        D1, D2, D3, D4, D5,
+    }
+
     public class Slot
     {
         public Slot() { }
@@ -49,8 +58,8 @@ namespace WindowsFormsApplication1
 
         public int Rank { get; set; }
 
-        // 装备或者部队绑定在哪个英雄身上,其他不需要这个数据
-        public int BindGeneralSlot { get; set; }
+        // 额外附加数据
+        public int ExtraData { get; set; }
     }
 
     public class SlotGeneral : Slot
@@ -66,6 +75,9 @@ namespace WindowsFormsApplication1
             Lv = 1;
             Rank = 1;
 
+            // 是否上阵
+            ExtraData = 0;
+
             generalConfig = ConfigDataMgr.Instance._MapGeneral[ConfigID];
         }
 
@@ -75,7 +87,6 @@ namespace WindowsFormsApplication1
             {
                 return (int)((generalConfig.HP + generalConfig.HPGorwth * Lv) * Rank * generalConfig.HPRankRate);
             }
-            
         }
 
         public int ATK { 
@@ -122,7 +133,7 @@ namespace WindowsFormsApplication1
             {
                 foreach (int i in PlayerDataMgr.Instance.GetPlayerBag(SlotType.SlotType_Soldier).Keys)
                 {
-                    if (PlayerDataMgr.Instance.GetPlayerBag(SlotType.SlotType_Soldier)[i].BindGeneralSlot == Index)
+                    if (PlayerDataMgr.Instance.GetPlayerBag(SlotType.SlotType_Soldier)[i].ExtraData == Index)
                     {
                         return i;
                     }
@@ -131,6 +142,8 @@ namespace WindowsFormsApplication1
                 return 0;
             }
         }
+
+        public FormationPosition FormationPosition { get; set; }
     }
 
     public class SlotSoldier : Slot
@@ -146,6 +159,9 @@ namespace WindowsFormsApplication1
             Lv = 1;
             Rank = 1;
             AddedCount = 0;
+
+            // 绑定的武将
+            ExtraData = 0;
 
             soldierConfig = ConfigDataMgr.Instance._MapSoldier[ConfigID];
         }
