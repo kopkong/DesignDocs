@@ -7,12 +7,12 @@ using System.IO;
 
 namespace WindowsFormsApplication1
 {
-    public class ConfigDataMgr
+    public class ConfigMgr
     {
-        private static ConfigDataMgr instance;
+        private static ConfigMgr instance;
         private static object syncRoot = new Object();
 
-        public static ConfigDataMgr Instance
+        public static ConfigMgr Instance
         {
             get
             {
@@ -21,7 +21,7 @@ namespace WindowsFormsApplication1
                     lock (syncRoot)
                     {
                         if (instance == null)
-                            instance = new ConfigDataMgr();
+                            instance = new ConfigMgr();
                     }
                 }
 

@@ -28,25 +28,17 @@ namespace WindowsFormsApplication1
 
     public enum FormationPosition
     {
-        OFF = 0,
-        A1 = 1, A2, A3, A4, A5,
-        B1, B2, B3, B4, B5,
-        C1, C2, C3, C4, C5,
-        D1, D2, D3, D4, D5,
+        OFF = -1,
+        A1 = 0, A2, A3, A4,
+        B1, B2, B3, B4, 
+        C1, C2, C3, C4,
+        D1, D2, D3, D4, 
+        E1, E2, E3, E4
     }
 
     public class Slot
     {
         public Slot() { }
-        //public Slot(SlotType type,int index,int id)
-        //{
-        //    Type = type;
-        //    Index = index;
-        //    ConfigID = id;
-
-        //    Lv = 1;
-        //    Rank = 1;
-        //}
 
         public SlotType Type { get; set; }
 
@@ -64,7 +56,7 @@ namespace WindowsFormsApplication1
 
     public class SlotGeneral : Slot
     {
-        private General generalConfig;
+        public General GeneralConfig { get; set; }
 
         public SlotGeneral(SlotType type, int index, int id)
         {
@@ -73,58 +65,12 @@ namespace WindowsFormsApplication1
             ConfigID = id;
 
             Lv = 1;
-            Rank = 1;
+            Rank = 0;
 
             // 是否上阵
             ExtraData = 0;
 
-            generalConfig = ConfigDataMgr.Instance._MapGeneral[ConfigID];
-        }
-
-        public int HP
-        {
-            get
-            {
-                return (int)((generalConfig.HP + generalConfig.HPGorwth * Lv) * Rank * generalConfig.HPRankRate);
-            }
-        }
-
-        public int ATK { 
-            get
-            {
-                return (int)((generalConfig.AttackPower + generalConfig.ATKGrowth * Lv) * Rank * generalConfig.ATKRankRate);
-            }
-            
-        }
-
-        public int DEF { 
-            get {
-                return (int)((generalConfig.DefensePower + generalConfig.DEFGrowth * Lv) * Rank * generalConfig.ATKRankRate);
-            } 
-        }
-
-        public double DodgeRate
-        {
-            get
-            {
-                return generalConfig.DodgeRate/100.0;
-            }
-        }
-
-        public double HitRate
-        {
-            get
-            {
-                return generalConfig.HitRate / 100.0;
-            }
-        }
-
-        public double CriticalRate
-        {
-            get
-            {
-                return generalConfig.CriticalRate / 100.0;
-            }
+            GeneralConfig = DBConfigMgr.Instance.MapGeneral[ConfigID];
         }
 
         public int SoldierIndex
@@ -148,7 +94,7 @@ namespace WindowsFormsApplication1
 
     public class SlotSoldier : Slot
     {
-        private Soldier soldierConfig;
+        public Soldier SoldierConfig { get; set; }
         
         public SlotSoldier(SlotType type, int index, int id)
         {
@@ -157,36 +103,13 @@ namespace WindowsFormsApplication1
             ConfigID = id;
 
             Lv = 1;
-            Rank = 1;
+            Rank = 0;
             AddedCount = 0;
 
             // 绑定的武将
             ExtraData = 0;
 
-            soldierConfig = ConfigDataMgr.Instance._MapSoldier[ConfigID];
-        }
-
-        public int HP
-        {
-            get
-            {
-                return (int)((soldierConfig.HP + soldierConfig.HPGorwth * Lv) * Rank * soldierConfig.HPRankRate);
-            }
-            
-        }
-
-        public int ATK { 
-            get
-            {
-                return (int)((soldierConfig.AttackPower + soldierConfig.ATKGrowth * Lv) * Rank * soldierConfig.ATKRankRate);
-            }
-            
-        }
-
-        public int DEF { 
-            get {
-                return (int)((soldierConfig.DefensePower + soldierConfig.DEFGrowth * Lv) * Rank * soldierConfig.ATKRankRate);
-            } 
+            SoldierConfig = DBConfigMgr.Instance.MapSoldier[ConfigID];
         }
 
         // 部队额外升级过的数量
@@ -196,7 +119,7 @@ namespace WindowsFormsApplication1
         {
             get
             {
-                return soldierConfig.InitialCount + AddedCount;
+                return SoldierConfig.InitialCount + AddedCount;
             }
         }
     }

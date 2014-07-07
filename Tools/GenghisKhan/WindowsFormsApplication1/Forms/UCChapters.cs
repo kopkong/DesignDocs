@@ -17,12 +17,16 @@ namespace WindowsFormsApplication1.Forms
             InitializeComponent();
         }
 
+        private Formation teamOneFormation;
+        private Formation teamTwoFormation;
+        private int currentSelectedLevelID;
+
         public void InitChapter()
         {
             // Init
             dataGridView1.Rows.Clear();
 
-            foreach (int i in ConfigDataMgr.Instance._MapChapter.Keys)
+            foreach (int i in DBConfigMgr.Instance.MapChapter.Keys)
             {
                 AddChapterRow(i);
             }
@@ -32,7 +36,7 @@ namespace WindowsFormsApplication1.Forms
 
         private void AddChapterRow(int index)
         {
-            Chapter chapter = ConfigDataMgr.Instance._MapChapter[index];
+            Chapter chapter = DBConfigMgr.Instance.MapChapter[index];
 
             DataGridViewRow row = new DataGridViewRow();
             DataGridViewTextBoxCell textBoxID = new DataGridViewTextBoxCell();
@@ -52,7 +56,7 @@ namespace WindowsFormsApplication1.Forms
 
         private void AddLevelRow(int index)
         {
-            Level levelConfig = ConfigDataMgr.Instance._MapLevel[index];
+            Level levelConfig = DBConfigMgr.Instance.MapLevel[index];
             LevelRecord record = PlayerDataMgr.Instance.GetPlayerLevelRecords()[index];
 
             DataGridViewRow row = new DataGridViewRow();
@@ -86,7 +90,7 @@ namespace WindowsFormsApplication1.Forms
                 return;
 
             int selectedID = Convert.ToInt32(dataGridView1.CurrentRow.Cells[0].Value);
-            IEnumerable<KeyValuePair<int,Level>> chapterLevelIDs = ConfigDataMgr.Instance._MapLevel.Where(x => x.Value.ChapterID == selectedID);
+            IEnumerable<KeyValuePair<int, Level>> chapterLevelIDs = DBConfigMgr.Instance.MapLevel.Where(x => x.Value.ChapterID == selectedID);
 
             dataGridView2.Rows.Clear();
             foreach (KeyValuePair<int, Level> i in chapterLevelIDs)
@@ -97,12 +101,34 @@ namespace WindowsFormsApplication1.Forms
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            int selectedID = Convert.ToInt32(dataGridView1.CurrentRow.Cells[0].Value);
+            //Console.WriteLine("当前选择了{0}行",dataGridView2.SelectedRows.Count);
+            int selectedID = Convert.ToInt32(dataGridView2.CurrentRow.Cells[0].Value);
+            currentSelectedLevelID = selectedID;
+            Console.WriteLine("选择了关卡ID {0}", selectedID);
+
+            panel1.Controls.Clear();
+            panel2.Controls.Clear();
 
             UCFormation ucFormation = new UCFormation();
             ucFormation.InitPlayerFormation();
-            groupBox1.Controls.Add(ucFormation);
+            panel1.Controls.Add(ucFormation);
+            teamOneFormation = ucFormation.CurrentFormation;
+
+            UCFormation ucFormation2 = new UCFormation();
+            ucFormation2.InitNPCFormation(selectedID);
+            panel2.Controls.Add(ucFormation2);
+            ucFormation2.Dock = DockStyle.Left;
+            teamTwoFormation = ucFormation.CurrentFormation;
+            
             groupBox1.Visible = true;
+        }
+
+        private void BTN_StartBattle_Click(object sender, EventArgs e)
+        {
+            bool win = Formula.ComputeTeamOneWin(teamOneFormation,teamTwoFormation);
+
+            string message = win?"挑战成功":"挑战失败";
+            MessageBox.Show(message);
         }
     }
 }

@@ -42,9 +42,14 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.BTN_StartBattle = new System.Windows.Forms.Button();
+            this.BTN_PassBattle = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -149,12 +154,52 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.BTN_PassBattle);
+            this.groupBox1.Controls.Add(this.BTN_StartBattle);
+            this.groupBox1.Controls.Add(this.panel2);
+            this.groupBox1.Controls.Add(this.panel1);
             this.groupBox1.Location = new System.Drawing.Point(404, 295);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(726, 304);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "关卡详情";
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.SystemColors.Desktop;
+            this.panel2.Location = new System.Drawing.Point(327, 20);
+            this.panel2.Name = "panel2";
+            this.panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.panel2.Size = new System.Drawing.Size(393, 215);
+            this.panel2.TabIndex = 1;
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.SystemColors.Desktop;
+            this.panel1.Location = new System.Drawing.Point(7, 21);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(298, 214);
+            this.panel1.TabIndex = 0;
+            // 
+            // BTN_StartBattle
+            // 
+            this.BTN_StartBattle.Location = new System.Drawing.Point(101, 254);
+            this.BTN_StartBattle.Name = "BTN_StartBattle";
+            this.BTN_StartBattle.Size = new System.Drawing.Size(75, 23);
+            this.BTN_StartBattle.TabIndex = 2;
+            this.BTN_StartBattle.Text = "挑战";
+            this.BTN_StartBattle.UseVisualStyleBackColor = true;
+            this.BTN_StartBattle.Click += new System.EventHandler(this.BTN_StartBattle_Click);
+            // 
+            // BTN_PassBattle
+            // 
+            this.BTN_PassBattle.Location = new System.Drawing.Point(208, 254);
+            this.BTN_PassBattle.Name = "BTN_PassBattle";
+            this.BTN_PassBattle.Size = new System.Drawing.Size(75, 23);
+            this.BTN_PassBattle.TabIndex = 3;
+            this.BTN_PassBattle.Text = "扫荡";
+            this.BTN_PassBattle.UseVisualStyleBackColor = true;
             // 
             // UCChapters
             // 
@@ -168,6 +213,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -187,5 +233,9 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button BTN_PassBattle;
+        private System.Windows.Forms.Button BTN_StartBattle;
     }
 }

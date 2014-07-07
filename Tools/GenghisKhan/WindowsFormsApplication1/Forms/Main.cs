@@ -24,10 +24,10 @@ namespace WindowsFormsApplication1
         private void InitAll()
         {
             // 按照顺序初始化
-            ConfigDataMgr.Instance.Init();
-            PlayerDataMgr.Instance.Init();
-            SQLiteHelper.Instance.Init(@"C:\DesignDocs\Tools\GenghisKhan\test.db");
+            //ConfigMgr.Instance.Init();
+            SQLiteHelper.Instance.Init(@"D:\DesignDocs\Tools\GenghisKhan\test.db");
             DBConfigMgr.Instance.Init();
+            PlayerDataMgr.Instance.Init();
             updatePlayerInfo();
         }
 

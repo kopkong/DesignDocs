@@ -41,7 +41,7 @@ namespace WindowsFormsApplication1
 
         private void AddRow(int index)
         {
-            Slot slotData = PlayerDataMgr.Instance.GetPlayerBag(SlotType.SlotType_General)[index];
+            SlotGeneral slotData = (SlotGeneral)PlayerDataMgr.Instance.GetPlayerBag(SlotType.SlotType_General)[index];
 
             DataGridViewRow row = new DataGridViewRow();
             DataGridViewTextBoxCell textboxName = new DataGridViewTextBoxCell();
@@ -57,7 +57,8 @@ namespace WindowsFormsApplication1
             row.Cells.Add(textboxRank);
 
             DataGridViewTextBoxCell textboxBattlePoint = new DataGridViewTextBoxCell();
-            textboxBattlePoint.Value = Formula.ComputeBattlePowerPoint(index);
+            textboxBattlePoint.Value = Formula.ComputeBattlePowerPoint(EntityInfoFactory.GetGeneralInfoFromPlayerSlot(index),
+                EntityInfoFactory.GetSoldierInfoFromPlayerSlot(slotData.SoldierIndex));
             row.Cells.Add(textboxBattlePoint);
 
             DataGridViewTextBoxCell textboxStar = new DataGridViewTextBoxCell();

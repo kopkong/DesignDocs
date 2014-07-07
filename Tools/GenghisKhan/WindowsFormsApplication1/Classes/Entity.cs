@@ -61,7 +61,7 @@ namespace WindowsFormsApplication1
         public string Description { get; set; }
 
         [DataMember]
-        public string Star { get; set; }
+        public int Star { get; set; }
 
         [DataMember]
         public int SoldierType { get; set; }
@@ -155,7 +155,7 @@ namespace WindowsFormsApplication1
         public string Description { get; set; }
 
         [DataMember]
-        public string Star { get; set; }
+        public int Star{ get; set; }
 
         [DataMember]
         public int SoldierType { get; set; }
@@ -237,7 +237,7 @@ namespace WindowsFormsApplication1
         public string Description { get; set; }
 
         [DataMember]
-        public string Star { get; set; }
+        public int Star{ get; set; }
 
         [DataMember]
         public int Type { get; set; }
@@ -284,7 +284,7 @@ namespace WindowsFormsApplication1
         public string Color { get; set; }
 
         [DataMember]
-        public string Star { get; set; }
+        public int Star { get; set; }
 
         [DataMember]
         public int Type { get; set; }
@@ -389,5 +389,61 @@ namespace WindowsFormsApplication1
 
         [DataMember]
         public int FailTime { get; set; }
+    }
+
+    [DataContract]
+    public class ArmorMaterial
+    {
+        [DataMember]
+        public int ID { get; set; }
+
+        [DataMember]
+        public string Name { get; set; }
+
+        [DataMember]
+        public string IconID { get; set; }
+
+        [DataMember]
+        public string Description { get; set; }
+
+        [DataMember]
+        public int  Star{ get; set; }
+
+        [DataMember]
+        public int Type{get;set;}
+
+        [DataMember]
+        public int ArmorID{get;set;}
+
+        [DataMember]
+        public int ConsumeMaterials{get;set;}
+    }
+
+    [DataContract]
+    public class SoldierMaterial
+    {
+        [DataMember]
+        public int ID{get;set;}
+
+        [DataMember]
+        public string Name{get;set;}
+
+        [DataMember]
+        public string IconID{get;set;}
+
+        [DataMember]
+        public string Description{get;set;}
+
+        [DataMember]
+        public int Star{get;set;}
+
+        [DataMember]
+        public int Type{get;set;}
+
+        [DataMember]
+        public int ArmyID{get;set;}
+
+        [DataMember]
+        public int ConsumeMaterials{get;set;}
     }
 }

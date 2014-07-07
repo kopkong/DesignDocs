@@ -60,8 +60,8 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 46.45669F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 53.54331F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 65F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 63F));
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(20, 40);
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 66F));
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(13, 38);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.tableLayoutPanel1.RowCount = 5;
@@ -76,7 +76,7 @@
             // LB_TeamName
             // 
             this.LB_TeamName.AutoSize = true;
-            this.LB_TeamName.Location = new System.Drawing.Point(71, 14);
+            this.LB_TeamName.Location = new System.Drawing.Point(92, 12);
             this.LB_TeamName.Name = "LB_TeamName";
             this.LB_TeamName.Size = new System.Drawing.Size(41, 12);
             this.LB_TeamName.TabIndex = 4;
@@ -91,7 +91,7 @@
             this.Controls.Add(this.LB_BattlePower);
             this.Controls.Add(this.label1);
             this.Name = "UCFormation";
-            this.Size = new System.Drawing.Size(292, 214);
+            this.Size = new System.Drawing.Size(283, 214);
             this.ResumeLayout(false);
             this.PerformLayout();
 

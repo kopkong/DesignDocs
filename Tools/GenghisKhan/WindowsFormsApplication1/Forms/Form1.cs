@@ -26,7 +26,7 @@ namespace WindowsFormsApplication1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            textBox1.Text += ConfigDataMgr.Instance.ErrorMessage;
+            textBox1.Text += ConfigMgr.Instance.ErrorMessage;
             //uiThread = new Thread(new ThreadStart(this.updateLabel));
             //uiThread.Start();
 

@@ -78,7 +78,7 @@ namespace WindowsFormsApplication1
 
         private void InitPlayerLevels()
         {
-            foreach(int i in ConfigDataMgr.Instance._MapLevel.Keys)
+            foreach(int i in DBConfigMgr.Instance.MapLevel.Keys)
             {
                 playerLevelRecords.Add(i, new LevelRecord(i));
             }
@@ -137,12 +137,12 @@ namespace WindowsFormsApplication1
             AddGeneral(6);
 
             // 一开始都要上阵
-            MakeGeneralOnBattle(1, FormationPosition.A2);
-            MakeGeneralOnBattle(2, FormationPosition.A3);
-            MakeGeneralOnBattle(3, FormationPosition.A4);
-            MakeGeneralOnBattle(4, FormationPosition.B2);
-            MakeGeneralOnBattle(5, FormationPosition.B3);
-            MakeGeneralOnBattle(6, FormationPosition.B4);
+            MakeGeneralOnBattle(1, FormationPosition.B1);
+            MakeGeneralOnBattle(2, FormationPosition.B2);
+            MakeGeneralOnBattle(3, FormationPosition.B3);
+            MakeGeneralOnBattle(4, FormationPosition.C1);
+            MakeGeneralOnBattle(5, FormationPosition.C2);
+            MakeGeneralOnBattle(6, FormationPosition.C3);
         }
 
         private void InitPlayerBag()
@@ -171,7 +171,7 @@ namespace WindowsFormsApplication1
             playerBags[SlotType.SlotType_General].Add(s.Index, s);
             
             // Add default soldier for general
-            AddSoldier(ConfigDataMgr.Instance._MapGeneral[id].InitialSoldier, s.Index);
+            AddSoldier(DBConfigMgr.Instance.MapGeneral[id].InitialSoldier, s.Index);
         }
 
         public void AddSoldier(int id,int generalIndex)
