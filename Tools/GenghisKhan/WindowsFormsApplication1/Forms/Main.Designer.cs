@@ -375,6 +375,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.BackColor = System.Drawing.Color.Gainsboro;
             this.tabPage1.Controls.Add(this.button17);
             this.tabPage1.Controls.Add(this.button11);
             this.tabPage1.Location = new System.Drawing.Point(4, 4);
@@ -383,7 +384,6 @@
             this.tabPage1.Size = new System.Drawing.Size(1011, 605);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "主城";
-            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // button17
             // 
@@ -406,112 +406,112 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.BackColor = System.Drawing.Color.Gainsboro;
             this.tabPage2.Location = new System.Drawing.Point(4, 4);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(1011, 605);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "仓库";
-            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // tabPage3
             // 
+            this.tabPage3.BackColor = System.Drawing.Color.Gainsboro;
             this.tabPage3.Location = new System.Drawing.Point(4, 4);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(1011, 605);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "合成";
-            this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // tabPage4
             // 
+            this.tabPage4.BackColor = System.Drawing.Color.Gainsboro;
             this.tabPage4.Location = new System.Drawing.Point(4, 4);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Size = new System.Drawing.Size(1011, 605);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "武将";
-            this.tabPage4.UseVisualStyleBackColor = true;
             // 
             // tabPage5
             // 
+            this.tabPage5.BackColor = System.Drawing.Color.Gainsboro;
             this.tabPage5.Location = new System.Drawing.Point(4, 4);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Size = new System.Drawing.Size(1011, 605);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "阵容";
-            this.tabPage5.UseVisualStyleBackColor = true;
             // 
             // tabPage6
             // 
+            this.tabPage6.BackColor = System.Drawing.Color.Gainsboro;
             this.tabPage6.Location = new System.Drawing.Point(4, 4);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Size = new System.Drawing.Size(1011, 605);
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "任务";
-            this.tabPage6.UseVisualStyleBackColor = true;
             // 
             // tabPage7
             // 
+            this.tabPage7.BackColor = System.Drawing.Color.Gainsboro;
             this.tabPage7.Location = new System.Drawing.Point(4, 4);
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Size = new System.Drawing.Size(1011, 605);
             this.tabPage7.TabIndex = 6;
             this.tabPage7.Text = "战役";
-            this.tabPage7.UseVisualStyleBackColor = true;
             // 
             // tabPage8
             // 
+            this.tabPage8.BackColor = System.Drawing.Color.Gainsboro;
             this.tabPage8.Location = new System.Drawing.Point(4, 4);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Size = new System.Drawing.Size(1011, 605);
             this.tabPage8.TabIndex = 7;
             this.tabPage8.Text = "探索";
-            this.tabPage8.UseVisualStyleBackColor = true;
             // 
             // tabPage9
             // 
+            this.tabPage9.BackColor = System.Drawing.Color.Gainsboro;
             this.tabPage9.Location = new System.Drawing.Point(4, 4);
             this.tabPage9.Name = "tabPage9";
             this.tabPage9.Size = new System.Drawing.Size(1011, 605);
             this.tabPage9.TabIndex = 8;
             this.tabPage9.Text = "远征";
-            this.tabPage9.UseVisualStyleBackColor = true;
             // 
             // tabPage10
             // 
+            this.tabPage10.BackColor = System.Drawing.Color.Gainsboro;
             this.tabPage10.Location = new System.Drawing.Point(4, 4);
             this.tabPage10.Name = "tabPage10";
             this.tabPage10.Size = new System.Drawing.Size(1011, 605);
             this.tabPage10.TabIndex = 9;
             this.tabPage10.Text = "军团";
-            this.tabPage10.UseVisualStyleBackColor = true;
             // 
             // tabPage11
             // 
+            this.tabPage11.BackColor = System.Drawing.Color.Gainsboro;
             this.tabPage11.Location = new System.Drawing.Point(4, 4);
             this.tabPage11.Name = "tabPage11";
             this.tabPage11.Size = new System.Drawing.Size(1011, 605);
             this.tabPage11.TabIndex = 10;
             this.tabPage11.Text = "竞技场";
-            this.tabPage11.UseVisualStyleBackColor = true;
             // 
             // tabPage12
             // 
+            this.tabPage12.BackColor = System.Drawing.Color.Gainsboro;
             this.tabPage12.Location = new System.Drawing.Point(4, 4);
             this.tabPage12.Name = "tabPage12";
             this.tabPage12.Size = new System.Drawing.Size(1011, 605);
             this.tabPage12.TabIndex = 11;
             this.tabPage12.Text = "爵位";
-            this.tabPage12.UseVisualStyleBackColor = true;
             // 
             // tabPage13
             // 
+            this.tabPage13.BackColor = System.Drawing.Color.Gainsboro;
             this.tabPage13.Location = new System.Drawing.Point(4, 4);
             this.tabPage13.Name = "tabPage13";
             this.tabPage13.Size = new System.Drawing.Size(1011, 605);
             this.tabPage13.TabIndex = 12;
             this.tabPage13.Text = "守护神";
-            this.tabPage13.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 

@@ -32,7 +32,7 @@ namespace WindowsFormsApplication1
                 Console.WriteLine("Add general index {0}", i);
 
                 if (type != SoldierType.ALL)
-                    if ((int)type != ConfigDataMgr.Instance._MapGeneral[i].SoldierType)
+                    if ((int)type != DBConfigMgr.Instance.MapGeneral[i].SoldierType)
                         continue;
 
                 AddRow(i);
@@ -45,7 +45,7 @@ namespace WindowsFormsApplication1
 
             DataGridViewRow row = new DataGridViewRow();
             DataGridViewTextBoxCell textboxName = new DataGridViewTextBoxCell();
-            textboxName.Value = ConfigDataMgr.Instance._MapGeneral[slotData.ConfigID].Name;
+            textboxName.Value = DBConfigMgr.Instance.MapGeneral[slotData.ConfigID].Name;
             row.Cells.Add(textboxName);
 
             DataGridViewTextBoxCell textboxLv = new DataGridViewTextBoxCell();
@@ -61,7 +61,7 @@ namespace WindowsFormsApplication1
             row.Cells.Add(textboxBattlePoint);
 
             DataGridViewTextBoxCell textboxStar = new DataGridViewTextBoxCell();
-            textboxStar.Value = ConfigDataMgr.Instance._MapGeneral[slotData.ConfigID].Star;
+            textboxStar.Value = DBConfigMgr.Instance.MapGeneral[slotData.ConfigID].Star;
             row.Cells.Add(textboxStar);
 
             dataGridView1.Rows.Add(row);
