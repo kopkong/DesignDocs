@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApplication1
 {
-    public class CKPlayer
+    public class PlayerInfo
     {
-        public CKPlayer()
+        public PlayerInfo()
         {
             Name = "大孔叔叔测试账号";
             Lv = 1;
@@ -48,5 +48,24 @@ namespace WindowsFormsApplication1
         public int Fame { get; set; }
 
         public int Energy { get; set; }
+
+        /// <summary>
+        /// 增加经验
+        /// </summary>
+        /// <param name="exp"></param>
+        public void AddExp(int exp)
+        {
+            if (exp > 0)
+            {
+                this.EXP += exp;
+
+                //  判断是否升级
+                if (EXP >= DBConfigMgr.Instance.MapExperience[Lv].PlayerEnd)
+                {
+                    Lv++;
+                }
+            }
+
+        }
     }
 }

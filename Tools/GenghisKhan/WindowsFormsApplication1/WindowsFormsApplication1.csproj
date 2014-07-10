@@ -86,6 +86,12 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\JSON.cs" />
+    <Compile Include="Forms\LevelEnemy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LevelEnemy.Designer.cs">
+      <DependentUpon>LevelEnemy.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,6 +120,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LevelEnemy.resx">
+      <DependentUpon>LevelEnemy.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>

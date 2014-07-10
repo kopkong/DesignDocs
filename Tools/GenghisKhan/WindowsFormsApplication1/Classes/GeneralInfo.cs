@@ -16,6 +16,10 @@ namespace WindowsFormsApplication1
 
         public int Rank { get; set; }
 
+        public int Exp { get; set; }
+
+        public int SlotIndex { get; set; }
+
         public int SoldierConfigID { get; set; }
 
         public int SoldierCount { get; set; }
@@ -24,7 +28,7 @@ namespace WindowsFormsApplication1
         {
             get
             {
-                return (int)((GeneralConfig.HP + GeneralConfig.HPGorwth * Level) * (Rank + 1) * GeneralConfig.HPRankRate);
+                return (int)((GeneralConfig.HP + GeneralConfig.HPGrowth * Level) * (Rank + 1) * GeneralConfig.HPRankRate);
             }
         }
 
@@ -67,6 +71,23 @@ namespace WindowsFormsApplication1
             {
                 return GeneralConfig.CriticalRate / 100.0;
             }
+        }
+
+        public void AddExp(int exp)
+        {
+            if (exp > 0)
+            {
+                this.Exp += exp;
+
+                if (Exp >= DBConfigMgr.Instance.MapExperience[Level].GeneralEnd)
+                {
+                    Level++;
+
+                    // 同步slot数据
+                    PlayerDataMgr.Instance.GetPlayerBag(SlotType.SlotType_General)[SlotIndex].Lv = Level;
+                }
+            }
+
         }
 
     }

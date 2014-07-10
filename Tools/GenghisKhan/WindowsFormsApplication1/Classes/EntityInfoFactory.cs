@@ -54,6 +54,7 @@ namespace WindowsFormsApplication1
             g.Rank = s1.Rank;
             g.SoldierConfigID = s2.ConfigID;
             g.SoldierCount = s2.Count;
+            g.SlotIndex = slotIndex;
 
             return g;
         }

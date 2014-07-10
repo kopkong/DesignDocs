@@ -103,7 +103,7 @@ namespace WindowsFormsApplication1
         public string TalentID { get; set; }
 
         [DataMember]
-        public int HPGorwth { get; set; }
+        public int HPGrowth { get; set; }
 
         [DataMember]
         public int ATKGrowth { get; set; }

@@ -70,6 +70,12 @@ namespace WindowsFormsApplication1.Forms
             LB_TeamName.Text = _formation.TeamName;
             LB_BattlePower.Text = _formation.TeamBattlePowerPoint.ToString();
         }
+
+        public void RefreshBattlePowerPoint()
+        {
+            _formation.ReComputePlayerTeamBattlePowerPoint();
+            LB_BattlePower.Text = _formation.TeamBattlePowerPoint.ToString();
+        }
         
     }
 }

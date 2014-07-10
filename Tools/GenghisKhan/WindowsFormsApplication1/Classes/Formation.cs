@@ -30,7 +30,7 @@ namespace WindowsFormsApplication1
 
         public string TeamName{get;set;}
 
-        public int TeamBattlePowerPoint{get;set;}
+        public int TeamBattlePowerPoint { get; set; }
 
         public Dictionary<GeneralInfo, PositionPair> FormationMap
         {
@@ -40,24 +40,32 @@ namespace WindowsFormsApplication1
             }
         }
 
-        public void InitPlayerFormation()
+        public void ReComputePlayerTeamBattlePowerPoint()
         {
-            IEnumerable<KeyValuePair<int, Slot>> onBattleGenerals = PlayerDataMgr.Instance.GetPlayerBag(SlotType.SlotType_General).Where(
-                x => x.Value.ExtraData > 0);
-
             int battlePoint = 0;
-            foreach (KeyValuePair<int, Slot> pair in onBattleGenerals)
+            foreach (KeyValuePair<int, SlotGeneral> pair in PlayerDataMgr.Instance.GetOnBattleGenerals())
             {
-                SlotGeneral slot = (SlotGeneral)(pair.Value);
+                SlotGeneral slot = pair.Value;
                 GeneralInfo g = EntityInfoFactory.GetGeneralInfoFromPlayerSlot(pair.Key);
                 SoldierInfo s = EntityInfoFactory.GetSoldierInfoFromPlayerSlot(slot.SoldierIndex);
 
-                _formation.Add(g, leftMap[(FormationPosition)pair.Value.ExtraData]);
-                battlePoint += Formula.ComputeBattlePowerPoint(g,s);
+                battlePoint += Formula.ComputeBattlePowerPoint(g, s);
             }
 
-            TeamName = PlayerDataMgr.Instance.GetPlayer().Name;
             TeamBattlePowerPoint = battlePoint;
+        }
+
+        public void InitPlayerFormation()
+        {
+            foreach (KeyValuePair<int, SlotGeneral> pair in PlayerDataMgr.Instance.GetOnBattleGenerals())
+            {
+                GeneralInfo g = EntityInfoFactory.GetGeneralInfoFromPlayerSlot(pair.Key);
+
+                _formation.Add(g, leftMap[(FormationPosition)pair.Value.ExtraData]);
+            }
+
+            ReComputePlayerTeamBattlePowerPoint();
+            TeamName = PlayerDataMgr.Instance.GetPlayer().Name;
         }
 
         public void InitNPCFormation(int levelConfigID)
@@ -88,9 +96,8 @@ namespace WindowsFormsApplication1
                 _formation.Add(gInfo, rightMap[p]);
                 battlePoint += Formula.ComputeBattlePowerPoint(gInfo, sInfo);
             }
-
-            TeamName = DBConfigMgr.Instance.MapLevel[levelConfigID].Name;
             TeamBattlePowerPoint = battlePoint;
+            TeamName = DBConfigMgr.Instance.MapLevel[levelConfigID].Name;
         }
 
         private void InitMap()

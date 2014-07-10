@@ -14,6 +14,11 @@ namespace WindowsFormsApplication1
             Passed = false;
             Times = 0;
             HighestStar = 0;
+
+            if (id == 1)
+                Locked = false;
+            else
+                Locked = true;
         }
 
         public int LevelID{get;set;}
@@ -23,13 +28,15 @@ namespace WindowsFormsApplication1
         public int Times{get;set;}
 
         public int HighestStar { get; set; }
+
+        public bool Locked { get; set; }
     }
 
     public class PlayerDataMgr
     {
         private static PlayerDataMgr instance;
         private static object syncRoot = new Object();
-        private static CKPlayer player = new CKPlayer();
+        private static PlayerInfo player = new PlayerInfo();
         private Dictionary<SlotType,Dictionary<int, Slot>> playerBags = new Dictionary<SlotType,Dictionary<int, Slot>>();
         private List<int> playerFinishedChapters = new List<int>();
         private Dictionary<int, LevelRecord> playerLevelRecords = new Dictionary<int, LevelRecord>();
@@ -59,7 +66,7 @@ namespace WindowsFormsApplication1
             InitPlayerLevels();
         }
 
-        public CKPlayer GetPlayer()
+        public PlayerInfo GetPlayer()
         {
             return player;
         }
@@ -102,6 +109,7 @@ namespace WindowsFormsApplication1
             {
                 playerLevelRecords[levelID].Passed = true;
                 playerLevelRecords[levelID].Times += 1;
+                playerLevelRecords[DBConfigMgr.Instance.MapLevel[levelID].UnlockNextLevelID].Locked = false;
 
                 if (playerLevelRecords[levelID].HighestStar < star)
                     playerLevelRecords[levelID].HighestStar = star;
@@ -125,16 +133,15 @@ namespace WindowsFormsApplication1
         }
         #endregion
 
-
         #region 背包和仓库
         private void AddInitialGeneralForPlayer()
         {
             AddGeneral(1);
-            AddGeneral(2);
-            AddGeneral(3);
-            AddGeneral(4);
-            AddGeneral(5);
-            AddGeneral(6);
+            AddGeneral(44);
+            AddGeneral(45);
+            AddGeneral(46);
+            AddGeneral(47);
+            AddGeneral(65);
 
             // 一开始都要上阵
             MakeGeneralOnBattle(1, FormationPosition.B1);
@@ -223,6 +230,22 @@ namespace WindowsFormsApplication1
                 MakeGeneralOnBattle(formationDict[position],position);
             }
         }
+
+        public Dictionary<int,SlotGeneral> GetOnBattleGenerals()
+        {
+            Dictionary<int, SlotGeneral> onBattleGenerals = new Dictionary<int,SlotGeneral>();
+
+            foreach (KeyValuePair<int, Slot> kv in playerBags[SlotType.SlotType_General])
+            {
+                if (kv.Value.ExtraData >= 0)
+                {
+                    onBattleGenerals.Add(kv.Key, (SlotGeneral)kv.Value);
+                }
+            }
+
+            return onBattleGenerals;
+        }
+
         #endregion
     }
 }

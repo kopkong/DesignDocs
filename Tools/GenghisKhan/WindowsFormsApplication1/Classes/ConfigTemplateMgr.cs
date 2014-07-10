@@ -35,7 +35,6 @@ namespace WindowsFormsApplication1
                             instance = new DBConfigMgr();
                     }
                 }
-
                 return instance;
             }
         }
@@ -100,7 +99,6 @@ namespace WindowsFormsApplication1
                 }
             }
         }
-
 
         private void LoadChapterData()
         {
@@ -201,5 +199,23 @@ namespace WindowsFormsApplication1
             }
         }
 
+        /// <summary>
+        /// 保存修改过的武将数据
+        /// </summary>
+        public int SaveGeneralData()
+        {
+            string cmd = String.Empty;
+            foreach (KeyValuePair<int, General> pair in MapGeneral)
+            {
+                string sql = String.Format(@"update GeneralConfig set HP={1},AttackPower={2},DefensePower={3},
+                    HPGrowth={4},ATKGrowth={5},DEFGrowth={6} where ID = {0};",
+                    pair.Key,pair.Value.HP, pair.Value.AttackPower, pair.Value.DefensePower,
+                    pair.Value.HPGrowth, pair.Value.ATKGrowth, pair.Value.DEFGrowth);
+
+                cmd += sql;
+            }
+
+            return SQLiteHelper.Instance.ExecuteNonQuery(cmd, null);
+        }
     }
 }

@@ -17,9 +17,13 @@ namespace WindowsFormsApplication1.Forms
             InitializeComponent();
         }
 
+        UCFormation playerFormationControl;
+        UCFormation npcFormationControl;
+
         private Formation teamOneFormation;
         private Formation teamTwoFormation;
         private int currentSelectedLevelID;
+        private int currentSelectedChapterID;
 
         public void InitChapter()
         {
@@ -90,7 +94,14 @@ namespace WindowsFormsApplication1.Forms
                 return;
 
             int selectedID = Convert.ToInt32(dataGridView1.CurrentRow.Cells[0].Value);
-            IEnumerable<KeyValuePair<int, Level>> chapterLevelIDs = DBConfigMgr.Instance.MapLevel.Where(x => x.Value.ChapterID == selectedID);
+            currentSelectedChapterID = selectedID;
+
+            RefreshLevelData();
+        }
+
+        private void RefreshLevelData()
+        {
+            IEnumerable<KeyValuePair<int, Level>> chapterLevelIDs = DBConfigMgr.Instance.MapLevel.Where(x => x.Value.ChapterID == currentSelectedChapterID);
 
             dataGridView2.Rows.Clear();
             foreach (KeyValuePair<int, Level> i in chapterLevelIDs)
@@ -106,19 +117,24 @@ namespace WindowsFormsApplication1.Forms
             currentSelectedLevelID = selectedID;
             Console.WriteLine("选择了关卡ID {0}", selectedID);
 
+            if (PlayerDataMgr.Instance.GetPlayerLevelRecords()[currentSelectedLevelID].Locked)
+            {
+                MessageBox.Show("本关还没有解锁，不能挑战");
+                return;
+            }
+
             panel1.Controls.Clear();
             panel2.Controls.Clear();
 
-            UCFormation ucFormation = new UCFormation();
-            ucFormation.InitPlayerFormation();
-            panel1.Controls.Add(ucFormation);
-            teamOneFormation = ucFormation.CurrentFormation;
+            playerFormationControl = new UCFormation();
+            playerFormationControl.InitPlayerFormation();
+            panel1.Controls.Add(playerFormationControl);
+            teamOneFormation = playerFormationControl.CurrentFormation;
 
-            UCFormation ucFormation2 = new UCFormation();
-            ucFormation2.InitNPCFormation(selectedID);
-            panel2.Controls.Add(ucFormation2);
-            ucFormation2.Dock = DockStyle.Left;
-            teamTwoFormation = ucFormation.CurrentFormation;
+            npcFormationControl = new UCFormation();
+            npcFormationControl.InitNPCFormation(selectedID);
+            panel2.Controls.Add(npcFormationControl);
+            teamTwoFormation = npcFormationControl.CurrentFormation;
             
             groupBox1.Visible = true;
         }
@@ -129,6 +145,27 @@ namespace WindowsFormsApplication1.Forms
 
             string message = win?"挑战成功":"挑战失败";
             MessageBox.Show(message);
+
+            // 应该给奖励以及扣除体力点数
+            if (win)
+            {
+                PlayerInfo pInfo = PlayerDataMgr.Instance.GetPlayer();
+                pInfo.Coin += DBConfigMgr.Instance.MapLevel[currentSelectedLevelID].MoneyReward;
+                pInfo.AddExp(10);
+                pInfo.Energy -= 6;
+
+                PlayerDataMgr.Instance.PlayerFinishedLevel(currentSelectedLevelID, 1);
+                RefreshLevelData();
+
+                foreach (GeneralInfo gInfo in teamOneFormation.FormationMap.Keys)
+                {
+                    gInfo.AddExp(DBConfigMgr.Instance.MapLevel[currentSelectedLevelID].GeneralExpReward);
+                }
+                playerFormationControl.RefreshBattlePowerPoint();
+
+                MainForm main = (MainForm)FindForm();
+                main.UpdatePlayerInfo();
+            }
         }
     }
 }
