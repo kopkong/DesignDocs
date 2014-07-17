@@ -49,6 +49,8 @@ public:
     std::string getPauseIcon();
 
 	std::string getStringSquadType(SquadType);
+	std::string getBackground();
+	std::string getFontName();
 };
 
 #endif /* defined(__MyGame__Resources__) */

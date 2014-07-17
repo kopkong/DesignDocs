@@ -22,7 +22,7 @@ namespace WindowsFormsApplication1
         {
             get
             {
-                return (int)((SoldierConfig.HP + SoldierConfig.HPGorwth * Level) * (Rank +1)* SoldierConfig.HPRankRate);
+                return (int)((SoldierConfig.HP + SoldierConfig.HPGrowth * Level) * (Rank +1)* SoldierConfig.HPRankRate);
             }
         }
 

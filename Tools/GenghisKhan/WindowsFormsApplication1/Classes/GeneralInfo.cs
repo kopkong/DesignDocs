@@ -79,6 +79,17 @@ namespace WindowsFormsApplication1
             {
                 this.Exp += exp;
 
+                int maxEXPAvailable = DBConfigMgr.Instance.MapExperience[PlayerDataMgr.Instance.GetPlayer().Lv].GeneralEnd - 1;
+
+                if(this.Exp >= maxEXPAvailable)
+                {
+                    this.Exp = maxEXPAvailable;
+                    Console.WriteLine("武将等级不能超过玩家等级!因此该武将无法继续获得经验");
+                }
+
+                // 同步数据
+                PlayerDataMgr.Instance.GetPlayerBag(SlotType.SlotType_General)[SlotIndex].ExtraData2 = this.Exp;
+
                 if (Exp >= DBConfigMgr.Instance.MapExperience[Level].GeneralEnd)
                 {
                     Level++;

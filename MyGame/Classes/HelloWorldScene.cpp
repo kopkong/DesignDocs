@@ -142,7 +142,7 @@ void HelloWorld::initBattle()
 	//backGround->setPosition(_screenSize.width/2,_screenSize.height/2);
 	//this->addChild(backGround,0);
 
-	Sprite* pRepeatTex = Sprite::create("bg1.png");
+	Sprite* pRepeatTex = Sprite::create(Resources::getInstance()->getBackground());
 	pRepeatTex->setAnchorPoint(Point::ZERO);
 	
 	Texture2D::TexParams params={
@@ -184,7 +184,7 @@ void HelloWorld::showFormationSelect()
     {
         for(int col =0 ; col < 5 ; col ++)
         {
-            Label* label = Label::create();
+            LabelTTF* label = LabelTTF::create();
 			setFormationLabelText(SquadSide::TeamA,row,col,label);
 
             auto item = MenuItemLabel::create(label);
@@ -206,7 +206,7 @@ void HelloWorld::showFormationSelect()
     {
         for(int col = 0 ; col < 5 ; col ++)
         {
-            Label* label = Label::create();
+            LabelTTF* label = LabelTTF::create();
             setFormationLabelText(SquadSide::TeamB,row,col,label);
             auto item = MenuItemLabel::create(label);
             
@@ -311,7 +311,7 @@ void HelloWorld::showResults()
     sprintf(buffer,"已进行 %d 次战斗，玩家胜利 %d 次",_testTimes,_teamAWins);
     std::string playerTeamMessage = buffer;
     
-    auto label = LabelTTF::create(playerTeamMessage, "HeiTi", 40);
+    auto label = LabelTTF::create(playerTeamMessage, Resources::getInstance()->getFontName(), 40);
     label->setPosition(_screenSize.width/2, _screenSize.height/2 + 100);
     label->setColor(Color3B(1.0,0.0,0.0));
     this->addChild(label,1);
@@ -319,7 +319,7 @@ void HelloWorld::showResults()
     sprintf(buffer,"已进行 %d 次战斗，NPC胜利 %d 次",_testTimes,_teamBWins);
     std::string npcTeamMessage = buffer;
     
-    auto label2 = LabelTTF::create(npcTeamMessage,"HeiTi",40);
+    auto label2 = LabelTTF::create(npcTeamMessage,Resources::getInstance()->getFontName(),40);
     label2->setPosition(_screenSize.width/2, _screenSize.height/2);
     label2->setColor(Color3B(1.0,0.0,0.0));
     this->addChild(label2,1);
@@ -455,7 +455,7 @@ void HelloWorld::menuRandomFormation(bool isPlayer)
 
 }
 
-void HelloWorld::setFormationLabelText(SquadSide side,int row,int col,Label* label)
+void HelloWorld::setFormationLabelText(SquadSide side,int row,int col,LabelTTF* label)
 {
 	SquadType typeSquad = SquadType::None;
 	if(side == SquadSide::TeamA && _leftFormation[row][col] >0 )
@@ -468,8 +468,8 @@ void HelloWorld::setFormationLabelText(SquadSide side,int row,int col,Label* lab
 		typeSquad = _rightFormation[row][col];
 	}
 
-
 	label->setString(Resources::getInstance()->getStringSquadType(typeSquad));
 	label->setFontSize(24);
+	label->setFontName(Resources::getInstance()->getFontName());
 	label->setColor(Color3B(1.0,0.0,0.0));
 }

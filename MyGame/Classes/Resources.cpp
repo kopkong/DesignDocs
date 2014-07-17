@@ -1,8 +1,8 @@
-ï»¿//
+//
 //  Resources.cpp
 //  MyGame
 //
-//  Created by å­” ä»¤é”´ on 14-4-28.
+//  Created by ¿× ÁîïÇ on 14-4-28.
 //
 //
 
@@ -48,12 +48,12 @@ CharacterRes Resources::getFootmanResourceA()
     
     for(int i = 1; i <=4 ; i++)
     {
-        idles.push_back(dir + Util::getInstance()->formatString("1-%d.png",i));
+        idles.push_back(dir + Util::getInstance()->formatString("5-%d.png",i));
     }
     
     for(int i = 1; i <= 8 ;i ++)
     {
-        moves.push_back(dir + Util::getInstance()->formatString("2-%d.png",i));
+        moves.push_back(dir + Util::getInstance()->formatString("6-%d.png",i));
     }
     
     r.Idle = idles;
@@ -77,12 +77,12 @@ CharacterRes Resources::getKnightResourceA()
     
     for(int i = 1; i <=4 ; i++)
     {
-        idles.push_back(dir + Util::getInstance()->formatString("5-%d.png",i));
+        idles.push_back(dir + Util::getInstance()->formatString("9-%d.png",i));
     }
     
     for(int i = 1; i <= 8 ;i ++)
     {
-        moves.push_back(dir + Util::getInstance()->formatString("6-%d.png",i));
+        moves.push_back(dir + Util::getInstance()->formatString("10-%d.png",i));
     }
     
     r.Idle = idles;
@@ -108,12 +108,12 @@ CharacterRes Resources::getArcherResourceA()
     
     for(int i = 1; i <=4 ; i++)
     {
-        idles.push_back(dir + Util::getInstance()->formatString("9-%d.png",i));
+        idles.push_back(dir + Util::getInstance()->formatString("1-%d.png",i));
     }
     
     for(int i = 1; i <= 8 ;i ++)
     {
-        moves.push_back(dir + Util::getInstance()->formatString("10-%d.png",i));
+        moves.push_back(dir + Util::getInstance()->formatString("2-%d.png",i));
     }
     
     r.Idle = idles;
@@ -137,12 +137,12 @@ CharacterRes Resources::getFootmanResourceB()
     
     for(int i = 1; i <=4 ; i++)
     {
-        idles.push_back(dir + Util::getInstance()->formatString("3-%d.png",i));
+        idles.push_back(dir + Util::getInstance()->formatString("7-%d.png",i));
     }
     
     for(int i = 1; i <= 8 ;i ++)
     {
-        moves.push_back(dir + Util::getInstance()->formatString("4-%d.png",i));
+        moves.push_back(dir + Util::getInstance()->formatString("8-%d.png",i));
     }
     
     r.Idle = idles;
@@ -167,12 +167,12 @@ CharacterRes Resources::getKnightResourceB()
     
     for(int i = 1; i <=4 ; i++)
     {
-        idles.push_back(dir + Util::getInstance()->formatString("7-%d.png",i));
+        idles.push_back(dir + Util::getInstance()->formatString("11-%d.png",i));
     }
     
     for(int i = 1; i <= 8 ;i ++)
     {
-        moves.push_back(dir + Util::getInstance()->formatString("8-%d.png",i));
+        moves.push_back(dir + Util::getInstance()->formatString("12-%d.png",i));
     }
     
     r.Idle = idles;
@@ -198,12 +198,12 @@ CharacterRes Resources::getArcherResourceB()
     
     for(int i = 1; i <=4 ; i++)
     {
-        idles.push_back(dir + Util::getInstance()->formatString("11-%d.png",i));
+        idles.push_back(dir + Util::getInstance()->formatString("3-%d.png",i));
     }
     
     for(int i = 1; i <= 8 ;i ++)
     {
-        moves.push_back(dir + Util::getInstance()->formatString("12-%d.png",i));
+        moves.push_back(dir + Util::getInstance()->formatString("4-%d.png",i));
     }
     
     r.Idle = idles;
@@ -272,15 +272,29 @@ std::string Resources::getStringSquadType(SquadType type)
 	switch (type)
 	{
 	case None:
-		return "ç©ºç™½";
+		return "Empty";
 	case Footman:
-		return "æ­¥å…µ";
+		return "Foo";
 	case Knight:
-		return "éª‘å…µ";
+		return "K";
 	case Archer:
-		return "å¼“å…µ";
+		return "A";
 	default:
-		return "ç©ºç™½";
+		return "Empty";
 	}
 
+}
+
+std::string Resources::getBackground()
+{
+	return "Map/bg1.png";
+}
+
+std::string Resources::getFontName()
+{
+	#ifdef WIN32
+		return "Î¢ÈíÑÅºÚ";
+	#else if
+		return "HeiTi";
+	#endif
 }

@@ -169,6 +169,7 @@ void Battle::initSquadSprite(Squad* pSquad)
 {
 	// Texture rect
 	//2D-Cartoon Vector Characters/archer.png
+	Sprite* test = Sprite::create("D:\DesignDocs\MyGame\Resources\Character\FootmanA\1-1.png");
 	Sprite* spriteHero = Sprite::create(pSquad->getSoldierRes().Idle[0]);
 	float scale_x = _heroSize.width / spriteHero->getContentSize().width ;
 	float scale_y = _heroSize.height / spriteHero->getContentSize().height;
@@ -223,8 +224,8 @@ void Battle::initSquadSprite(Squad* pSquad)
 
 void Battle::startBattle(Squad* pSelfSquad)
 {
-    battleStartSearch(pSelfSquad, SquadType (*targetFormation)[5])
-	pSelfSquad->setState(SquadState::Moving);
+    //battleStartSearch(pSelfSquad, SquadType (*targetFormation)[5])
+	//pSelfSquad->setState(SquadState::Moving);
 }
 
 void Battle::wholeSquadWaiting(Squad* pSelfSquad)

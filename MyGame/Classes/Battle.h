@@ -4,7 +4,7 @@
 #include <iostream>
 #include "cocos2d.h"
 #include "Squad.h"
-#include "Unit.h"
+#include "Unit/Unit.h"
 
 USING_NS_CC;
 

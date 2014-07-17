@@ -217,5 +217,38 @@ namespace WindowsFormsApplication1
 
             return SQLiteHelper.Instance.ExecuteNonQuery(cmd, null);
         }
+
+        public int SaveLevelEnemyData(int levelID,Dictionary<int,NPCEnemy> enemyList)
+        {
+            string enemyStr = String.Empty;
+            foreach (NPCEnemy enemy in enemyList.Values)
+            {
+                string fString = String.Format("{0},{1},{2},{3},{4},{5};",enemy.Position,enemy.GeneralConfigID,
+                    enemy.GeneralLevel,enemy.SoldierConfigID,enemy.SoldierLevel,enemy.SoldierCount);
+
+                enemyStr += fString;
+            }
+
+            string cmd = String.Format(@"update LevelConfig set Enemy = '{1}' where ID = {0};",
+                levelID, enemyStr);
+            MapLevel[levelID].Enemy = enemyStr;
+
+            return SQLiteHelper.Instance.ExecuteNonQuery(cmd, null);
+        }
+
+        public int SaveLevelGeneralEXPReward()
+        {
+            string cmd = String.Empty;
+            foreach (KeyValuePair<int, Level> pair in MapLevel)
+            {
+                string sql = String.Format(@"update LevelConfig set GeneralExpReward ={1} where ID = {0};",
+                    pair.Key,pair.Value.GeneralExpReward);
+
+                cmd += sql;
+            }
+
+            return SQLiteHelper.Instance.ExecuteNonQuery(cmd, null);
+
+        }
     }
 }

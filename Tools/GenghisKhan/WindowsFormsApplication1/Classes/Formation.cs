@@ -17,6 +17,27 @@ namespace WindowsFormsApplication1
         public int ColumnIndex { get; set; }
     }
 
+    public class NPCEnemy
+    {
+        public NPCEnemy(int position,int generalConfigID,int generalLevel, int soldierConfigID, int soldierLevel, int soldierCount)
+        {
+            this.Position = position;
+            this.GeneralConfigID = generalConfigID;
+            this.GeneralLevel = generalLevel;
+            this.SoldierConfigID = soldierConfigID;
+            this.SoldierLevel = soldierLevel;
+            this.SoldierCount = soldierCount;
+        }
+
+        public int Position { get; set; }
+        public int GeneralConfigID { get; set; }
+        public int GeneralLevel { get; set; }
+        public int SoldierConfigID { get; set; }
+        public int SoldierLevel { get; set; }
+        public int SoldierCount { get; set; }
+
+    }
+
     public class Formation
     {
         public Formation()
@@ -40,6 +61,8 @@ namespace WindowsFormsApplication1
             }
         }
 
+        public Dictionary<int, NPCEnemy> NPCFormation { get; set; }
+
         public void ReComputePlayerTeamBattlePowerPoint()
         {
             int battlePoint = 0;
@@ -52,6 +75,22 @@ namespace WindowsFormsApplication1
                 battlePoint += Formula.ComputeBattlePowerPoint(g, s);
             }
 
+            TeamBattlePowerPoint = battlePoint;
+        }
+
+        public void ReComputeNPCTeamBattlePowerPoint()
+        {
+            int battlePoint = 0;
+            foreach (NPCEnemy enemy in NPCFormation.Values)
+            {
+
+                GeneralInfo gInfo = EntityInfoFactory.GetGeneralInfoFromConfig(enemy.GeneralConfigID, 
+                    enemy.GeneralLevel, enemy.SoldierCount);
+                SoldierInfo sInfo = EntityInfoFactory.GetSoldierInfoFromConfig(enemy.SoldierConfigID, enemy.SoldierLevel,
+                    enemy.SoldierCount);
+
+                battlePoint += Formula.ComputeBattlePowerPoint(gInfo, sInfo);
+            }
             TeamBattlePowerPoint = battlePoint;
         }
 
@@ -71,16 +110,16 @@ namespace WindowsFormsApplication1
         public void InitNPCFormation(int levelConfigID)
         {
             string enemyStr = DBConfigMgr.Instance.MapLevel[levelConfigID].Enemy;
+            Dictionary<int, NPCEnemy> _formationNPC = new Dictionary<int, NPCEnemy>();
 
             // Parse string
             string[] itemsStr = enemyStr.Split(';');
-            int battlePoint = 0;
             foreach (string s in itemsStr)
             {
                 if (s.Length <= 0)
                     continue;
 
-                string[] item = s.Replace("(", "").Replace(")","").Split(',');
+                string[] item = s.Split(',');
 
                 int pos = Convert.ToInt32(item[0]);
                 int gConfigID = Convert.ToInt32(item[1]);
@@ -94,10 +133,14 @@ namespace WindowsFormsApplication1
 
                 FormationPosition p = (FormationPosition)pos;
                 _formation.Add(gInfo, rightMap[p]);
-                battlePoint += Formula.ComputeBattlePowerPoint(gInfo, sInfo);
+
+                NPCEnemy enemy = new NPCEnemy(pos, gConfigID, gLevel, sConfigID, sLevel, sCount);
+                _formationNPC.Add(pos, enemy);
             }
-            TeamBattlePowerPoint = battlePoint;
+
             TeamName = DBConfigMgr.Instance.MapLevel[levelConfigID].Name;
+            NPCFormation = _formationNPC;
+            ReComputeNPCTeamBattlePowerPoint();
         }
 
         private void InitMap()

@@ -30,11 +30,6 @@ namespace WindowsFormsApplication1
             PlayerDataMgr.Instance.Init();
             UpdatePlayerInfo();
 
-            // 控件默认值
-            comboBox2.SelectedIndex = 0;
-            comboBox3.SelectedIndex = 0;
-            comboBox4.SelectedIndex = 0;
-            textBox1.Text = "0";
         }
 
         public void UpdatePlayerInfo()
@@ -117,12 +112,12 @@ namespace WindowsFormsApplication1
 
         private void button9_Click(object sender, EventArgs e)
         {
-            if (comboBox3.SelectedIndex >= 0)
-            {
-                int gapBetweenStar = Convert.ToInt32(comboBox3.SelectedText);
-                Formula.ComputeGeneralBasicAttribute(gapBetweenStar);
-                Console.WriteLine("刷新成功");
-            }
+            //if (comboBox3.SelectedIndex >= 0)
+            //{
+                //int gapBetweenStar = Convert.ToInt32(comboBox3.SelectedText);
+            Formula.ComputeGeneralBasicAttribute(20);
+            Console.WriteLine("刷新成功");
+            //}
         }
 
         private void button10_Click(object sender, EventArgs e)
@@ -131,18 +126,25 @@ namespace WindowsFormsApplication1
             MessageBox.Show(String.Format("成功保存了{0}条武将数据", affectRows));
         }
 
+        /// <summary>
+        /// 调整关卡难度
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button12_Click(object sender, EventArgs e)
         {
-            int chapterid = Convert.ToInt32(comboBox2.SelectedItem);
-            int referLevel = Convert.ToInt32(textBox1.Text);
-            int difficulty = Convert.ToInt32(comboBox4.SelectedItem);
+            Formula.ComputeGeneralLevelAterEveryLevel();
+        }
 
-            Console.WriteLine("选择了章节{0},参考等级{1}，调整难度为{2}", chapterid, referLevel, difficulty);
-            
-            foreach(KeyValuePair<int,Level> pair in DBConfigMgr.Instance.MapLevel.Where(x=>x.Value.ChapterID == chapterid))
-            {
-                Formula.ComputeLevelDifficulty(pair.Key, referLevel, difficulty);
-            }
+        /// <summary>
+        /// 刷新关卡奖励的经验
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button13_Click(object sender, EventArgs e)
+        {
+            int affectRows = Formula.ComputeLevelGeneralEXPReward();
+            MessageBox.Show(String.Format("成功保存了{0}条关卡奖励数据",affectRows));
         }
     }
 }

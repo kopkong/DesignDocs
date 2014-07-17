@@ -5,14 +5,14 @@ using System.Drawing;
 using System.Data;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading.Tasks; 
 using System.Windows.Forms;
 
 namespace WindowsFormsApplication1.Forms
 {
     public partial class UCChapters : UserControl
     {
-        public UCChapters()
+        public UCChapters() 
         {
             InitializeComponent();
         }
@@ -22,8 +22,8 @@ namespace WindowsFormsApplication1.Forms
 
         private Formation teamOneFormation;
         private Formation teamTwoFormation;
-        private int currentSelectedLevelID;
-        private int currentSelectedChapterID;
+        private int currentSelectedLevelID = 1;
+        private int currentSelectedChapterID = 1;
 
         public void InitChapter()
         {
@@ -81,9 +81,21 @@ namespace WindowsFormsApplication1.Forms
             textBoxPassed.Value = record.Passed;
             row.Cells.Add(textBoxPassed);
 
-            DataGridViewTextBoxCell textBoxHighestStar = new DataGridViewTextBoxCell();
-            textBoxHighestStar.Value = record.HighestStar;
-            row.Cells.Add(textBoxHighestStar);
+            //DataGridViewTextBoxCell textBoxHighestStar = new DataGridViewTextBoxCell();
+            //textBoxHighestStar.Value = record.HighestStar;
+            //row.Cells.Add(textBoxHighestStar);
+
+            DataGridViewTextBoxCell textBoxEXPReward = new DataGridViewTextBoxCell();
+            textBoxEXPReward.Value = levelConfig.GeneralExpReward;
+            row.Cells.Add(textBoxEXPReward);
+
+            DataGridViewTextBoxCell textBoxCoin = new DataGridViewTextBoxCell();
+            textBoxCoin.Value = levelConfig.MoneyReward;
+            row.Cells.Add(textBoxCoin);
+
+            DataGridViewButtonCell buttonBattle = new DataGridViewButtonCell();
+            buttonBattle.Value = "挑战";
+            row.Cells.Add(buttonBattle);
 
             dataGridView2.Rows.Add(row);
         }
@@ -113,58 +125,87 @@ namespace WindowsFormsApplication1.Forms
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
             //Console.WriteLine("当前选择了{0}行",dataGridView2.SelectedRows.Count);
-            int selectedID = Convert.ToInt32(dataGridView2.CurrentRow.Cells[0].Value);
-            currentSelectedLevelID = selectedID;
-            Console.WriteLine("选择了关卡ID {0}", selectedID);
-
-            if (PlayerDataMgr.Instance.GetPlayerLevelRecords()[currentSelectedLevelID].Locked)
-            {
-                MessageBox.Show("本关还没有解锁，不能挑战");
-                return;
-            }
-
-            panel1.Controls.Clear();
-            panel2.Controls.Clear();
-
-            playerFormationControl = new UCFormation();
-            playerFormationControl.InitPlayerFormation();
-            panel1.Controls.Add(playerFormationControl);
-            teamOneFormation = playerFormationControl.CurrentFormation;
-
-            npcFormationControl = new UCFormation();
-            npcFormationControl.InitNPCFormation(selectedID);
-            panel2.Controls.Add(npcFormationControl);
-            teamTwoFormation = npcFormationControl.CurrentFormation;
             
-            groupBox1.Visible = true;
         }
 
         private void BTN_StartBattle_Click(object sender, EventArgs e)
         {
-            bool win = Formula.ComputeTeamOneWin(teamOneFormation,teamTwoFormation);
+            
+        }
 
-            string message = win?"挑战成功":"挑战失败";
-            MessageBox.Show(message);
+        private void 配置怪物ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LevelEnemy form = new LevelEnemy();
+            form.InitLevelEnemy(currentSelectedLevelID);
+            form.Show();
+        }
 
-            // 应该给奖励以及扣除体力点数
-            if (win)
+        private void dataGridView2_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            
+        }
+
+        private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
             {
-                PlayerInfo pInfo = PlayerDataMgr.Instance.GetPlayer();
-                pInfo.Coin += DBConfigMgr.Instance.MapLevel[currentSelectedLevelID].MoneyReward;
-                pInfo.AddExp(10);
-                pInfo.Energy -= 6;
+                int selectedID = Convert.ToInt32(dataGridView2.CurrentRow.Cells[0].Value);
+                currentSelectedLevelID = selectedID;
 
-                PlayerDataMgr.Instance.PlayerFinishedLevel(currentSelectedLevelID, 1);
-                RefreshLevelData();
+                Console.WriteLine("选择了关卡ID {0}", selectedID);
 
-                foreach (GeneralInfo gInfo in teamOneFormation.FormationMap.Keys)
+                // 显示关卡的怪物
+                panel1.Controls.Clear();
+                panel2.Controls.Clear();
+
+                playerFormationControl = new UCFormation();
+                playerFormationControl.InitPlayerFormation();
+                panel1.Controls.Add(playerFormationControl);
+                teamOneFormation = playerFormationControl.CurrentFormation;
+
+                npcFormationControl = new UCFormation();
+                npcFormationControl.InitNPCFormation(currentSelectedLevelID);
+                panel2.Controls.Add(npcFormationControl);
+                teamTwoFormation = npcFormationControl.CurrentFormation;
+
+                groupBox1.Visible = true;
+
+            }
+
+            if (e.ColumnIndex == 6)
+            {
+                if (PlayerDataMgr.Instance.GetPlayerLevelRecords()[currentSelectedLevelID].Locked)
                 {
-                    gInfo.AddExp(DBConfigMgr.Instance.MapLevel[currentSelectedLevelID].GeneralExpReward);
+                    MessageBox.Show("本关还没有解锁，不能挑战");
+                    return;
                 }
-                playerFormationControl.RefreshBattlePowerPoint();
 
-                MainForm main = (MainForm)FindForm();
-                main.UpdatePlayerInfo();
+                bool win = Formula.ComputeTeamOneWin(teamOneFormation, teamTwoFormation);
+
+                string message = win ? "挑战成功" : "挑战失败";
+                MessageBox.Show(message);
+
+                // 应该给奖励以及扣除体力点数
+                if (win)
+                {
+                    PlayerInfo pInfo = PlayerDataMgr.Instance.GetPlayer();
+                    pInfo.Coin += DBConfigMgr.Instance.MapLevel[currentSelectedLevelID].MoneyReward;
+                    pInfo.AddExp(10);
+                    pInfo.Energy -= 6;
+
+                    PlayerDataMgr.Instance.PlayerFinishedLevel(currentSelectedLevelID, 1);
+                    RefreshLevelData();
+
+                    foreach (GeneralInfo gInfo in teamOneFormation.FormationMap.Keys)
+                    {
+                        gInfo.AddExp(DBConfigMgr.Instance.MapLevel[currentSelectedLevelID].GeneralExpReward);
+                    }
+                    playerFormationControl.RefreshBattlePowerPoint();
+
+                    MainForm main = (MainForm)FindForm();
+                    main.UpdatePlayerInfo();
+                }
+
+
             }
         }
     }

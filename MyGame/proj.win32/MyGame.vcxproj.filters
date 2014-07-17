@@ -33,12 +33,14 @@
     <ClCompile Include="..\Classes\Resources.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Util.cpp" />
     <ClCompile Include="..\Classes\Unit\Unit.cpp">
       <Filter>Classes\Unit</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Unit\UnitState.cpp">
       <Filter>Classes\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Util.cpp">
+      <Filter>Classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -60,12 +62,14 @@
     <ClInclude Include="..\Classes\Resources.h">
       <Filter>Classes</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Util.h" />
     <ClInclude Include="..\Classes\Unit\Unit.h">
       <Filter>Classes\Unit</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Unit\UnitState.h">
       <Filter>Classes\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Util.h">
+      <Filter>Classes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

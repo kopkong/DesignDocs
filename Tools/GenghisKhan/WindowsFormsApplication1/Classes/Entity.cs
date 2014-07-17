@@ -55,9 +55,6 @@ namespace WindowsFormsApplication1
         public string ModelPatch { get; set; }
 
         [DataMember]
-        public string Color { get; set; }
-
-        [DataMember]
         public string Description { get; set; }
 
         [DataMember]
@@ -149,9 +146,6 @@ namespace WindowsFormsApplication1
         public string ModelPatch { get; set; }
 
         [DataMember]
-        public string Color { get; set; }
-
-        [DataMember]
         public string Description { get; set; }
 
         [DataMember]
@@ -197,7 +191,7 @@ namespace WindowsFormsApplication1
         public string AIID { get; set; }
 
         [DataMember]
-        public int HPGorwth { get; set; }
+        public int HPGrowth { get; set; }
 
         [DataMember]
         public int ATKGrowth { get; set; }
@@ -229,9 +223,6 @@ namespace WindowsFormsApplication1
 
         [DataMember]
         public string IconID { get; set; }
-
-        [DataMember]
-        public string Color { get; set; }
 
         [DataMember]
         public string Description { get; set; }
@@ -281,9 +272,6 @@ namespace WindowsFormsApplication1
         public string IconID { get; set; }
 
         [DataMember]
-        public string Color { get; set; }
-
-        [DataMember]
         public int Star { get; set; }
 
         [DataMember]
@@ -328,6 +316,11 @@ namespace WindowsFormsApplication1
         [DataMember]
         public string RewardRule { get; set; }
 
+        [DataMember]
+        public int X { get; set; }
+
+        [DataMember]
+        public int Y { get; set; }
     }
 
     [DataContract]
@@ -350,6 +343,9 @@ namespace WindowsFormsApplication1
 
         [DataMember]
         public string Enemy { get; set; }
+
+        [DataMember]
+        public int IsEliteLevel { get; set; }
 
         [DataMember]
         public string LevelReward { get; set; }

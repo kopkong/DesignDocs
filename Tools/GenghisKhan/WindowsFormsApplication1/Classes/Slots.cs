@@ -52,6 +52,10 @@ namespace WindowsFormsApplication1
 
         // 额外附加数据
         public int ExtraData { get; set; }
+
+
+        // 额外附加数据
+        public int ExtraData2 { get; set; }
     }
 
     public class SlotGeneral : Slot
@@ -69,6 +73,9 @@ namespace WindowsFormsApplication1
 
             // 是否上阵
             ExtraData = 0;
+
+            // 经验值
+            ExtraData2 = 0;
 
             GeneralConfig = DBConfigMgr.Instance.MapGeneral[ConfigID];
         }

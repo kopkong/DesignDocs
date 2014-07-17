@@ -20,7 +20,7 @@ private:
     
     bool _inFormationSelect;
     int _currentItemIndex;
-    Vector<Label*> _menuLabels;
+    Vector<LabelTTF*> _menuLabels;
     Vector<MenuItem*> _menuItems;
     
     bool _inLeveltSelect;
@@ -38,7 +38,7 @@ private:
     
     float _speedUpRate;
 	void initBattle();
-    void setFormationLabelText(SquadSide,int row,int col,Label*);
+    void setFormationLabelText(SquadSide,int row,int col,LabelTTF*);
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
     static cocos2d::Scene* createScene();

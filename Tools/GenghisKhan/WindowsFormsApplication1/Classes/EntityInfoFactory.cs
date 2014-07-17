@@ -55,6 +55,7 @@ namespace WindowsFormsApplication1
             g.SoldierConfigID = s2.ConfigID;
             g.SoldierCount = s2.Count;
             g.SlotIndex = slotIndex;
+            g.Exp = s1.ExtraData2;
 
             return g;
         }

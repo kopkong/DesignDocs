@@ -49,8 +49,9 @@ namespace WindowsFormsApplication1
             row.Cells.Add(textboxName);
 
             DataGridViewTextBoxCell textboxLv = new DataGridViewTextBoxCell();
-            textboxLv.Value = slotData.Lv.ToString();
+            textboxLv.Value = slotData.Lv;
             row.Cells.Add(textboxLv);
+            //Console.WriteLine("General level is {0}",slotData.Lv);
 
             DataGridViewTextBoxCell textboxRank = new DataGridViewTextBoxCell();
             textboxRank.Value = slotData.Rank.ToString();

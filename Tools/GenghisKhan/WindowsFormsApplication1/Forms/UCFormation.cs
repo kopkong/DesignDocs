@@ -42,7 +42,7 @@ namespace WindowsFormsApplication1.Forms
 
                 lb_General.TextAlign = ContentAlignment.MiddleCenter;
                 tableLayoutPanel1.Controls.Add(lb_General, c,r);
-                Console.WriteLine("添加了Formation table{0}{1}, 武将{2}", r,c,lb_General.Text);
+                //Console.WriteLine("添加了Formation table{0}{1}, 武将{2}", r,c,lb_General.Text);
             }
 
             LB_TeamName.Text = _formation.TeamName;
@@ -64,7 +64,7 @@ namespace WindowsFormsApplication1.Forms
 
                 lb_General.TextAlign = ContentAlignment.MiddleCenter;
                 tableLayoutPanel1.Controls.Add(lb_General, c, r);
-                Console.WriteLine("添加了Formation table{0}{1}, 武将{2}", r, c, lb_General.Text);
+                //Console.WriteLine("添加了Formation table{0}{1}, 武将{2}", r, c, lb_General.Text);
             }
 
             LB_TeamName.Text = _formation.TeamName;
