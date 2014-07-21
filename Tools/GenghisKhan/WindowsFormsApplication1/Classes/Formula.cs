@@ -89,6 +89,14 @@ namespace WindowsFormsApplication1
             
         }
 
+        private static int GetReferLevelForNobleRankLevel(int nobleLevel)
+        {
+            if (nobleLevel == 1)
+                return 10;
+            else
+                return 15 * (nobleLevel - 1);
+        }
+
         private static MainAttribute GetGeneralMainAttributeGrowth(int level)
         {
             MainAttribute main;

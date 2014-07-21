@@ -172,14 +172,14 @@ namespace WindowsFormsApplication1
         private void button4_Click(object sender, EventArgs e)
         {
             var encoding = new UTF8Encoding(false);
-            
+
             // general
             string str = parseDataToJsonString<General>(DBConfigMgr.Instance.MapGeneral.Values);
 
             string fileName = Path.Combine(System.Environment.CurrentDirectory, "general.json");
             File.WriteAllText(fileName, str, encoding);
-            textBox1.Text+= "general.json 生成成功" + Environment.NewLine;
-            
+            textBox1.Text += "general.json 生成成功" + Environment.NewLine;
+
 
             {
                 // soldier
@@ -243,6 +243,14 @@ namespace WindowsFormsApplication1
                 fileName = Path.Combine(System.Environment.CurrentDirectory, "level.json");
                 File.WriteAllText(fileName, str, encoding);
                 textBox1.Text += "level.json 生成成功\n" + Environment.NewLine;
+            }
+
+            {  // nobolity
+                str = parseDataToJsonString<Nobility>(DBConfigMgr.Instance.MapNobility.Values);
+                fileName = Path.Combine(System.Environment.CurrentDirectory, "nobility.json");
+                File.WriteAllText(fileName, str, encoding);
+                textBox1.Text += "nobility.json 生成成功\n" + Environment.NewLine;
+
             }
 
         }

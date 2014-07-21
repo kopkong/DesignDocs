@@ -442,4 +442,33 @@ namespace WindowsFormsApplication1
         [DataMember]
         public int ConsumeMaterials{get;set;}
     }
+
+    [DataContract]
+    public class Nobility
+    {
+        [DataMember]
+        public int ID { get; set; }
+
+        [DataMember]
+        public int Level { get; set; }
+
+        [DataMember]
+        public string Name { get; set; }
+
+        [DataMember]
+        public int StarCosts { get; set; }
+
+        [DataMember]
+        public int HP { get; set; }
+
+        [DataMember]
+        public int AttackPower { get; set; }
+
+        [DataMember]
+        public int DefensePower { get; set; }
+
+        [DataMember]
+        public string ExtraSkills { get; set; }
+
+    }
 }
