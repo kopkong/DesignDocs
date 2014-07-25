@@ -65,6 +65,7 @@
             this.button9 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button13 = new System.Windows.Forms.Button();
             this.button12 = new System.Windows.Forms.Button();
             this.button17 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
@@ -80,7 +81,6 @@
             this.tabPage11 = new System.Windows.Forms.TabPage();
             this.tabPage12 = new System.Windows.Forms.TabPage();
             this.tabPage13 = new System.Windows.Forms.TabPage();
-            this.button13 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -465,6 +465,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "调整关卡";
             // 
+            // button13
+            // 
+            this.button13.Location = new System.Drawing.Point(6, 83);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(109, 42);
+            this.button13.TabIndex = 19;
+            this.button13.Text = "重置关卡经验";
+            this.button13.UseVisualStyleBackColor = true;
+            this.button13.Click += new System.EventHandler(this.button13_Click);
+            // 
             // button12
             // 
             this.button12.Location = new System.Drawing.Point(6, 23);
@@ -481,7 +491,7 @@
             this.button17.Name = "button17";
             this.button17.Size = new System.Drawing.Size(110, 112);
             this.button17.TabIndex = 8;
-            this.button17.Text = "配置检查工具";
+            this.button17.Text = "配置工具";
             this.button17.UseVisualStyleBackColor = true;
             this.button17.Click += new System.EventHandler(this.button17_Click);
             // 
@@ -602,16 +612,6 @@
             this.tabPage13.Size = new System.Drawing.Size(1011, 605);
             this.tabPage13.TabIndex = 12;
             this.tabPage13.Text = "守护神";
-            // 
-            // button13
-            // 
-            this.button13.Location = new System.Drawing.Point(6, 83);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(109, 42);
-            this.button13.TabIndex = 19;
-            this.button13.Text = "重置关卡经验";
-            this.button13.UseVisualStyleBackColor = true;
-            this.button13.Click += new System.EventHandler(this.button13_Click);
             // 
             // MainForm
             // 

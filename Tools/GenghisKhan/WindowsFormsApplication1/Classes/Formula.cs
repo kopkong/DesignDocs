@@ -76,14 +76,14 @@ namespace WindowsFormsApplication1
         public static int GetReferenceLevel(int levelID)
         {
             int chapter = DBConfigMgr.Instance.MapLevel[levelID].ChapterID;
-            bool isElite = DBConfigMgr.Instance.MapLevel[levelID].IsEliteLevel == 1;
+            //bool isElite = DBConfigMgr.Instance.MapLevel[levelID].IsEliteLevel == 1;
 
             int referenceLevel = 1;
             if(chapter> 1)
                 referenceLevel = (chapter - 1) * 5;
 
-            if (isElite)
-                referenceLevel += 10;
+            //if (isElite)
+            //    referenceLevel += 10;
 
             return referenceLevel;
             

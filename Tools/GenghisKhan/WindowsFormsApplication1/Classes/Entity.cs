@@ -49,7 +49,7 @@ namespace WindowsFormsApplication1
         public int InitialLv { get; set; }
 
         [DataMember]
-        public string SmallIcon { get; set; }
+        public string IconID { get; set; }
 
         [DataMember]
         public string ModelPatch { get; set; }
@@ -125,6 +125,36 @@ namespace WindowsFormsApplication1
 
         [DataMember]
         public int InitialSoldier { get; set; }
+
+        [DataMember]
+        public string RankUpLevel1Costs { get; set; }
+
+        [DataMember]
+        public string RankUpLevel2Costs { get; set; }
+
+        [DataMember]
+        public string RankUpLevel3Costs { get; set; }
+
+        [DataMember]
+        public string RankUpLevel4Costs { get; set; }
+
+        [DataMember]
+        public string RankUpLevel5Costs { get; set; }
+
+        [DataMember]
+        public int Rank1LeastLevel { get; set; }
+
+        [DataMember]
+        public int Rank2LeastLevel { get; set; }
+
+        [DataMember]
+        public int Rank3LeastLevel { get; set; }
+
+        [DataMember]
+        public int Rank4LeastLevel { get; set; }
+
+        [DataMember]
+        public int Rank5LeastLevel { get; set; }
     }
 
     [DataContract]
@@ -140,7 +170,7 @@ namespace WindowsFormsApplication1
         public int InitialLv { get; set; }
 
         [DataMember]
-        public string SmallIcon { get; set; }
+        public string IconID { get; set; }
 
         [DataMember]
         public string ModelPatch { get; set; }
@@ -210,6 +240,51 @@ namespace WindowsFormsApplication1
 
         [DataMember]
         public int InitialCount { get; set; }
+
+        [DataMember]
+        public string RankUpLevel1Costs { get; set; }
+
+        [DataMember]
+        public string RankUpLevel2Costs { get; set; }
+
+        [DataMember]
+        public string RankUpLevel3Costs { get; set; }
+
+        [DataMember]
+        public string RankUpLevel4Costs { get; set; }
+
+        [DataMember]
+        public string RankUpLevel5Costs { get; set; }
+
+        [DataMember]
+        public string AddCount1Costs { get; set; }
+
+        [DataMember]
+        public string AddCount2Costs { get; set; }
+
+        [DataMember]
+        public string AddCount3Costs { get; set; }
+
+        [DataMember]
+        public string AddCount4Costs { get; set; }
+
+        [DataMember]
+        public string AddCount5Costs { get; set; }
+
+        [DataMember]
+        public string AddCount6Costs { get; set; }
+
+        [DataMember]
+        public string AddCount7Costs { get; set; }
+
+        [DataMember]
+        public string AddCount8Costs { get; set; }
+
+        [DataMember]
+        public string AddCount9Costs { get; set; }
+
+        [DataMember]
+        public string AddCount10Costs { get; set; }
     }
 
     [DataContract]
@@ -278,7 +353,7 @@ namespace WindowsFormsApplication1
         public int Type { get; set; }
 
         [DataMember]
-        public int RuleID {get;set;}
+        public string RuleID {get;set;}
 
     }
 
@@ -345,22 +420,34 @@ namespace WindowsFormsApplication1
         public string Enemy { get; set; }
 
         [DataMember]
-        public int IsEliteLevel { get; set; }
+        public string LevelReward { get; set; }
 
         [DataMember]
-        public string LevelReward { get; set; }
+        public string EliteLevelReward { get; set; }
 
         [DataMember]
         public int MoneyReward { get; set; }
 
         [DataMember]
+        public int EliteMoneyReward { get; set; }
+
+        [DataMember]
         public int GeneralExpReward { get; set; }
+
+        [DataMember]
+        public int EliteGeneralExpReward { get; set; }
 
         [DataMember]
         public string ClientShowRewards { get; set; }
 
         [DataMember]
+        public string EliteClientShowRewards { get; set; }
+
+        [DataMember]
         public int ConsumeEnergy { get; set; }
+
+        [DataMember]
+        public int EliteConsumeEnergy { get; set; }
 
         [DataMember]
         public int DefaultLocked { get; set; }
@@ -375,6 +462,9 @@ namespace WindowsFormsApplication1
         public int DailyMostTimes { get; set; }
 
         [DataMember]
+        public int EliteDailyMostTimes { get; set; }
+
+        [DataMember]
         public int Star1Time { get; set; }
 
         [DataMember]
@@ -382,9 +472,6 @@ namespace WindowsFormsApplication1
 
         [DataMember]
         public int Star3Time { get; set; }
-
-        [DataMember]
-        public int FailTime { get; set; }
     }
 
     [DataContract]

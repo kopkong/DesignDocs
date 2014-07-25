@@ -65,7 +65,8 @@ namespace WindowsFormsApplication1
                 int o = reader.GetOrdinal(pI.Name);
                 if (o >= 0 )
                 {
-                    Object v = Convert.ChangeType(reader[pI.Name], type);
+                    Object rawValue = reader[pI.Name];
+                    Object v = Convert.ChangeType(rawValue, type);
                     pI.SetValue(obj, v, null);
                 }
             }
