@@ -23,6 +23,7 @@ namespace WindowsFormsApplication1
         public IDictionary<int, Level> MapLevel;
         public IDictionary<int, Experience> MapExperience;
         public IDictionary<int, Nobility> MapNobility;
+        public IDictionary<int, Task> MapTask;
 
         public static DBConfigMgr Instance
         {
@@ -52,6 +53,7 @@ namespace WindowsFormsApplication1
             LoadArmorMaterialData();
             LoadSoldierMaterialData();
             LoadNobilityData();
+            LoadTaskData();
         }
 
         private T ParseFromDataReader<T>(SQLiteDataReader reader)
@@ -212,6 +214,20 @@ namespace WindowsFormsApplication1
                 {
                     Nobility s = ParseFromDataReader<Nobility>(reader);
                     MapNobility.Add(s.ID, s);
+                }
+            }
+        }
+
+        private void LoadTaskData()
+        {
+            MapTask = new Dictionary<int, Task>();
+            string sql = "select * from TaskConfig";
+            using (SQLiteDataReader reader = SQLiteHelper.Instance.ExecuteReader(sql, null))
+            {
+                while (reader.Read())
+                {
+                    Task s = ParseFromDataReader<Task>(reader);
+                    MapTask.Add(s.ID, s);
                 }
             }
         }

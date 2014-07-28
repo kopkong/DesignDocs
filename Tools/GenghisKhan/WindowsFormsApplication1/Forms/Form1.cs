@@ -253,6 +253,14 @@ namespace WindowsFormsApplication1
 
             }
 
+            { // task
+                str = parseDataToJsonString<Task>(DBConfigMgr.Instance.MapTask.Values);
+                fileName = Path.Combine(System.Environment.CurrentDirectory, "task.json");
+                File.WriteAllText(fileName, str, encoding);
+                textBox1.Text += "task.json 生成成功\n" + Environment.NewLine;
+
+            }
+
         }
 
         private void button5_Click(object sender, EventArgs e)

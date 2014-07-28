@@ -558,4 +558,54 @@ namespace WindowsFormsApplication1
         public string ExtraSkills { get; set; }
 
     }
+
+    [DataContract]
+    public class Task
+    {
+        [DataMember]
+        public int ID { get; set; }
+
+        [DataMember]
+        public string Name { get; set; }
+
+        [DataMember]
+        public string Description { get; set; }
+
+        [DataMember]
+        public int Type { get; set; }
+
+        [DataMember]
+        public int TaskLevel { get; set; }
+
+        [DataMember]
+        public int TaskTarget { get; set; }
+
+        [DataMember]
+        public int TaskParameter1 { get; set; }
+
+        [DataMember]
+        public int TaskParameter2 { get; set; }
+
+        [DataMember]
+        public int PlayerExpReward { get; set; }
+
+        [DataMember]
+        public int DiamondReward { get; set; }
+
+        [DataMember]
+        public int MoneyReward { get; set; }
+
+        [DataMember]
+        public int Cycle { get; set; }
+
+        [DataMember]
+        public string StartTime { get; set; }
+
+        [DataMember]
+        public string EndTime { get; set; }
+
+        [DataMember]
+        public int PreviousTask { get; set; }
+
+    }
 }
