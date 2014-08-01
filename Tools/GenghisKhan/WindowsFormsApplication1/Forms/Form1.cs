@@ -261,6 +261,14 @@ namespace WindowsFormsApplication1
 
             }
 
+            {   // skill
+                str = parseDataToJsonString<Skill>(DBConfigMgr.Instance.MapSkill.Values);
+                fileName = Path.Combine(System.Environment.CurrentDirectory, "skill.json");
+                File.WriteAllText(fileName, str, encoding);
+                textBox1.Text += "skill.json 生成成功\n" + Environment.NewLine;
+
+            }
+
         }
 
         private void button5_Click(object sender, EventArgs e)

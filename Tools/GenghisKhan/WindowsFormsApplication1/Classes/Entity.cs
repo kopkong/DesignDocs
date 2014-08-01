@@ -608,4 +608,75 @@ namespace WindowsFormsApplication1
         public int PreviousTask { get; set; }
 
     }
+
+    [DataContract]
+    public class Skill
+    {
+        [DataMember]
+        public int ID { get; set; }
+
+        [DataMember]
+        public int SkillType { get; set; }
+
+        [DataMember]
+        public string Name { get; set; }
+
+        [DataMember]
+        public int SkillCategory { get; set; }
+
+        [DataMember]
+        public int Range { get; set; }
+
+        [DataMember]
+        public int Target { get; set; }
+
+        [DataMember]
+        public int MaxHit { get; set; }
+
+        [DataMember]
+        public int Possiblity { get; set; }
+
+        [DataMember]
+        public int CoolDown { get; set; }
+
+        [DataMember]
+        public int EffectRange { get; set; }
+
+        [DataMember]
+        public int SkillParameter { get; set; }
+
+        [DataMember]
+        public int EffectWeapon { get; set; }
+
+        [DataMember]
+        public int FixedDamage { get; set; }
+
+        [DataMember]
+        public int EffectID { get; set; }
+
+        [DataMember]
+        public int Buff1 { get; set; }
+
+        [DataMember]
+        public int Buff1Possibility { get; set; }
+
+        [DataMember]
+        public int Buff1Para1 { get; set; }
+
+        [DataMember]
+        public int Buff1Para2 { get; set; }
+
+        [DataMember]
+        public int Buff2 { get; set; }
+
+        [DataMember]
+        public int Buff2Possibility { get; set; }
+
+        [DataMember]
+        public int Buff2Para1 { get; set; }
+
+        [DataMember]
+        public int Buff2Para2 { get; set; }
+
+    }
 }
