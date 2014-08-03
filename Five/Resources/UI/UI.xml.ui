@@ -10,36 +10,14 @@
     <string>UI_1.json</string>
   </JsonList>
   <CanvasSize>
-    <Width>0</Width>
-    <Height>0</Height>
+    <Width>480</Width>
+    <Height>320</Height>
   </CanvasSize>
   <filePath>C:\DesignDocs\Five\Resources\UI\UI.xml.ui</filePath>
   <ProjectType>UIProject</ProjectType>
   <ResRelativePath />
   <imageFileList />
-  <imagePngList>
-    <string>bg.jpg</string>
-    <string>chessBoard.jpg</string>
-    <string>msg-board.png</string>
-    <string>player-bg.png</string>
-    <string>player-black.png</string>
-    <string>player-name-b.png</string>
-    <string>GUI/image.png</string>
-    <string>player-white.png</string>
-    <string>player-name-w.png</string>
-    <string>btn-start-game [www.imagesplitter.net]-1-0.png</string>
-    <string>btn-start-game [www.imagesplitter.net]-0-0.png</string>
-    <string>checkbox [www.imagesplitter.net]-0-0.png</string>
-    <string>checkbox [www.imagesplitter.net]-1-0.png</string>
-    <string>settings1.png</string>
-    <string>settings2.png</string>
-    <string>settings3.png</string>
-    <string>settings4.png</string>
-    <string>settings5.png</string>
-    <string>slider [www.imagesplitter.net].png</string>
-    <string>slider-toggle.png</string>
-    <string>slider-inner.png</string>
-  </imagePngList>
+  <imagePngList />
   <JsonSuffix>.json</JsonSuffix>
   <CurrentUIJson>UI_1.json</CurrentUIJson>
 </UIProject>

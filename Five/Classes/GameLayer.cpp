@@ -69,22 +69,8 @@ void GameLayer::initUI()
 		cocostudio::GUIReader::getInstance()->widgetFromJsonFile(UI_LAYTOU_MAIN.c_str())); 
     
     _screenSize = Director::getInstance()->getVisibleSize();
-	Size rootSize = layout->getSize();
-	this->addChild(layout);
+	//Size rootSize = layout->getSize();
 	Node* rootChild = layout->getChildren().at(0);
-
-	// 
-	{
-		_WidgetdialogMessage = static_cast<Widget*>(rootChild->getChildByTag(24));
-
-		// Add a Label
-		_resultText = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("playerOneWin"));
-		_resultText->setPosition(135,45);
-		_WidgetdialogMessage->addChild(_resultText);
-
-		_WidgetdialogMessage->setZOrder(2);
-		//_WidgetdialogMessage->setVisible(false);
-	}
 
 	// Player Boxes
 	{
@@ -108,7 +94,7 @@ void GameLayer::initUI()
 		Point leftTopCorner = Point(chessBoardWidget->getPosition().x - chessBoardWidget->getSize().width / 2, 
 			chessBoardWidget->getPosition().y + chessBoardWidget->getSize().height / 2);
 
-		Point pieceOffset(34,34);
+		Point pieceOffset(37,37);
 		Size cellSize(50,50);
 
 		int index = 0;
@@ -121,8 +107,8 @@ void GameLayer::initUI()
 				float positionY = leftTopCorner.y - row * cellSize.height - pieceOffset.y;
 				cell->setPosition(positionX,positionY);
 				cell->setCallback(CC_CALLBACK_0(GameLayer::cellTouchCallback,this,index));
-				cell->setNormalSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("transparentPiece"));
-
+				cell->setNormalSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("blackPieceNormal"));
+				cell->setLocalZOrder(1);
 				_vectorPieces.pushBack(cell);
 				index ++;
 			}
@@ -130,7 +116,32 @@ void GameLayer::initUI()
 
 		auto menu2 = Menu::createWithArray(_vectorPieces);
 		menu2->setPosition(Point::ZERO);
-		this->addChild(menu2,1);
+		layout->addChild(menu2,1);
+
+		log("menu2 z-order is %d",menu2->getLocalZOrder());
+	}
+
+	// 输赢信息面板
+	{
+		//_WidgetdialogMessage = static_cast<Widget*>(rootChild->getChildByTag(24));
+
+		_WidgetdialogMessage = Widget::create();
+		_WidgetdialogMessage->setPosition(Point(256,537));
+
+		// Add a Label
+		_resultText = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("playerOneWin"));
+		_resultText->setPosition(135,45);
+		_WidgetdialogMessage->addChild(_resultText);
+
+		layout->addChild(_WidgetdialogMessage,3);
+
+		//Sprite* _sprite = Sprite::createWithSpriteFrameName("playerTwoWin");
+		//_sprite->setPosition(200,300);
+		//this->addChild(_sprite,3);
+		//_WidgetdialogMessage->setLocalZOrder(2);
+		//_WidgetdialogMessage->setVisible(false);
+
+		log("_WidgetdialogMessage z-order is %d",_WidgetdialogMessage->getLocalZOrder());
 	}
 
 	// Setting 面板 ， Button监听事件
@@ -159,7 +170,8 @@ void GameLayer::initUI()
 		slider1->addTouchEventListener(this,toucheventselector(GameLayer::uiButtonTouchCallback));
 		slider2->addTouchEventListener(this,toucheventselector(GameLayer::uiButtonTouchCallback));
 	}
-
+	
+	this->addChild(layout);
 }
 
 void GameLayer::initTexture()
