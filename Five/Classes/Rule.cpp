@@ -37,13 +37,16 @@ void Rule::setData(int row,int column,PieceSide side)
 		_steps ++;
 	}
 
-	if(side == PieceSide::BlackSide && _hasForbidden)// 检查禁手，如果有则判负
-		checkForbidden(row,column,side);
-
 	if(_steps >= 9)
 	{
 		// 检查是否连到5子
 		checkSum(row,column,side);
+
+		if(!isFinished())
+		{
+			if(side == PieceSide::BlackSide && _hasForbidden)// 检查禁手，如果有则判负
+				checkForbidden(row,column,side);
+		}
 	}
 }
 
@@ -147,6 +150,7 @@ bool Rule::straightThree(int row,int column,int direction[2])
 
 	// 格子的数值
 	int blackValue = (int)PieceSide::BlackSide;
+	int whiteValue = (int)PieceSide::WhiteSide;
 	int emptyValue = 0;
 	int outsideValue = 9;
 
@@ -165,16 +169,15 @@ bool Rule::straightThree(int row,int column,int direction[2])
 			nextValue = _goBangData[nextRow][nextColumn];
 	}
 
+	// 前方被堵死，不会3连
+	//if(nextValue[0] == outsideValue || nextValue[0] == whiteValue ||
+	//	nextValue[1] == outsideValue || nextValue[1] == whiteValue
+	//	|| nextValue[2] == outsideValue || nextValue[2] == whiteValue)
+	//	return false;
+
 	// Pattern1 ***
-	if(nextValue[0] == blackValue && nextValue[1] == blackValue
-		&& (nextValue[3] == 0 || nextValue[3] == blackValue))
-	{
-		return true;
-	}
 
 	// Pattern2 **-*
-	if(nextValue[0] == blackValue && nextValue[1] == emptyValue 
-		&& nextValue[2] == blackValue && next`
 
 	// Pattern3 *-**
 
