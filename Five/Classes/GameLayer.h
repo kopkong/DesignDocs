@@ -7,6 +7,7 @@
 #include "public.h"
 #include "CocosGUI.h"
 #include "cocostudio/CocoStudio.h"
+#include "MessageBox.h"
 
 USING_NS_CC;
 using namespace cocos2d::ui;
@@ -20,7 +21,6 @@ private:
 	TurnOwner _whoseTurn;
 	int _currentCellIndex;
 
-	Widget* _WidgetdialogMessage;
 	Widget* _WidgetsettingsBoard;
 
 	Sprite* _resultText;
@@ -29,6 +29,9 @@ private:
 	ImageView* _ImageViewplayerTwoColor;
 	ImageView* _ImageViewtotoalTimeSettings;
 	ImageView* _ImageViewextralTimeSettings;
+
+	TextAtlas* _TextAtlasplayerOneTimeLabel;
+	TextAtlas* _TextAtlasplayerTwoTimeLabel;
 
 	PieceSide _playerOneSide;
 	PieceSide _playerTwoSide;
@@ -39,9 +42,6 @@ private:
 	int _playerOneExtraTurnTime;
 	int _playerTwoExtraTurnTime;
 
-	TextAtlas* _TextAtlasplayerOneTimeLabel;
-	TextAtlas* _TextAtlasplayerTwoTimeLabel;
-	
 
 	// 所有UI按钮的touch处理事件
 	void uiButtonTouchCallback(Ref* obj,TouchEventType eventType);
@@ -53,6 +53,9 @@ private:
 
 	TotalTimeOption _totalTimeOption;
 	ExtraTimeOption _extraTimeOption;
+
+	// 消息窗口
+	FiveMessageBox* _messageDialog;
 
 protected:
 	~GameLayer();
@@ -84,11 +87,11 @@ public:
 	// 交换黑白方
 	void changeSide();
 
-	void winGame(TurnOwner);
+	void winGame(PieceSide);
     
-	void forbiddenLose(TurnOwner);
+	void forbiddenLose();
 
-	void timeoutLose(TurnOwner);
+	void timeoutLose(PieceSide);
 
 	// 点击对应位置下子
 	void cellTouchCallback(int index);

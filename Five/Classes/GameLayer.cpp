@@ -107,7 +107,7 @@ void GameLayer::initUI()
 				float positionY = leftTopCorner.y - row * cellSize.height - pieceOffset.y;
 				cell->setPosition(positionX,positionY);
 				cell->setCallback(CC_CALLBACK_0(GameLayer::cellTouchCallback,this,index));
-				cell->setNormalSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("blackPieceNormal"));
+				cell->setNormalSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("transparentPiece"));
 				cell->setLocalZOrder(1);
 				_vectorPieces.pushBack(cell);
 				index ++;
@@ -123,25 +123,13 @@ void GameLayer::initUI()
 
 	// 输赢信息面板
 	{
-		//_WidgetdialogMessage = static_cast<Widget*>(rootChild->getChildByTag(24));
+		_messageDialog = new FiveMessageBox();
+		//_messageDialog->setAnchorPoint(0.5,0.5);
+		_messageDialog->setPosition(Point(392,544));
+		this->addChild(_messageDialog,3);
 
-		_WidgetdialogMessage = Widget::create();
-		_WidgetdialogMessage->setPosition(Point(256,537));
-
-		// Add a Label
-		_resultText = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("playerOneWin"));
-		_resultText->setPosition(135,45);
-		_WidgetdialogMessage->addChild(_resultText);
-
-		layout->addChild(_WidgetdialogMessage,3);
-
-		//Sprite* _sprite = Sprite::createWithSpriteFrameName("playerTwoWin");
-		//_sprite->setPosition(200,300);
-		//this->addChild(_sprite,3);
-		//_WidgetdialogMessage->setLocalZOrder(2);
-		//_WidgetdialogMessage->setVisible(false);
-
-		log("_WidgetdialogMessage z-order is %d",_WidgetdialogMessage->getLocalZOrder());
+		//_messageDialog->showBlackWin();
+		_messageDialog->setVisible(false);
 	}
 
 	// Setting 面板 ， Button监听事件
@@ -204,11 +192,11 @@ void GameLayer::initTexture()
 	SpriteFrame* time1m			= SpriteFrame::create(EXTRATIME_TEXT_PATH,Rect(47,0,47,23));
 	SpriteFrame* time2m			= SpriteFrame::create(EXTRATIME_TEXT_PATH,Rect(94,0,47,23));
 
-	frameCache->addSpriteFrame(playerOneWin,"playerOneWin");
-	frameCache->addSpriteFrame(playerTwoWin,"playerTwoWin");
-	frameCache->addSpriteFrame(playerOneForbidden,"playerOneForbidden");
-	frameCache->addSpriteFrame(playerOneTimeout,"playerOneTimeout");
-	frameCache->addSpriteFrame(playerTwoTimeout,"playerTwoTimeout");
+	frameCache->addSpriteFrame(playerOneWin,SPRITECACHE_NAME_BLACKWIN);
+	frameCache->addSpriteFrame(playerTwoWin,SPRITECACHE_NAME_WHITEWIN);
+	frameCache->addSpriteFrame(playerOneForbidden,SPRITECACHE_NAME_FORBIDDENLOSE);
+	frameCache->addSpriteFrame(playerOneTimeout,SPRITECACHE_NAME_BLACKTIMEOUT);
+	frameCache->addSpriteFrame(playerTwoTimeout,SPRITECACHE_NAME_WHITETIMEOUT);
 
 	frameCache->addSpriteFrame(blackNormalSprite,"blackPieceNormal");
 	frameCache->addSpriteFrame(blackSelectedSprite,"blackPieceSelected");
@@ -248,7 +236,13 @@ void GameLayer::resetGame()
 
 	uiRefreshTime(_gameSettings.TotalTime);
 
-	this->schedule(schedule_selector(GameLayer::updateTotalTime),1.0f);
+	// 重置规则
+	Rule::getInstance()->Init(_gameSettings);
+
+	if(!this->isScheduled(schedule_selector(GameLayer::updateTotalTime)))
+	{
+		this->schedule(schedule_selector(GameLayer::updateTotalTime),1.0f);
+	}
 }
 
 void GameLayer::update(float dt)
@@ -282,7 +276,7 @@ void GameLayer::updateTotalTime(float dt)
 			}
 			else
 			{
-				timeoutLose(TurnOwner::PlayerOne);
+				timeoutLose(_playerOneSide);
 			}
 		}
 	}
@@ -302,7 +296,7 @@ void GameLayer::updateTotalTime(float dt)
 			}
 			else
 			{
-				timeoutLose(TurnOwner::PlayerTwo);
+				timeoutLose(_playerTwoSide);
 			}
 		}
 	}
@@ -336,39 +330,36 @@ void GameLayer::changeTurn()
 	}
 }
 
-void GameLayer::winGame(TurnOwner owner)
+void GameLayer::winGame(PieceSide side)
 {
 	_gameRunning = false;
 
-	_WidgetdialogMessage->setVisible(true);
+	_messageDialog->setVisible(true);
 
-	if(owner == TurnOwner::PlayerOne)
-		_resultText->setSpriteFrame("playerOneWin");
+	if(side == PieceSide::BlackSide)
+		_messageDialog->showBlackWin();
 	else
-		_resultText->setSpriteFrame("playerTwoWin");
+		_messageDialog->showWhiteWin();
 
 	//log("Player %d win the game!",owner);
 }
 
-void GameLayer::forbiddenLose(TurnOwner owner)
+void GameLayer::forbiddenLose()
 {
 	_gameRunning = false;
-
-	_WidgetdialogMessage->setVisible(true);
-
-	_resultText->setSpriteFrame("playerOneForbidden");
+	_messageDialog->setVisible(true);
+	_messageDialog->showBlackForbiddenLose();
 }
 
-void GameLayer::timeoutLose(TurnOwner owner)
+void GameLayer::timeoutLose(PieceSide side)
 {
 	_gameRunning = false;
+	_messageDialog->setVisible(true);
 
-	_WidgetdialogMessage->setVisible(true);
-
-	if(owner == TurnOwner::PlayerOne)
-		_resultText->setSpriteFrame("playerOneTimeout");
+	if(side == PieceSide::BlackSide)
+		_messageDialog->showBlackTimeout();
 	else
-		_resultText->setSpriteFrame("playerTwoTimeout");
+		_messageDialog->showWhiteTimeout();
 
 	//log("Player %d lose the game!",owner);
 }
@@ -397,9 +388,9 @@ void GameLayer::cellTouchCallback(int index)
 			if(Rule::getInstance()->isFinished())
 			{
 				if(Rule::getInstance()->getWinner() == _playerOneSide)
-					winGame(TurnOwner::PlayerOne);
+					winGame(_playerOneSide);
 				else
-					forbiddenLose(TurnOwner::PlayerOne);
+					forbiddenLose();
 			}
 		}
 		else
@@ -412,10 +403,9 @@ void GameLayer::cellTouchCallback(int index)
 			if(Rule::getInstance()->isFinished())
 			{
 				if(Rule::getInstance()->getWinner() == _playerTwoSide)
-					winGame(TurnOwner::PlayerTwo);
+					winGame(_playerTwoSide);
 				else
-					forbiddenLose(TurnOwner::PlayerTwo);
-
+					forbiddenLose();
 			}
 		}
 

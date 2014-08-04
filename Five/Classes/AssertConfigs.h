@@ -30,9 +30,15 @@ static const string BOX_BLACK_PATH				=	RESOURCES_PATH + "UI_0/box-b.png";
 static const string BOX_WHITE_PATH				=	RESOURCES_PATH + "UI_0/box-w.png";
 static const string TOTALTIME_TEXT_PATH			=	RESOURCES_PATH + "UI_0/t1.png";
 static const string EXTRATIME_TEXT_PATH			=	RESOURCES_PATH + "UI_0/t2.png";
+static const string MESSAGEBOX_BACKGROUND_PATH  =	RESOURCES_PATH + "UI_0/msg-board.png";
 
 static const string USER_DEFAULT_DATAFILE		=	RESOURCES_PATH  + "UserData/data";
 static const string DATABASE_FILE				=	RESOURCES_PATH	+ "UserData/user.db";
 
+static const string SPRITECACHE_NAME_BLACKWIN		=	"blackWin";
+static const string SPRITECACHE_NAME_WHITEWIN		=	"whiteWin";
+static const string SPRITECACHE_NAME_BLACKTIMEOUT	=	"blackTimeout";
+static const string SPRITECACHE_NAME_WHITETIMEOUT	=	"whiteTimeout";
+static const string SPRITECACHE_NAME_FORBIDDENLOSE	=	"blackForbidden";
 
 #endif
