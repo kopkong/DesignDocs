@@ -35,6 +35,25 @@ def writeCSV(filename):
 	    writer.writerow(line)
 	ofile.close()
 
+def getHP(level):
+	initial = 250
+	return initial + (level- 1) * 48
+
+def getATK(level):
+	initial = 35
+	return initial + (level - 1) * 12
+
+def getDEF(level):
+	initial = 15
+	return initial + (level - 1 ) * 3
+
+def displayNobilityAttributes():
+	allRanks = {10,15,30,45,60,75,90,105}
+	allRanks = sorted(allRanks)
+	for r in allRanks:
+		print r
+		print "%d, %d, %d" %(getHP(r),getATK(r),getDEF(r))
+
 def displayNormal():
 	for i in od:
 		a1 = (basicHeroGrowth + basicArmyGrowth) * i *onBattleSquads[i]
@@ -71,6 +90,6 @@ def displayDifficulty():
 		print d 
 
 if __name__ == '__main__':
-	displayHighEnd()
-
+	#displayHighEnd()
+	displayNobilityAttributes()
 	
