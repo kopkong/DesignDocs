@@ -17,10 +17,17 @@ private:
 
 	int countNumber(int row,int column,int direction[2],int value);
 
-	// 3连
-	bool straightThree(int row,int column,int direction[2]);
-	// 4连
-	bool straightFour(int row,int column,int direction[2]);
+	// 匹配禁手规则1 （在同一个方向的四四禁）
+	bool matchBanRuleOne(const std::string baseString);
+
+	// 匹配禁手规则2 (在不同方向的三三禁）
+	bool matchBanRuleTwo(const std::string baseString);
+
+	// 匹配禁手规则2 (在不同方向的四四禁）
+	bool matchBanRuleThree(const std::string baseString);
+
+	// 是否活四
+	// bool hasLiveFour(int row,int column,int direction[2]);
 
 	// 计数规则
 	void checkSum(int row,int column,PieceSide side);
@@ -33,6 +40,13 @@ private:
 	PieceSide _winner;
 
 	bool _hasForbidden;
+
+	void buildBasePieceString(int row,int column,int direction[2],std::string &str);
+
+	std::string getStringValue(int row,int column);
+
+	// 黑方禁手判负
+	void blackBanLose();
 
 protected:
 	Rule();

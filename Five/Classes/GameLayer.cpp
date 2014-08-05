@@ -52,8 +52,6 @@ void GameLayer::initState()
 	// set start is false
 	_gameRunning = false;
 
-	_whoseTurn = TurnOwner::PlayerOne;
-
 	_totalTimeOption = TotalTimeOption::_15M;
 	_extraTimeOption = ExtraTimeOption::_1M;
 
@@ -65,12 +63,12 @@ void GameLayer::initState()
 void GameLayer::initUI()
 {
 	// load UI
-	Layout* layout = static_cast<Layout*>(
+	_layout = static_cast<Layout*>(
 		cocostudio::GUIReader::getInstance()->widgetFromJsonFile(UI_LAYTOU_MAIN.c_str())); 
     
     _screenSize = Director::getInstance()->getVisibleSize();
-	//Size rootSize = layout->getSize();
-	Node* rootChild = layout->getChildren().at(0);
+	//Size rootSize = _layout->getSize();
+	Node* rootChild = _layout->getChildren().at(0);
 
 	// Player Boxes
 	{
@@ -86,39 +84,6 @@ void GameLayer::initUI()
 		// 时间便签
 		_TextAtlasplayerOneTimeLabel = static_cast<TextAtlas*>(playerOneWidget->getChildByName("PlayerOneTime"));
 		_TextAtlasplayerTwoTimeLabel = static_cast<TextAtlas*>(playerTwoWidget->getChildByName("PlayerTwoTime"));
-	}
-
-	// Add 15 * 15 buttons on chess board
-	{
-		Widget* chessBoardWidget = static_cast<Widget*>(rootChild->getChildByTag(10));
-		Point leftTopCorner = Point(chessBoardWidget->getPosition().x - chessBoardWidget->getSize().width / 2, 
-			chessBoardWidget->getPosition().y + chessBoardWidget->getSize().height / 2);
-
-		Point pieceOffset(37,37);
-		Size cellSize(50,50);
-
-		int index = 0;
-		for(int row = 0 ; row < 15; row ++)
-		{
-			for(int column = 0 ; column < 15; column ++)
-			{
-				MenuItemImage* cell = MenuItemImage::create();
-				float positionX = leftTopCorner.x + column * cellSize.width + pieceOffset.x;
-				float positionY = leftTopCorner.y - row * cellSize.height - pieceOffset.y;
-				cell->setPosition(positionX,positionY);
-				cell->setCallback(CC_CALLBACK_0(GameLayer::cellTouchCallback,this,index));
-				cell->setNormalSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("transparentPiece"));
-				cell->setLocalZOrder(1);
-				_vectorPieces.pushBack(cell);
-				index ++;
-			}
-		}
-
-		auto menu2 = Menu::createWithArray(_vectorPieces);
-		menu2->setPosition(Point::ZERO);
-		layout->addChild(menu2,1);
-
-		log("menu2 z-order is %d",menu2->getLocalZOrder());
 	}
 
 	// 输赢信息面板
@@ -158,8 +123,43 @@ void GameLayer::initUI()
 		slider1->addTouchEventListener(this,toucheventselector(GameLayer::uiButtonTouchCallback));
 		slider2->addTouchEventListener(this,toucheventselector(GameLayer::uiButtonTouchCallback));
 	}
-	
-	this->addChild(layout);
+
+	this->addChild(_layout);
+}
+
+void GameLayer::initPieces()
+{
+	_vectorPieces.clear();
+	_layout->removeChild(_piecesMenu,true);
+
+	// Add 15 * 15 buttons on chess board
+	{
+		Point leftTopCorner(5,763);
+		Point pieceOffset(37,37);
+		Size cellSize(50,50);
+
+		int index = 0;
+		for(int row = 0 ; row < 15; row ++)
+		{
+			for(int column = 0 ; column < 15; column ++)
+			{
+				MenuItemImage* cell = MenuItemImage::create();
+				float positionX = leftTopCorner.x + column * cellSize.width + pieceOffset.x;
+				float positionY = leftTopCorner.y - row * cellSize.height - pieceOffset.y;
+				cell->setPosition(positionX,positionY);
+				cell->setCallback(CC_CALLBACK_0(GameLayer::cellTouchCallback,this,index));
+				cell->setNormalSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("transparentPiece"));
+				cell->setLocalZOrder(1);
+				_vectorPieces.pushBack(cell);
+				index ++;
+			}
+		}
+
+		_piecesMenu = Menu::createWithArray(_vectorPieces);
+		_piecesMenu->setPosition(Point::ZERO);
+		_layout->addChild(_piecesMenu,1);
+	}
+
 }
 
 void GameLayer::initTexture()
@@ -236,8 +236,18 @@ void GameLayer::resetGame()
 
 	uiRefreshTime(_gameSettings.TotalTime);
 
+	// 重置先手玩家
+	_whoseTurn = TurnOwner::PlayerOne;
+
+	// 重置棋子
+	initPieces();
+
 	// 重置规则
 	Rule::getInstance()->Init(_gameSettings);
+
+	// 提示框不可见
+	_messageDialog->setVisible(false);
+	
 
 	if(!this->isScheduled(schedule_selector(GameLayer::updateTotalTime)))
 	{

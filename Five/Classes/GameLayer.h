@@ -21,10 +21,9 @@ private:
 	TurnOwner _whoseTurn;
 	int _currentCellIndex;
 
+	Layout* _layout;
+	Menu* _piecesMenu;
 	Widget* _WidgetsettingsBoard;
-
-	Sprite* _resultText;
-
 	ImageView* _ImageViewplayerOneColor;
 	ImageView* _ImageViewplayerTwoColor;
 	ImageView* _ImageViewtotoalTimeSettings;
@@ -76,6 +75,8 @@ public:
     void resetGame();
     
     void initUI();
+
+	void initPieces();
 
 	void initState();
 

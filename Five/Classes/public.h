@@ -58,4 +58,5 @@ static const int EXTRATIME_SECONDS[3] = {30,60,120};
 
 static const std::string TOTALTIME_FRAMENAME[6] = {"time5m","time10m","time15m","time20m","time25m","time30m"};
 static const std::string EXTRATIME_FRAMENAME[3] = {"time30s","time1m","time2m"};
+
 #endif

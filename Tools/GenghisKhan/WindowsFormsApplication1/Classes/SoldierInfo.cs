@@ -42,7 +42,5 @@ namespace WindowsFormsApplication1
                 return (int)((SoldierConfig.DefensePower + SoldierConfig.DEFGrowth * Level) * (Rank + 1) * SoldierConfig.ATKRankRate);
             }
         }
-        
-
     }
 }

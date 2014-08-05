@@ -1,5 +1,18 @@
 #include "rule.h"
 
+// 格子的数值
+static const std::string BlackValue = "1";
+static const std::string WhiteValue = "2";
+static const std::string EmptyValue = "0";
+static const std::string OutsideValue = "9";
+
+static int FourDirections[4][2] = 
+{
+	1,0,		// 垂直方向
+	0,1,		// 水平方向
+	1,-1,		// 正斜杠方向 "/"
+	1,1			// 反斜杠方向 "\"
+};
 
 Rule::Rule()
 {
@@ -52,19 +65,11 @@ void Rule::setData(int row,int column,PieceSide side)
 
 void Rule::checkSum(int row,int column,PieceSide side)
 {
-	int fourDirections[4][2] = 
-	{
-		1,0,		// 垂直方向
-		0,1,		// 水平方向
-		1,-1,		// 正斜杠方向 "/"
-		1,1			// 反斜杠方向 "\"
-	};
-
 	int value = (int)side;
 
 	for(int i = 0; i< 4 ; i ++)
 	{
-		int count = countNumber(row,column,fourDirections[i],value);
+		int count = countNumber(row,column,FourDirections[i],value);
 
 		if(side == PieceSide::WhiteSide)
 		{
@@ -80,7 +85,7 @@ void Rule::checkSum(int row,int column,PieceSide side)
 			if(count > 5 && _hasForbidden)
 			{
 				// 黑棋输了！
-				_state = GameState::Finished;
+				blackBanLose();
 				return;
 			}
 			else if(count == 5)
@@ -137,66 +142,166 @@ bool Rule::nextSame(int& row,int& column,const int direction[2],int value)
 
 void Rule::checkForbidden(int row,int column,PieceSide side)
 {
-	//return true;
-}
-
-
-// 该方向是否3连
-bool Rule::straightThree(int row,int column,int direction[2])
-{
-	// 有堵死就不会3连
-	if(behindBlocked(row,column,direction,(int)PieceSide::BlackSide))
-		return false;
-
-	// 格子的数值
-	int blackValue = (int)PieceSide::BlackSide;
-	int whiteValue = (int)PieceSide::WhiteSide;
-	int emptyValue = 0;
-	int outsideValue = 9;
-
-	// 先保存正方向的后面5个格子的值
-	int nextValue[5] = {0};
-	for(int i = 0 ; i < 5 ; i++)
+	int threeThreeCount = 0;
+	int fourFourCount = 0;
+	for(int i = 0; i< 4 ; i ++)
 	{
-		int nextRow = row + (i + 1) * direction[0];
-		int nextColumn = column + (i + 1) * direction[1];
-		int nextValue;
+		std::string baseString;
+		buildBasePieceString(row,column,FourDirections[i],baseString);
 
-		// 出界了！
-		if(nextRow < 0 || nextRow >= 15 || nextColumn < 0 || nextColumn >=15)
-			nextValue = outsideValue;
-		else
-			nextValue = _goBangData[nextRow][nextColumn];
+		// 在一个方向上的四四禁
+		if(matchBanRuleOne(baseString))
+		{
+			blackBanLose();
+			break;
+		}
+			
+		if(matchBanRuleTwo(baseString))
+			threeThreeCount++;
+
+		if(matchBanRuleThree(baseString))
+			fourFourCount++;
 	}
 
-	// 前方被堵死，不会3连
-	//if(nextValue[0] == outsideValue || nextValue[0] == whiteValue ||
-	//	nextValue[1] == outsideValue || nextValue[1] == whiteValue
-	//	|| nextValue[2] == outsideValue || nextValue[2] == whiteValue)
-	//	return false;
+	// 三三 或者 四四禁
+	if(threeThreeCount >= 2 || fourFourCount >= 2)
+	{
+		blackBanLose();
+	}
 
-	// Pattern1 ***
+}
 
-	// Pattern2 **-*
+bool Rule::matchBanRuleOne(const std::string baseString)
+{
+	const int maxPattern = 14;
+	// 模式字符串
+	std::string patterns[maxPattern] = {
+		//黑黑空黑黑空黑黑
+		"0110110110",
+		"9110110110",
+		"2110110110",
+		"0110110119",
+		"0110110112",
+		"9110110119",
+		"2110110112",
 
-	// Pattern3 *-**
+		//黑空黑黑黑空黑
+		"010111010",
+		"910111010",
+		"210111010",
+		"010111019",
+		"010111012",
+		"910111019",
+		"210111012",
+	};
+
+	// 模式搜索
+	for(int i = 0; i < maxPattern; i++)
+	{
+		if(baseString.find(patterns[i]) != std::string::npos)
+		{
+			// 成功匹配
+			log("match the pattern %s",patterns[i].c_str());
+
+			return true;
+		}
+	}
 
 	return false;
 }
 
-// 该方向是否4连
-bool Rule::straightFour(int row,int column,int direction[2])
+bool Rule::matchBanRuleTwo(const std::string baseString)
 {
-	int count = 1;
-	while(nextSame(row,column,direction,(int)PieceSide::BlackSide))
+	const int maxPattern = 15;
+	// 模式字符串
+	std::string patterns[maxPattern] = {
+		//黑黑黑
+		"0011100",
+		"9011100",
+		"2011100",
+		"0011109",
+		"0011102",
+
+		//黑空黑黑
+		"00101100",
+		"90101100",
+		"20101100",
+		"00101109",
+		"00101102",
+
+		//黑黑空黑
+		"00110100",
+		"90110100",
+		"20110100",
+		"00110109",
+		"00110102",
+
+	};
+
+	// 模式搜索
+	for(int i = 0; i < maxPattern; i++)
 	{
-		count ++;
+		if(baseString.find(patterns[i]) != std::string::npos)
+		{
+			// 成功匹配
+			log("match the pattern %s",patterns[i].c_str());
+
+			return true;
+		}
 	}
 
-	if(count == 4)
-		return true;
-	else 
-		return false;
+	return false;
+}
+
+bool Rule::matchBanRuleThree(const std::string baseString)
+{
+	const int maxPattern = 20;
+
+	// 模式字符串
+	std::string patterns[maxPattern] = {
+		//黑黑黑黑
+		"011110",
+		"911110",
+		"211110",
+		"011119",
+		"011112",
+
+		//黑黑空黑黑
+		"0110110",
+		"9110110",
+		"2110110",
+		"0110119",
+		"0110112",
+
+		//黑空黑黑黑
+		"0101110",
+		"9101110",
+		"2101110",
+		"0101119",
+		"0101112",
+
+		//黑黑黑空黑
+		"0111010",
+		"9111010",
+		"2111010",
+		"0111019",
+		"0111012",
+
+	};
+
+	// 模式搜索
+	for(int i = 0; i < maxPattern; i++)
+	{
+		if(baseString.find(patterns[i]) != std::string::npos)
+		{
+			// 成功匹配
+			log("match the pattern %s",patterns[i].c_str());
+
+			return true;
+		}
+	}
+
+	return false;
 }
 
 // 反方向是否被堵死
@@ -227,4 +332,59 @@ bool Rule::isFinished()
 PieceSide Rule::getWinner()
 {
 	return _winner;
+}
+
+void Rule::buildBasePieceString(int row,int column,int direction[2],std::string& baseString)
+{
+	// 保存正面5个 反面5个 共11个格子的值
+
+	// 反方向
+	for(int i = 0; i< 5 ; i++)
+	{
+		int nextRow = row - ( 5 - i ) * direction[0];
+		int nextColumn = column - ( 5 - i ) * direction[1];
+
+		baseString += getStringValue(nextRow,nextColumn);
+	}
+
+	// 下的那个子本身
+	baseString += BlackValue;
+
+	// 正方向
+	for(int i = 6 ; i < 11 ; i++)
+	{
+		int nextRow = row + ( i -5 ) * direction[0];
+		int nextColumn = column + ( i -5 ) * direction[1];
+
+		baseString += getStringValue(nextRow,nextColumn);
+	}
+}
+
+std::string Rule::getStringValue(int row,int column)
+{
+	// 出界了！
+	if(row < 0 || row >= 15 || column < 0 || column >=15)
+		return OutsideValue;
+	else
+	{
+		int v = _goBangData[row][column];
+		
+		switch(v)
+		{
+			case 1:
+				return BlackValue;
+			case 2:
+				return WhiteValue;
+			case 0:
+				return EmptyValue;
+			default:
+				return EmptyValue;
+		}
+	}
+}
+
+void Rule::blackBanLose()
+{
+	_state = GameState::Finished;
+	_winner = PieceSide::WhiteSide;
 }
