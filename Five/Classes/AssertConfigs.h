@@ -1,4 +1,4 @@
-#ifndef _AssertConfigs_h
+﻿#ifndef _AssertConfigs_h
 #define _AssertConfigs_h
 
 #include <string>

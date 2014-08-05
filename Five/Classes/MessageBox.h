@@ -1,4 +1,4 @@
-#ifndef __FiveMessageBox_H__
+﻿#ifndef __FiveMessageBox_H__
 #define __FiveMessageBox_H__
 
 #include "public.h"

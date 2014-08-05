@@ -1,4 +1,4 @@
-#ifndef __GameLayer_SCENE_H__
+ï»¿#ifndef __GameLayer_SCENE_H__
 #define __GameLayer_SCENE_H__
 
 #include "cocos2d.h"
@@ -42,10 +42,10 @@ private:
 	int _playerTwoExtraTurnTime;
 
 
-	// ËùÓĞUI°´Å¥µÄtouch´¦ÀíÊÂ¼ş
+	// æ‰€æœ‰UIæŒ‰é’®çš„touchå¤„ç†äº‹ä»¶
 	void uiButtonTouchCallback(Ref* obj,TouchEventType eventType);
 
-	// ÏÔÊ¾Ê±¼ä
+	// æ˜¾ç¤ºæ—¶é—´
 	void uiRefreshTime(int time);
 
 	GameSettings _gameSettings;
@@ -53,7 +53,7 @@ private:
 	TotalTimeOption _totalTimeOption;
 	ExtraTimeOption _extraTimeOption;
 
-	// ÏûÏ¢´°¿Ú
+	// æ¶ˆæ¯çª—å£
 	FiveMessageBox* _messageDialog;
 
 protected:
@@ -82,10 +82,10 @@ public:
 
 	void initTexture();
 
-	// ½»»»»ØºÏ
+	// äº¤æ¢å›åˆ
 	void changeTurn();
 
-	// ½»»»ºÚ°×·½
+	// äº¤æ¢é»‘ç™½æ–¹
 	void changeSide();
 
 	void winGame(PieceSide);
@@ -94,7 +94,7 @@ public:
 
 	void timeoutLose(PieceSide);
 
-	// µã»÷¶ÔÓ¦Î»ÖÃÏÂ×Ó
+	// ç‚¹å‡»å¯¹åº”ä½ç½®ä¸‹å­
 	void cellTouchCallback(int index);
     
 };

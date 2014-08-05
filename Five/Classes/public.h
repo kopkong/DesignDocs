@@ -1,10 +1,10 @@
-#ifndef _Public_h
+ï»¿#ifndef _Public_h
 #define _Public_h
 
 #include "cocos2d.h"
 USING_NS_CC;
 
-// Ë­µÄ»ØºÏ
+// è°çš„å›åˆ
 enum TurnOwner
 {
 	NonePlayer,
@@ -12,7 +12,7 @@ enum TurnOwner
 	PlayerTwo
 };
 
-// ºÚ·½»¹ÊÇ°×·½
+// é»‘æ–¹è¿˜æ˜¯ç™½æ–¹
 enum PieceSide
 {
 	NoneSide,
@@ -20,7 +20,7 @@ enum PieceSide
 	WhiteSide
 };
 
-// ÓÎÏ·×´Ì¬
+// æ¸¸æˆçŠ¶æ€
 enum GameState
 {
 	NotStarted,
@@ -28,7 +28,7 @@ enum GameState
 	Finished
 };
 
-// ÓÎÏ·ÉèÖÃ
+// æ¸¸æˆè®¾ç½®
 struct GameSettings
 {
 	int TotalTime;

@@ -1,6 +1,6 @@
-#include "rule.h"
+ï»¿#include "rule.h"
 
-// ¸ñ×ÓµÄÊıÖµ
+// æ ¼å­çš„æ•°å€¼
 static const std::string BlackValue = "1";
 static const std::string WhiteValue = "2";
 static const std::string EmptyValue = "0";
@@ -8,10 +8,10 @@ static const std::string OutsideValue = "9";
 
 static int FourDirections[4][2] = 
 {
-	1,0,		// ´¹Ö±·½Ïò
-	0,1,		// Ë®Æ½·½Ïò
-	1,-1,		// ÕıĞ±¸Ü·½Ïò "/"
-	1,1			// ·´Ğ±¸Ü·½Ïò "\"
+	1,0,		// å‚ç›´æ–¹å‘
+	0,1,		// æ°´å¹³æ–¹å‘
+	1,-1,		// æ­£æ–œæ æ–¹å‘ "/"
+	1,1			// åæ–œæ æ–¹å‘ "\"
 };
 
 Rule::Rule()
@@ -52,12 +52,12 @@ void Rule::setData(int row,int column,PieceSide side)
 
 	if(_steps >= 9)
 	{
-		// ¼ì²éÊÇ·ñÁ¬µ½5×Ó
+		// æ£€æŸ¥æ˜¯å¦è¿åˆ°5å­
 		checkSum(row,column,side);
 
 		if(!isFinished())
 		{
-			if(side == PieceSide::BlackSide && _hasForbidden)// ¼ì²é½ûÊÖ£¬Èç¹ûÓĞÔòÅĞ¸º
+			if(side == PieceSide::BlackSide && _hasForbidden)// æ£€æŸ¥ç¦æ‰‹ï¼Œå¦‚æœæœ‰åˆ™åˆ¤è´Ÿ
 				checkForbidden(row,column,side);
 		}
 	}
@@ -75,7 +75,7 @@ void Rule::checkSum(int row,int column,PieceSide side)
 		{
 			if(count >= 5 )
 			{
-				// °×ÆåÓ®ÁË
+				// ç™½æ£‹èµ¢äº†
 				_state = GameState::Finished;
 				_winner = side;
 			}
@@ -84,13 +84,13 @@ void Rule::checkSum(int row,int column,PieceSide side)
 		{
 			if(count > 5 && _hasForbidden)
 			{
-				// ºÚÆåÊäÁË£¡
+				// é»‘æ£‹è¾“äº†ï¼
 				blackBanLose();
 				return;
 			}
 			else if(count == 5)
 			{
-				// ºÚÆåÓ®ÁË
+				// é»‘æ£‹èµ¢äº†
 				_state = GameState::Finished;
 				_winner = side;
 				return;
@@ -105,13 +105,13 @@ int Rule::countNumber(int row,int column,int direction[2],int value)
 	int tmpRow = row;
 	int tmpColumn = column;
 
-	// Õı·½Ïò¼ÆÊı
+	// æ­£æ–¹å‘è®¡æ•°
 	while(nextSame(tmpRow,tmpColumn,direction,value))
 	{
 		count ++;
 	}
 
-	// ·´·½Ïò
+	// åæ–¹å‘
 	tmpRow = row;
 	tmpColumn = column;
 	int reverseDirection[2] = {-direction[0], -direction[1]};
@@ -128,7 +128,7 @@ bool Rule::nextSame(int& row,int& column,const int direction[2],int value)
 	row = row + direction[0];
 	column = column + direction[1];
 
-	// ³ö½çÁË£¡
+	// å‡ºç•Œäº†ï¼
 	if(row < 0 || row >= 15 || column < 0 || column >= 15)
 		return false;
 
@@ -149,7 +149,7 @@ void Rule::checkForbidden(int row,int column,PieceSide side)
 		std::string baseString;
 		buildBasePieceString(row,column,FourDirections[i],baseString);
 
-		// ÔÚÒ»¸ö·½ÏòÉÏµÄËÄËÄ½û
+		// åœ¨ä¸€ä¸ªæ–¹å‘ä¸Šçš„å››å››ç¦
 		if(matchBanRuleOne(baseString))
 		{
 			blackBanLose();
@@ -163,7 +163,7 @@ void Rule::checkForbidden(int row,int column,PieceSide side)
 			fourFourCount++;
 	}
 
-	// ÈıÈı »òÕß ËÄËÄ½û
+	// ä¸‰ä¸‰ æˆ–è€… å››å››ç¦
 	if(threeThreeCount >= 2 || fourFourCount >= 2)
 	{
 		blackBanLose();
@@ -174,9 +174,9 @@ void Rule::checkForbidden(int row,int column,PieceSide side)
 bool Rule::matchBanRuleOne(const std::string baseString)
 {
 	const int maxPattern = 14;
-	// Ä£Ê½×Ö·û´®
+	// æ¨¡å¼å­—ç¬¦ä¸²
 	std::string patterns[maxPattern] = {
-		//ºÚºÚ¿ÕºÚºÚ¿ÕºÚºÚ
+		//é»‘é»‘ç©ºé»‘é»‘ç©ºé»‘é»‘
 		"0110110110",
 		"9110110110",
 		"2110110110",
@@ -185,7 +185,7 @@ bool Rule::matchBanRuleOne(const std::string baseString)
 		"9110110119",
 		"2110110112",
 
-		//ºÚ¿ÕºÚºÚºÚ¿ÕºÚ
+		//é»‘ç©ºé»‘é»‘é»‘ç©ºé»‘
 		"010111010",
 		"910111010",
 		"210111010",
@@ -195,12 +195,12 @@ bool Rule::matchBanRuleOne(const std::string baseString)
 		"210111012",
 	};
 
-	// Ä£Ê½ËÑË÷
+	// æ¨¡å¼æœç´¢
 	for(int i = 0; i < maxPattern; i++)
 	{
 		if(baseString.find(patterns[i]) != std::string::npos)
 		{
-			// ³É¹¦Æ¥Åä
+			// æˆåŠŸåŒ¹é…
 			log("match the pattern %s",patterns[i].c_str());
 
 			return true;
@@ -213,23 +213,23 @@ bool Rule::matchBanRuleOne(const std::string baseString)
 bool Rule::matchBanRuleTwo(const std::string baseString)
 {
 	const int maxPattern = 15;
-	// Ä£Ê½×Ö·û´®
+	// æ¨¡å¼å­—ç¬¦ä¸²
 	std::string patterns[maxPattern] = {
-		//ºÚºÚºÚ
+		//é»‘é»‘é»‘
 		"0011100",
 		"9011100",
 		"2011100",
 		"0011109",
 		"0011102",
 
-		//ºÚ¿ÕºÚºÚ
+		//é»‘ç©ºé»‘é»‘
 		"00101100",
 		"90101100",
 		"20101100",
 		"00101109",
 		"00101102",
 
-		//ºÚºÚ¿ÕºÚ
+		//é»‘é»‘ç©ºé»‘
 		"00110100",
 		"90110100",
 		"20110100",
@@ -238,12 +238,12 @@ bool Rule::matchBanRuleTwo(const std::string baseString)
 
 	};
 
-	// Ä£Ê½ËÑË÷
+	// æ¨¡å¼æœç´¢
 	for(int i = 0; i < maxPattern; i++)
 	{
 		if(baseString.find(patterns[i]) != std::string::npos)
 		{
-			// ³É¹¦Æ¥Åä
+			// æˆåŠŸåŒ¹é…
 			log("match the pattern %s",patterns[i].c_str());
 
 			return true;
@@ -257,30 +257,30 @@ bool Rule::matchBanRuleThree(const std::string baseString)
 {
 	const int maxPattern = 20;
 
-	// Ä£Ê½×Ö·û´®
+	// æ¨¡å¼å­—ç¬¦ä¸²
 	std::string patterns[maxPattern] = {
-		//ºÚºÚºÚºÚ
+		//é»‘é»‘é»‘é»‘
 		"011110",
 		"911110",
 		"211110",
 		"011119",
 		"011112",
 
-		//ºÚºÚ¿ÕºÚºÚ
+		//é»‘é»‘ç©ºé»‘é»‘
 		"0110110",
 		"9110110",
 		"2110110",
 		"0110119",
 		"0110112",
 
-		//ºÚ¿ÕºÚºÚºÚ
+		//é»‘ç©ºé»‘é»‘é»‘
 		"0101110",
 		"9101110",
 		"2101110",
 		"0101119",
 		"0101112",
 
-		//ºÚºÚºÚ¿ÕºÚ
+		//é»‘é»‘é»‘ç©ºé»‘
 		"0111010",
 		"9111010",
 		"2111010",
@@ -289,12 +289,12 @@ bool Rule::matchBanRuleThree(const std::string baseString)
 
 	};
 
-	// Ä£Ê½ËÑË÷
+	// æ¨¡å¼æœç´¢
 	for(int i = 0; i < maxPattern; i++)
 	{
 		if(baseString.find(patterns[i]) != std::string::npos)
 		{
-			// ³É¹¦Æ¥Åä
+			// æˆåŠŸåŒ¹é…
 			log("match the pattern %s",patterns[i].c_str());
 
 			return true;
@@ -304,23 +304,23 @@ bool Rule::matchBanRuleThree(const std::string baseString)
 	return false;
 }
 
-// ·´·½ÏòÊÇ·ñ±»¶ÂËÀ
+// åæ–¹å‘æ˜¯å¦è¢«å µæ­»
 bool Rule::behindBlocked(int row,int column,const int direction[2],int value)
 {
 	int behindRow = row - direction[0];
 	int behindColumn = column - direction[1];
 
-	// ³ö½çÁË£¡¶ÂËÀ£¡
+	// å‡ºç•Œäº†ï¼å µæ­»ï¼
 	if(behindRow < 0 || behindRow >= 15 || behindColumn < 0 || behindColumn >= 15)
 		return true;
 	
 	int behindValue = _goBangData[behindRow][behindColumn];
 
-	// ÓĞ°××Ó£¡¶ÂËÀ£¡
+	// æœ‰ç™½å­ï¼å µæ­»ï¼
 	if(behindValue != value || behindValue != 0)
 		return true;
 
-	// Ã»ÓĞ¶ÂËÀ£¡
+	// æ²¡æœ‰å µæ­»ï¼
 	return false;
 }
 
@@ -336,9 +336,9 @@ PieceSide Rule::getWinner()
 
 void Rule::buildBasePieceString(int row,int column,int direction[2],std::string& baseString)
 {
-	// ±£´æÕıÃæ5¸ö ·´Ãæ5¸ö ¹²11¸ö¸ñ×ÓµÄÖµ
+	// ä¿å­˜æ­£é¢5ä¸ª åé¢5ä¸ª å…±11ä¸ªæ ¼å­çš„å€¼
 
-	// ·´·½Ïò
+	// åæ–¹å‘
 	for(int i = 0; i< 5 ; i++)
 	{
 		int nextRow = row - ( 5 - i ) * direction[0];
@@ -347,10 +347,10 @@ void Rule::buildBasePieceString(int row,int column,int direction[2],std::string&
 		baseString += getStringValue(nextRow,nextColumn);
 	}
 
-	// ÏÂµÄÄÇ¸ö×Ó±¾Éí
+	// ä¸‹çš„é‚£ä¸ªå­æœ¬èº«
 	baseString += BlackValue;
 
-	// Õı·½Ïò
+	// æ­£æ–¹å‘
 	for(int i = 6 ; i < 11 ; i++)
 	{
 		int nextRow = row + ( i -5 ) * direction[0];
@@ -362,7 +362,7 @@ void Rule::buildBasePieceString(int row,int column,int direction[2],std::string&
 
 std::string Rule::getStringValue(int row,int column)
 {
-	// ³ö½çÁË£¡
+	// å‡ºç•Œäº†ï¼
 	if(row < 0 || row >= 15 || column < 0 || column >=15)
 		return OutsideValue;
 	else

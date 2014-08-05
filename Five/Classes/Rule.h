@@ -1,4 +1,4 @@
-#ifndef _Rule_h
+ï»¿#ifndef _Rule_h
 #define _Rule_h
 
 #include "public.h"
@@ -12,27 +12,27 @@ private:
 
 	bool nextSame(int& row,int& column,const int direction[2],int value);
 
-	// ÁíÒ»¸ö·½ÏòÊÇ·ñÒÑ¾­±»¶ÂËÀ
+	// å¦ä¸€ä¸ªæ–¹å‘æ˜¯å¦å·²ç»è¢«å µæ­»
 	bool behindBlocked(int row,int column,const int direction[2],int value);
 
 	int countNumber(int row,int column,int direction[2],int value);
 
-	// Æ¥Åä½ûÊÖ¹æÔò1 £¨ÔÚÍ¬Ò»¸ö·½ÏòµÄËÄËÄ½û£©
+	// åŒ¹é…ç¦æ‰‹è§„åˆ™1 ï¼ˆåœ¨åŒä¸€ä¸ªæ–¹å‘çš„å››å››ç¦ï¼‰
 	bool matchBanRuleOne(const std::string baseString);
 
-	// Æ¥Åä½ûÊÖ¹æÔò2 (ÔÚ²»Í¬·½ÏòµÄÈıÈı½û£©
+	// åŒ¹é…ç¦æ‰‹è§„åˆ™2 (åœ¨ä¸åŒæ–¹å‘çš„ä¸‰ä¸‰ç¦ï¼‰
 	bool matchBanRuleTwo(const std::string baseString);
 
-	// Æ¥Åä½ûÊÖ¹æÔò2 (ÔÚ²»Í¬·½ÏòµÄËÄËÄ½û£©
+	// åŒ¹é…ç¦æ‰‹è§„åˆ™2 (åœ¨ä¸åŒæ–¹å‘çš„å››å››ç¦ï¼‰
 	bool matchBanRuleThree(const std::string baseString);
 
-	// ÊÇ·ñ»îËÄ
+	// æ˜¯å¦æ´»å››
 	// bool hasLiveFour(int row,int column,int direction[2]);
 
-	// ¼ÆÊı¹æÔò
+	// è®¡æ•°è§„åˆ™
 	void checkSum(int row,int column,PieceSide side);
 
-	// ½ûÊÖ¹æÔò
+	// ç¦æ‰‹è§„åˆ™
 	void checkForbidden(int row,int column,PieceSide side);
 
 	GameState _state;
@@ -45,7 +45,7 @@ private:
 
 	std::string getStringValue(int row,int column);
 
-	// ºÚ·½½ûÊÖÅĞ¸º
+	// é»‘æ–¹ç¦æ‰‹åˆ¤è´Ÿ
 	void blackBanLose();
 
 protected:
