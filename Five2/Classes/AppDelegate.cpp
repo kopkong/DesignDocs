@@ -21,7 +21,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
     }
 
 	Size designSize(1024,768);
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	glview->setFrameSize(designSize.width,designSize.height);
+#endif
+    
 	glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::EXACT_FIT);
 
     // turn on display FPS
