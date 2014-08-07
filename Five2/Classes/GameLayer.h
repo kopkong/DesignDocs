@@ -18,7 +18,8 @@ private:
     Size _screenSize;
 	bool _gameRunning;
 	TurnOwner _whoseTurn;
-	int _currentCellIndex;
+	bool _hasComputerPlayer;
+	bool _isComputerTurn;
 
 	Layout* _layout;
 	Widget* _WidgetChessBoard;
@@ -58,6 +59,9 @@ private:
 
 	// 消息窗口
 	FiveMessageBox* _messageDialog;
+
+	// 电脑下棋
+	void computerMove(int level);
 
 protected:
 	~GameLayer();

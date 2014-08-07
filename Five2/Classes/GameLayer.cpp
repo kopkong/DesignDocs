@@ -58,6 +58,13 @@ void GameLayer::initState()
 	_gameSettings.TotalTime = TOTALTIME_SECONDS[_totalTimeOption];
 	_gameSettings.ExtraTime = EXTRATIME_SECONDS[_extraTimeOption];
 	_gameSettings.hasForbidden = false;
+
+	// 初始化电脑选手
+	if(_currentLevel > 0)
+	{
+		_hasComputerPlayer = true;
+		_isComputerTurn = false;
+	}
 }
 
 void GameLayer::initUI()
@@ -379,7 +386,7 @@ void GameLayer::timeoutLose(PieceSide side)
 
 void GameLayer::stoneTouchCallback(Ref* obj,TouchEventType eventType)
 {
-	if(!_gameRunning)
+	if(!_gameRunning || _isComputerTurn)
 		return;
 
 	Button* stone = dynamic_cast<Button*>(obj);
@@ -509,6 +516,13 @@ void GameLayer::putStone(Button* stone)
 
 	changeTurn();
 }
+
+void GameLayer::computerMove(int level)
+{
+
+
+}
+
 
 void GameLayer::uiRefreshTime(int time)
 {
