@@ -17,12 +17,11 @@ class GameLayer : public cocos2d::Layer
 private:
     Size _screenSize;
 	bool _gameRunning;
-	Vector<MenuItem*> _vectorPieces;
 	TurnOwner _whoseTurn;
 	int _currentCellIndex;
 
 	Layout* _layout;
-	Menu* _piecesMenu;
+	Widget* _WidgetChessBoard;
 	Widget* _WidgetsettingsBoard;
 	ImageView* _ImageViewplayerOneColor;
 	ImageView* _ImageViewplayerTwoColor;
@@ -41,12 +40,16 @@ private:
 	int _playerOneExtraTurnTime;
 	int _playerTwoExtraTurnTime;
 
-
 	// 所有UI按钮的touch处理事件
 	void uiButtonTouchCallback(Ref* obj,TouchEventType eventType);
 
+	// 棋子button的touch处理事件
+	void stoneTouchCallback(Ref* obj,TouchEventType eventType);
+
 	// 显示时间
 	void uiRefreshTime(int time);
+
+	void putStone(Button*);
 
 	GameSettings _gameSettings;
 
@@ -94,9 +97,6 @@ public:
 
 	void timeoutLose(PieceSide);
 
-	// 点击对应位置下子
-	void cellTouchCallback(int index);
-    
 };
 
 #endif // __GameLayer_SCENE_H__

@@ -64,11 +64,14 @@ void GameLayer::initUI()
 {
 	// load UI
 	_layout = static_cast<Layout*>(
-		cocostudio::GUIReader::getInstance()->widgetFromJsonFile(UI_LAYTOU_MAIN.c_str())); 
+		cocostudio::GUIReader::getInstance()->widgetFromJsonFile(UI_LAYOUT_MAIN.c_str())); 
     
     _screenSize = Director::getInstance()->getVisibleSize();
 	//Size rootSize = _layout->getSize();
 	Node* rootChild = _layout->getChildren().at(0);
+
+	// 棋盘
+	_WidgetChessBoard = static_cast<Widget*>(rootChild->getChildByTag(UI_MAIN_CHESSBOARDTAG));
 
 	// Player Boxes
 	{
@@ -129,13 +132,12 @@ void GameLayer::initUI()
 
 void GameLayer::initPieces()
 {
-	_vectorPieces.clear();
-	_layout->removeChild(_piecesMenu,true);
+	_WidgetChessBoard->removeAllChildren();
 
 	// Add 15 * 15 buttons on chess board
 	{
-		Point leftTopCorner(5,763);
-		Point pieceOffset(37,37);
+		Point leftTopCorner(39,728);
+		Point pieceOffset(5,2);
 		Size cellSize(50,50);
 
 		int index = 0;
@@ -143,21 +145,19 @@ void GameLayer::initPieces()
 		{
 			for(int column = 0 ; column < 15; column ++)
 			{
-				MenuItemImage* cell = MenuItemImage::create();
-				float positionX = leftTopCorner.x + column * cellSize.width + pieceOffset.x;
-				float positionY = leftTopCorner.y - row * cellSize.height - pieceOffset.y;
-				cell->setPosition(positionX,positionY);
-				cell->setCallback(CC_CALLBACK_0(GameLayer::cellTouchCallback,this,index));
-				cell->setNormalSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("transparentPiece"));
-				cell->setLocalZOrder(1);
-				_vectorPieces.pushBack(cell);
+				Button* stone = Button::create();
+				stone->setTag(index);
+				float positionX = leftTopCorner.x + column * cellSize.width - pieceOffset.x  ;
+				float positionY = leftTopCorner.y - row * cellSize.height - pieceOffset.y   ;
+				stone->setPosition(Point(positionX,positionY));
+				stone->loadTextureNormal(SPRITECACHE_NAME_HOVERSTONE,TextureResType::UI_TEX_TYPE_PLIST);
+				stone->addTouchEventListener(this,toucheventselector(GameLayer::stoneTouchCallback));
+				stone->setVisible(false);
 				index ++;
+
+				_WidgetChessBoard->addChild(stone,2);
 			}
 		}
-
-		_piecesMenu = Menu::createWithArray(_vectorPieces);
-		_piecesMenu->setPosition(Point::ZERO);
-		_layout->addChild(_piecesMenu,1);
 	}
 
 }
@@ -166,11 +166,12 @@ void GameLayer::initTexture()
 {
 	SpriteFrameCache* frameCache = SpriteFrameCache::getInstance();
 
-	SpriteFrame* blackNormalSprite = SpriteFrame::create(UI_PIECES,Rect(0,0,66,66));
-	SpriteFrame* blackSelectedSprite = SpriteFrame::create(UI_PIECES,Rect(0,66,66,66));
-	SpriteFrame* whiteNormalSprite = SpriteFrame::create(UI_PIECES,Rect(66,0,66,66));
-	SpriteFrame* whiteSelectedSprite = SpriteFrame::create(UI_PIECES,Rect(66,66,66,66));
-	SpriteFrame* transparentSprite = SpriteFrame::create(UI_TRANSPARENTPIECE,Rect(0,0,50,50));
+	SpriteFrame* blackNormalSprite = SpriteFrame::create(UI_ICON_PIECES,Rect(0,0,66,66));
+	SpriteFrame* blackSelectedSprite = SpriteFrame::create(UI_ICON_PIECES,Rect(0,66,66,66));
+	SpriteFrame* whiteNormalSprite = SpriteFrame::create(UI_ICON_PIECES,Rect(66,0,66,66));
+	SpriteFrame* whiteSelectedSprite = SpriteFrame::create(UI_ICON_PIECES,Rect(66,66,66,66));
+	SpriteFrame* transparentSprite = SpriteFrame::create(UI_ICON_TRANSPARENTPIECE,Rect(0,0,50,50));
+	SpriteFrame* hoverSprite = SpriteFrame::create(UI_ICON_PIECE_HOVER,Rect(0,0,50,50));
 
 	SpriteFrame* playerOneWin = SpriteFrame::create(RESULT_TEXT_FILE_PATH,Rect(0,0,205,40));
 	SpriteFrame* playerTwoWin = SpriteFrame::create(RESULT_TEXT_FILE_PATH,Rect(0,40,205,40));
@@ -198,11 +199,15 @@ void GameLayer::initTexture()
 	frameCache->addSpriteFrame(playerOneTimeout,SPRITECACHE_NAME_BLACKTIMEOUT);
 	frameCache->addSpriteFrame(playerTwoTimeout,SPRITECACHE_NAME_WHITETIMEOUT);
 
-	frameCache->addSpriteFrame(blackNormalSprite,"blackPieceNormal");
-	frameCache->addSpriteFrame(blackSelectedSprite,"blackPieceSelected");
-	frameCache->addSpriteFrame(whiteNormalSprite,"whitePieceNormal");
-	frameCache->addSpriteFrame(whiteSelectedSprite,"whitePieceSelected");
-	frameCache->addSpriteFrame(transparentSprite,"transparentPiece");
+	//frameCache->addSpriteFrame(blackNormalSprite,"blackPieceNormal");
+	//frameCache->addSpriteFrame(blackSelectedSprite,"blackPieceSelected");
+	//frameCache->addSpriteFrame(whiteNormalSprite,"whitePieceNormal");
+	//frameCache->addSpriteFrame(whiteSelectedSprite,"whitePieceSelected");
+	//frameCache->addSpriteFrame(transparentSprite,"transparentPiece");
+	//frameCache->addSpriteFrame(hoverSprite,"hoverSprite");
+	frameCache->addSpriteFrame(blackNormalSprite,SPRITECACHE_NAME_BLACKSTONE);
+	frameCache->addSpriteFrame(whiteNormalSprite,SPRITECACHE_NAME_WHITESTONE);
+	frameCache->addSpriteFrame(hoverSprite,SPRITECACHE_NAME_HOVERSTONE);
 
 	frameCache->addSpriteFrame(playerOneBox,"playerOneBox");
 	frameCache->addSpriteFrame(playerTwoBox,"playerTwoBox");
@@ -370,58 +375,31 @@ void GameLayer::timeoutLose(PieceSide side)
 		_messageDialog->showBlackTimeout();
 	else
 		_messageDialog->showWhiteTimeout();
-
-	//log("Player %d lose the game!",owner);
 }
 
-void GameLayer::cellTouchCallback(int index)
+void GameLayer::stoneTouchCallback(Ref* obj,TouchEventType eventType)
 {
 	if(!_gameRunning)
 		return;
 
-	log("Touch cell %d",index);
-	if(index >=0 && index < _vectorPieces.size())
+	Button* stone = dynamic_cast<Button*>(obj);
+
+	switch(eventType)
 	{
-		int row = index /15;
-		int column = index % 15;
-		log("Row: %d, Column: %d",row,column);
-
-		MenuItemImage* cell = static_cast<MenuItemImage*>(_vectorPieces.at(index));
-
-		if(_whoseTurn == TurnOwner::PlayerOne)
+	case TouchEventType::TOUCH_EVENT_BEGAN:
 		{
-			cell->setNormalSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("blackPieceNormal"));
-			cell->setEnabled(false);
-
-			Rule::getInstance()->setData(row,column,_playerOneSide);
-
-			if(Rule::getInstance()->isFinished())
-			{
-				if(Rule::getInstance()->getWinner() == _playerOneSide)
-					winGame(_playerOneSide);
-				else
-					forbiddenLose();
-			}
+			stone->setVisible(true);
+			break;
 		}
-		else
+	case TouchEventType::TOUCH_EVENT_ENDED:
 		{
-			cell->setNormalSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("whitePieceNormal"));
-			cell->setEnabled(false);
-
-			Rule::getInstance()->setData(row,column,_playerTwoSide);
-
-			if(Rule::getInstance()->isFinished())
-			{
-				if(Rule::getInstance()->getWinner() == _playerTwoSide)
-					winGame(_playerTwoSide);
-				else
-					forbiddenLose();
-			}
+			putStone(stone);
+			break;
 		}
-
-		changeTurn();
-		
+	default:
+		break;
 	}
+	
 }
 
 void GameLayer::uiButtonTouchCallback(Ref* obj,TouchEventType eventType)
@@ -483,6 +461,53 @@ void GameLayer::uiButtonTouchCallback(Ref* obj,TouchEventType eventType)
 	default:
 		break;
 	}
+}
+
+void GameLayer::putStone(Button* stone)
+{
+	int index = stone->getTag();
+	log("Touch stone %d",index);
+
+	int row = index /15;
+	int column = index % 15;
+	log("Row: %d, Column: %d",row,column);
+
+	// 图片需往右下偏移
+	stone->setPosition(stone->getPosition() - Point(-3,3));
+
+	if(_whoseTurn == TurnOwner::PlayerOne)
+	{
+		stone->loadTextureNormal(SPRITECACHE_NAME_BLACKSTONE,TextureResType::UI_TEX_TYPE_PLIST);
+		//stone->loadTextureDisabled(SPRITECACHE_NAME_BLACKSTONE,TextureResType::UI_TEX_TYPE_PLIST);
+		stone->setTouchEnabled(false);
+
+		Rule::getInstance()->setData(row,column,_playerOneSide);
+
+		if(Rule::getInstance()->isFinished())
+		{
+			if(Rule::getInstance()->getWinner() == _playerOneSide)
+				winGame(_playerOneSide);
+			else
+				forbiddenLose();
+		}
+	}
+	else
+	{
+		stone->loadTextureNormal(SPRITECACHE_NAME_WHITESTONE,TextureResType::UI_TEX_TYPE_PLIST);
+		stone->setTouchEnabled(false);
+
+		Rule::getInstance()->setData(row,column,_playerTwoSide);
+
+		if(Rule::getInstance()->isFinished())
+		{
+			if(Rule::getInstance()->getWinner() == _playerTwoSide)
+				winGame(_playerTwoSide);
+			else
+				forbiddenLose();
+		}
+	}
+
+	changeTurn();
 }
 
 void GameLayer::uiRefreshTime(int time)
