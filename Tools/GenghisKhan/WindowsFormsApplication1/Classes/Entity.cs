@@ -596,7 +596,13 @@ namespace WindowsFormsApplication1
         public int MoneyReward { get; set; }
 
         [DataMember]
-        public int Cycle { get; set; }
+        public string ItemReward { get; set; }
+
+        [DataMember]
+        public string ClientReward { get; set; }
+
+        //[DataMember]
+        //public int Cycle { get; set; }
 
         [DataMember]
         public string StartTime { get; set; }
