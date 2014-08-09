@@ -197,9 +197,9 @@
                   "capInsetsY": 0,
                   "fileName": null,
                   "fileNameData": {
-                    "path": "C:\\Program Files (x86)\\CocoStudio\\EditorDefaultRes\\GUI/image.png",
+                    "path": "GUI/image.png",
                     "plistFile": "",
-                    "resourceType": 2
+                    "resourceType": 0
                   },
                   "scale9Enable": false,
                   "scale9Height": 40,
@@ -465,9 +465,9 @@
                   "capInsetsY": 0,
                   "fileName": null,
                   "fileNameData": {
-                    "path": "C:\\Program Files (x86)\\CocoStudio\\EditorDefaultRes\\GUI/image.png",
+                    "path": "GUI/image.png",
                     "plistFile": "",
-                    "resourceType": 2
+                    "resourceType": 0
                   },
                   "scale9Enable": false,
                   "scale9Height": 40,
@@ -1184,9 +1184,9 @@
                   "capInsetsY": 0,
                   "fileName": null,
                   "fileNameData": {
-                    "path": "C:\\Program Files (x86)\\CocoStudio\\EditorDefaultRes\\GUI/image.png",
+                    "path": "GUI/image.png",
                     "plistFile": "",
-                    "resourceType": 2
+                    "resourceType": 0
                   },
                   "scale9Enable": false,
                   "scale9Height": 24,
@@ -1328,9 +1328,9 @@
                   "capInsetsY": 0,
                   "fileName": null,
                   "fileNameData": {
-                    "path": "C:\\Program Files (x86)\\CocoStudio\\EditorDefaultRes\\GUI/image.png",
+                    "path": "GUI/image.png",
                     "plistFile": "",
-                    "resourceType": 2
+                    "resourceType": 0
                   },
                   "scale9Enable": false,
                   "scale9Height": 24,

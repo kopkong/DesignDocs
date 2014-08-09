@@ -1,8 +1,7 @@
 ﻿#include "GameLayer.h"
 #include <string>
-
 #include "AssertConfigs.h"
-
+#include "Game.h"
 
 static int _currentLevel = 0;
 
@@ -39,19 +38,16 @@ bool GameLayer::init()
     }
 
 	initState();
-	initTexture();
 	initUI();
+	dealWithCustomEvent();
 
 	this->schedule(schedule_selector(GameLayer::update));
-
+	
     return true;
 }
 
 void GameLayer::initState()
 {
-	// set start is false
-	_gameRunning = false;
-
 	_totalTimeOption = TotalTimeOption::_15M;
 	_extraTimeOption = ExtraTimeOption::_1M;
 
@@ -74,11 +70,7 @@ void GameLayer::initUI()
 		cocostudio::GUIReader::getInstance()->widgetFromJsonFile(UI_LAYOUT_MAIN.c_str())); 
     
     _screenSize = Director::getInstance()->getVisibleSize();
-	//Size rootSize = _layout->getSize();
 	Node* rootChild = _layout->getChildren().at(0);
-
-	// 棋盘
-	_WidgetChessBoard = static_cast<Widget*>(rootChild->getChildByTag(UI_MAIN_CHESSBOARDTAG));
 
 	// Player Boxes
 	{
@@ -109,7 +101,7 @@ void GameLayer::initUI()
 
 	// Setting 面板 ， Button监听事件
 	{
-		_WidgetsettingsBoard = static_cast<Widget*>(rootChild->getChildByTag(UI_MAIN_SETTINGBOARDTAG));
+		_WidgetsettingsBoard = static_cast<Widget*>(rootChild->getChildByTag(UI_TAGID_MAIN_SETTINGBOARD));
 		Button* startButton = static_cast<Button*>(_WidgetsettingsBoard->getChildByTag(UI_MAIN_BUTTONTAG_START));
 		startButton->addTouchEventListener(this,toucheventselector(GameLayer::uiButtonTouchCallback));
 
@@ -119,124 +111,35 @@ void GameLayer::initUI()
 		_ImageViewtotoalTimeSettings->loadTexture(TOTALTIME_FRAMENAME[(int)_totalTimeOption],TextureResType::UI_TEX_TYPE_PLIST);
 		_ImageViewextralTimeSettings->loadTexture(EXTRATIME_FRAMENAME[(int)_extraTimeOption],TextureResType::UI_TEX_TYPE_PLIST);
 
-		CheckBox* setting1 = static_cast<CheckBox*>(_WidgetsettingsBoard->getChildByTag(UI_MAIN_BUTTONTAG_SETTING1));
-		CheckBox* setting2 = static_cast<CheckBox*>(_WidgetsettingsBoard->getChildByTag(UI_MAIN_BUTTONTAG_SETTING2));
-		CheckBox* setting3 = static_cast<CheckBox*>(_WidgetsettingsBoard->getChildByTag(UI_MAIN_BUTTONTAG_SETTING3));
+		_CheckBoxSetting1 = static_cast<CheckBox*>(_WidgetsettingsBoard->getChildByTag(UI_MAIN_BUTTONTAG_SETTING1));
+		_CheckBoxSetting2 = static_cast<CheckBox*>(_WidgetsettingsBoard->getChildByTag(UI_MAIN_BUTTONTAG_SETTING2));
+		_CheckBoxSetting3 = static_cast<CheckBox*>(_WidgetsettingsBoard->getChildByTag(UI_MAIN_BUTTONTAG_SETTING3));
 
-		setting1->addTouchEventListener(this,toucheventselector(GameLayer::uiButtonTouchCallback));
-		setting2->addTouchEventListener(this,toucheventselector(GameLayer::uiButtonTouchCallback));
-		setting3->addTouchEventListener(this,toucheventselector(GameLayer::uiButtonTouchCallback));
+		_CheckBoxSetting1->addTouchEventListener(this,toucheventselector(GameLayer::uiButtonTouchCallback));
+		_CheckBoxSetting2->addTouchEventListener(this,toucheventselector(GameLayer::uiButtonTouchCallback));
+		_CheckBoxSetting3->addTouchEventListener(this,toucheventselector(GameLayer::uiButtonTouchCallback));
 			
-		Slider* slider1 = static_cast<Slider*>(_WidgetsettingsBoard->getChildByName("Slider_TotalTime"));
-		Slider* slider2 = static_cast<Slider*>(_WidgetsettingsBoard->getChildByName("Slider_ExtraTime"));
+		_SliderTime1 = static_cast<Slider*>(_WidgetsettingsBoard->getChildByName("Slider_TotalTime"));
+		_SliderTime2 = static_cast<Slider*>(_WidgetsettingsBoard->getChildByName("Slider_ExtraTime"));
 
-		slider1->addTouchEventListener(this,toucheventselector(GameLayer::uiButtonTouchCallback));
-		slider2->addTouchEventListener(this,toucheventselector(GameLayer::uiButtonTouchCallback));
+		_SliderTime1->addTouchEventListener(this,toucheventselector(GameLayer::uiButtonTouchCallback));
+		_SliderTime2->addTouchEventListener(this,toucheventselector(GameLayer::uiButtonTouchCallback));
+	}
+
+	// 棋盘
+	{
+		Widget* panelChessBoard = static_cast<Widget*>(rootChild->getChildByTag(UI_TAGID_MAIN_CHESSBOARD));
+		ChessBoard* _WidgetChessBoard = ChessBoard::createWithSpriteFrameName(SPRITECACHE_NAME_CHESSBOARD);
+		_WidgetChessBoard->setAnchorPoint(Point::ZERO);
+		_WidgetChessBoard->setPosition(Point::ZERO);
+		panelChessBoard->addChild(_WidgetChessBoard);
 	}
 
 	this->addChild(_layout);
 }
 
-void GameLayer::initPieces()
-{
-	_WidgetChessBoard->removeAllChildren();
-
-	// Add 15 * 15 buttons on chess board
-	{
-		Point leftTopCorner(39,728);
-		Point pieceOffset(5,2);
-		Size cellSize(50,50);
-
-		int index = 0;
-		for(int row = 0 ; row < 15; row ++)
-		{
-			for(int column = 0 ; column < 15; column ++)
-			{
-				Button* stone = Button::create();
-				stone->setTag(index);
-				float positionX = leftTopCorner.x + column * cellSize.width - pieceOffset.x  ;
-				float positionY = leftTopCorner.y - row * cellSize.height - pieceOffset.y   ;
-				stone->setPosition(Point(positionX,positionY));
-				stone->loadTextureNormal(SPRITECACHE_NAME_HOVERSTONE,TextureResType::UI_TEX_TYPE_PLIST);
-				stone->addTouchEventListener(this,toucheventselector(GameLayer::stoneTouchCallback));
-				stone->setVisible(false);
-				index ++;
-
-				_WidgetChessBoard->addChild(stone,2);
-			}
-		}
-	}
-
-}
-
-void GameLayer::initTexture()
-{
-	SpriteFrameCache* frameCache = SpriteFrameCache::getInstance();
-
-	SpriteFrame* blackNormalSprite = SpriteFrame::create(UI_ICON_PIECES,Rect(0,0,66,66));
-	SpriteFrame* blackSelectedSprite = SpriteFrame::create(UI_ICON_PIECES,Rect(0,66,66,66));
-	SpriteFrame* whiteNormalSprite = SpriteFrame::create(UI_ICON_PIECES,Rect(66,0,66,66));
-	SpriteFrame* whiteSelectedSprite = SpriteFrame::create(UI_ICON_PIECES,Rect(66,66,66,66));
-	SpriteFrame* transparentSprite = SpriteFrame::create(UI_ICON_TRANSPARENTPIECE,Rect(0,0,50,50));
-	SpriteFrame* hoverSprite = SpriteFrame::create(UI_ICON_PIECE_HOVER,Rect(0,0,50,50));
-
-	SpriteFrame* playerOneWin = SpriteFrame::create(RESULT_TEXT_FILE_PATH,Rect(0,0,205,40));
-	SpriteFrame* playerTwoWin = SpriteFrame::create(RESULT_TEXT_FILE_PATH,Rect(0,40,205,40));
-	SpriteFrame* playerOneForbidden = SpriteFrame::create(RESULT_TEXT_FILE_PATH,Rect(0,80,205,40));
-	SpriteFrame* playerOneTimeout = SpriteFrame::create(RESULT_TEXT_FILE_PATH,Rect(0,120,205,40));
-	SpriteFrame* playerTwoTimeout = SpriteFrame::create(RESULT_TEXT_FILE_PATH,Rect(0,160,205,40));
-
-	SpriteFrame* playerOneBox = SpriteFrame::create(BOXES_FILE_PATH,Rect(0,0,51,40));
-	SpriteFrame* playerTwoBox = SpriteFrame::create(BOXES_FILE_PATH,Rect(0,40,51,40));
-
-	SpriteFrame* time5m			= SpriteFrame::create(TOTALTIME_TEXT_PATH,Rect(0,0,48,24));
-	SpriteFrame* time10m		= SpriteFrame::create(TOTALTIME_TEXT_PATH,Rect(48,0,48,24));
-	SpriteFrame* time15m		= SpriteFrame::create(TOTALTIME_TEXT_PATH,Rect(96,0,48,24));
-	SpriteFrame* time20m		= SpriteFrame::create(TOTALTIME_TEXT_PATH,Rect(144,0,48,24));
-	SpriteFrame* time25m		= SpriteFrame::create(TOTALTIME_TEXT_PATH,Rect(192,0,48,24));
-	SpriteFrame* time30m		= SpriteFrame::create(TOTALTIME_TEXT_PATH,Rect(240,0,48,24));
-
-	SpriteFrame* timem30s		= SpriteFrame::create(EXTRATIME_TEXT_PATH,Rect(0,0,47,23));
-	SpriteFrame* time1m			= SpriteFrame::create(EXTRATIME_TEXT_PATH,Rect(47,0,47,23));
-	SpriteFrame* time2m			= SpriteFrame::create(EXTRATIME_TEXT_PATH,Rect(94,0,47,23));
-
-	frameCache->addSpriteFrame(playerOneWin,SPRITECACHE_NAME_BLACKWIN);
-	frameCache->addSpriteFrame(playerTwoWin,SPRITECACHE_NAME_WHITEWIN);
-	frameCache->addSpriteFrame(playerOneForbidden,SPRITECACHE_NAME_FORBIDDENLOSE);
-	frameCache->addSpriteFrame(playerOneTimeout,SPRITECACHE_NAME_BLACKTIMEOUT);
-	frameCache->addSpriteFrame(playerTwoTimeout,SPRITECACHE_NAME_WHITETIMEOUT);
-
-	//frameCache->addSpriteFrame(blackNormalSprite,"blackPieceNormal");
-	//frameCache->addSpriteFrame(blackSelectedSprite,"blackPieceSelected");
-	//frameCache->addSpriteFrame(whiteNormalSprite,"whitePieceNormal");
-	//frameCache->addSpriteFrame(whiteSelectedSprite,"whitePieceSelected");
-	//frameCache->addSpriteFrame(transparentSprite,"transparentPiece");
-	//frameCache->addSpriteFrame(hoverSprite,"hoverSprite");
-	frameCache->addSpriteFrame(blackNormalSprite,SPRITECACHE_NAME_BLACKSTONE);
-	frameCache->addSpriteFrame(whiteNormalSprite,SPRITECACHE_NAME_WHITESTONE);
-	frameCache->addSpriteFrame(hoverSprite,SPRITECACHE_NAME_HOVERSTONE);
-
-	frameCache->addSpriteFrame(playerOneBox,"playerOneBox");
-	frameCache->addSpriteFrame(playerTwoBox,"playerTwoBox");
-
-	frameCache->addSpriteFrame(timem30s,"time30s");
-	frameCache->addSpriteFrame(time1m,"time1m");
-	frameCache->addSpriteFrame(time2m,"time2m");
-	frameCache->addSpriteFrame(time5m,"time5m");
-	frameCache->addSpriteFrame(time10m,"time10m");
-	frameCache->addSpriteFrame(time15m,"time15m");
-	frameCache->addSpriteFrame(time20m,"time20m");
-	frameCache->addSpriteFrame(time25m,"time25m");
-	frameCache->addSpriteFrame(time30m,"time30m");
-}
-
 void GameLayer::resetGame()
 {
-	_gameRunning = true;
-
-	_playerOneSide = PieceSide::BlackSide;
-	_playerTwoSide = PieceSide::WhiteSide;
-
 	_gameSettings.TotalTime = TOTALTIME_SECONDS[_totalTimeOption];
 	_gameSettings.ExtraTime = EXTRATIME_SECONDS[_extraTimeOption];
 
@@ -249,17 +152,36 @@ void GameLayer::resetGame()
 	uiRefreshTime(_gameSettings.TotalTime);
 
 	// 重置先手玩家
-	_whoseTurn = TurnOwner::PlayerOne;
-
-	// 重置棋子
-	initPieces();
-
-	// 重置规则
-	Rule::getInstance()->Init(_gameSettings);
-
+	_playerOneSide = PieceSide::BlackSide;
+	_playerTwoSide = PieceSide::WhiteSide;
+	
 	// 提示框不可见
 	_messageDialog->setVisible(false);
 	
+	// 设置面板不可用
+	{
+		size_t allSettingWidgetCount = _WidgetsettingsBoard->getChildrenCount();
+		for(size_t i = 0; i < allSettingWidgetCount; i++)
+		{
+			Widget* w = static_cast<Widget*>(_WidgetsettingsBoard->getChildren().at(i));
+			w->setTouchEnabled(false);
+			w->setOpacity(150);
+		}
+	}
+
+	// 重置棋子
+	{
+		Node* rootChild = _layout->getChildren().at(0);
+		Widget* panelChessBoard = static_cast<Widget*>(rootChild->getChildByTag(UI_TAGID_MAIN_CHESSBOARD));
+
+		int count = panelChessBoard->getChildrenCount();
+		_WidgetChessBoard = static_cast<ChessBoard*>(panelChessBoard->getChildren().at(0));
+		_WidgetChessBoard->clearStones();
+	}
+
+	// 初始化游戏
+	Game::getInstance()->init(_gameSettings);
+	turnChange();
 
 	if(!this->isScheduled(schedule_selector(GameLayer::updateTotalTime)))
 	{
@@ -267,22 +189,32 @@ void GameLayer::resetGame()
 	}
 }
 
+void GameLayer::dealWithCustomEvent()
+{
+	_listener = EventListenerCustom::create("event_game_end",[=](EventCustom* event){
+		endGame();
+	});
+
+	_listener2 = EventListenerCustom::create("event_turn_change",[=](EventCustom* event){
+		turnChange();
+	});
+
+	_eventDispatcher->addEventListenerWithFixedPriority(_listener,1);
+	_eventDispatcher->addEventListenerWithFixedPriority(_listener2, 1);
+}
+
 void GameLayer::update(float dt)
 {
 	// 在游戏还没开始前读取设置信息
-	if(!_gameRunning)
-	{
-		//int totalTimePercent = _SliderTotalTime->getPercent();
-		//int extraTimePercent = _SliderExtraTime->getPercent();
-	}
+
 }
 
 void GameLayer::updateTotalTime(float dt)
 {
-	if(!_gameRunning)
+	if(Game::getInstance()->isFinished())
 		return;
 
-	if(_whoseTurn == TurnOwner::PlayerOne)
+	if(Game::getInstance()->getTurn() == _playerOneSide)
 	{
 		if(_playerOneTotalTime > 0 )
 		{
@@ -298,7 +230,8 @@ void GameLayer::updateTotalTime(float dt)
 			}
 			else
 			{
-				timeoutLose(_playerOneSide);
+				Game::getInstance()->setTimeout(_playerOneSide);
+				endGame();
 			}
 		}
 	}
@@ -318,16 +251,17 @@ void GameLayer::updateTotalTime(float dt)
 			}
 			else
 			{
-				timeoutLose(_playerTwoSide);
+				Game::getInstance()->setTimeout(_playerTwoSide);
+				endGame();
 			}
 		}
 	}
 }
 
 // 交换回合
-void GameLayer::changeTurn()
+void GameLayer::turnChange()
 {
-	if(_whoseTurn == TurnOwner::PlayerOne)
+	if(Game::getInstance()->getTurn() == _playerOneSide)
 	{
 		if(_playerOneTotalTime <= 0)
 		{
@@ -335,78 +269,42 @@ void GameLayer::changeTurn()
 			uiRefreshTime(_gameSettings.ExtraTime);
 		}
 
-		_whoseTurn = TurnOwner::PlayerTwo;
-		_ImageViewplayerOneColor->setVisible(false);
-		_ImageViewplayerTwoColor->setVisible(true);
+		_ImageViewplayerOneColor->setVisible(true);
+		_ImageViewplayerTwoColor->setVisible(false);
 	}
-	else
+	else if(Game::getInstance()->getTurn() == _playerTwoSide)
 	{
 		if(_playerTwoTotalTime <= 0)
 		{
 			_playerTwoExtraTurnTime = _gameSettings.ExtraTime;
 			uiRefreshTime(_gameSettings.ExtraTime);
 		}
-		_whoseTurn = TurnOwner::PlayerOne;
-		_ImageViewplayerOneColor->setVisible(true);
-		_ImageViewplayerTwoColor->setVisible(false);
+
+		_ImageViewplayerOneColor->setVisible(false);
+		_ImageViewplayerTwoColor->setVisible(true);
 	}
-}
-
-void GameLayer::winGame(PieceSide side)
-{
-	_gameRunning = false;
-
-	_messageDialog->setVisible(true);
-
-	if(side == PieceSide::BlackSide)
-		_messageDialog->showBlackWin();
 	else
-		_messageDialog->showWhiteWin();
-
-	//log("Player %d win the game!",owner);
-}
-
-void GameLayer::forbiddenLose()
-{
-	_gameRunning = false;
-	_messageDialog->setVisible(true);
-	_messageDialog->showBlackForbiddenLose();
-}
-
-void GameLayer::timeoutLose(PieceSide side)
-{
-	_gameRunning = false;
-	_messageDialog->setVisible(true);
-
-	if(side == PieceSide::BlackSide)
-		_messageDialog->showBlackTimeout();
-	else
-		_messageDialog->showWhiteTimeout();
-}
-
-void GameLayer::stoneTouchCallback(Ref* obj,TouchEventType eventType)
-{
-	if(!_gameRunning || _isComputerTurn)
-		return;
-
-	Button* stone = dynamic_cast<Button*>(obj);
-
-	switch(eventType)
 	{
-	case TouchEventType::TOUCH_EVENT_BEGAN:
-		{
-			stone->setVisible(true);
-			break;
-		}
-	case TouchEventType::TOUCH_EVENT_ENDED:
-		{
-			putStone(stone);
-			break;
-		}
-	default:
-		break;
+		// 不在任何人的回合内
 	}
-	
+}
+
+void GameLayer::endGame()
+{
+	// 显示结果
+	_messageDialog->setVisible(true);
+	_messageDialog->showResult();
+
+	//设置面板重新启用
+	{
+		size_t allSettingWidgetCount = _WidgetsettingsBoard->getChildrenCount();
+		for(size_t i = 0; i < allSettingWidgetCount; i++)
+		{
+			Widget* w = static_cast<Widget*>(_WidgetsettingsBoard->getChildren().at(i));
+			w->setTouchEnabled(true);
+			w->setOpacity(255);
+		}
+	}
 }
 
 void GameLayer::uiButtonTouchCallback(Ref* obj,TouchEventType eventType)
@@ -470,59 +368,11 @@ void GameLayer::uiButtonTouchCallback(Ref* obj,TouchEventType eventType)
 	}
 }
 
-void GameLayer::putStone(Button* stone)
-{
-	int index = stone->getTag();
-	log("Touch stone %d",index);
-
-	int row = index /15;
-	int column = index % 15;
-	log("Row: %d, Column: %d",row,column);
-
-	// 图片需往右下偏移
-	stone->setPosition(stone->getPosition() - Point(-3,3));
-
-	if(_whoseTurn == TurnOwner::PlayerOne)
-	{
-		stone->loadTextureNormal(SPRITECACHE_NAME_BLACKSTONE,TextureResType::UI_TEX_TYPE_PLIST);
-		//stone->loadTextureDisabled(SPRITECACHE_NAME_BLACKSTONE,TextureResType::UI_TEX_TYPE_PLIST);
-		stone->setTouchEnabled(false);
-
-		Rule::getInstance()->setData(row,column,_playerOneSide);
-
-		if(Rule::getInstance()->isFinished())
-		{
-			if(Rule::getInstance()->getWinner() == _playerOneSide)
-				winGame(_playerOneSide);
-			else
-				forbiddenLose();
-		}
-	}
-	else
-	{
-		stone->loadTextureNormal(SPRITECACHE_NAME_WHITESTONE,TextureResType::UI_TEX_TYPE_PLIST);
-		stone->setTouchEnabled(false);
-
-		Rule::getInstance()->setData(row,column,_playerTwoSide);
-
-		if(Rule::getInstance()->isFinished())
-		{
-			if(Rule::getInstance()->getWinner() == _playerTwoSide)
-				winGame(_playerTwoSide);
-			else
-				forbiddenLose();
-		}
-	}
-
-	changeTurn();
-}
-
 void GameLayer::computerMove(int level)
 {
 
 
 }
-
 
 void GameLayer::uiRefreshTime(int time)
 {
@@ -531,11 +381,11 @@ void GameLayer::uiRefreshTime(int time)
 	int seconds = time%60;
 	sprintf(buf,"%i:%i",minutes,seconds);
 
-	if(_whoseTurn == TurnOwner::PlayerOne)
+	if(Game::getInstance()->getTurn() == _playerOneSide)
 	{
 		_TextAtlasplayerOneTimeLabel->setStringValue(buf);
 	}
-	else if(_whoseTurn == TurnOwner::PlayerTwo)
+	else if(Game::getInstance()->getTurn() == _playerTwoSide)
 	{
 		_TextAtlasplayerTwoTimeLabel->setStringValue(buf);
 	}

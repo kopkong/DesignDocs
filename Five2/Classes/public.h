@@ -4,6 +4,8 @@
 #include "cocos2d.h"
 USING_NS_CC;
 
+typedef int GomokuData[15][15];
+
 // 谁的回合
 enum TurnOwner
 {
@@ -18,14 +20,6 @@ enum PieceSide
 	NoneSide,
 	BlackSide,
 	WhiteSide
-};
-
-// 游戏状态
-enum GameState
-{
-	NotStarted,
-	Running,
-	Finished
 };
 
 // 游戏设置
@@ -51,6 +45,18 @@ enum ExtraTimeOption
 	_30S,
 	_1M,
 	_2M
+};
+
+enum GameResult
+{
+	NotStarted,
+	NoResult,
+	BlackWin,
+	WhiteWin,
+	BlackTimeOut,
+	WhiteTimeOut,
+	BlackBan,
+	Draw
 };
 
 static const int TOTALTIME_SECONDS[6] = {300,600,900,1200,1500,1800};

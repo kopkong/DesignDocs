@@ -3,11 +3,11 @@
 
 #include "cocos2d.h"
 #include <vector>
-#include "Rule.h"
 #include "public.h"
 #include "CocosGUI.h"
 #include "cocostudio/CocoStudio.h"
 #include "MessageBox.h"
+#include "ChessBoard.h"
 
 USING_NS_CC;
 using namespace cocos2d::ui;
@@ -16,14 +16,18 @@ class GameLayer : public cocos2d::Layer
 {
 private:
     Size _screenSize;
-	bool _gameRunning;
-	TurnOwner _whoseTurn;
 	bool _hasComputerPlayer;
 	bool _isComputerTurn;
 
 	Layout* _layout;
-	Widget* _WidgetChessBoard;
+	ChessBoard* _WidgetChessBoard;
 	Widget* _WidgetsettingsBoard;
+	CheckBox* _CheckBoxSetting1;
+	CheckBox* _CheckBoxSetting2;
+	CheckBox* _CheckBoxSetting3;
+	Slider* _SliderTime1;
+	Slider* _SliderTime2;
+
 	ImageView* _ImageViewplayerOneColor;
 	ImageView* _ImageViewplayerTwoColor;
 	ImageView* _ImageViewtotoalTimeSettings;
@@ -41,16 +45,8 @@ private:
 	int _playerOneExtraTurnTime;
 	int _playerTwoExtraTurnTime;
 
-	// 所有UI按钮的touch处理事件
-	void uiButtonTouchCallback(Ref* obj,TouchEventType eventType);
-
-	// 棋子button的touch处理事件
-	void stoneTouchCallback(Ref* obj,TouchEventType eventType);
-
 	// 显示时间
 	void uiRefreshTime(int time);
-
-	void putStone(Button*);
 
 	GameSettings _gameSettings;
 
@@ -62,6 +58,9 @@ private:
 
 	// 电脑下棋
 	void computerMove(int level);
+
+	EventListenerCustom* _listener;
+	EventListenerCustom* _listener2;
 
 protected:
 	~GameLayer();
@@ -83,23 +82,21 @@ public:
     
     void initUI();
 
-	void initPieces();
-
 	void initState();
 
-	void initTexture();
+	// 处理自定义事件
+	void dealWithCustomEvent();
 
-	// 交换回合
-	void changeTurn();
+	// 回合变化
+	void turnChange();
 
 	// 交换黑白方
 	void changeSide();
 
-	void winGame(PieceSide);
-    
-	void forbiddenLose();
+	void endGame();
 
-	void timeoutLose(PieceSide);
+	// 所有UI按钮的touch处理事件
+	void uiButtonTouchCallback(Ref* obj,TouchEventType eventType);
 
 };
 

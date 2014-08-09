@@ -29,84 +29,48 @@ Rule* Rule::getInstance()
 	return &instance;
 }
 
-void Rule::Init(GameSettings settings)
-{
-	for(int i = 0 ; i < 15; i++)
-		for(int j = 0 ; j < 15; j++)
-			_goBangData[i][j] = 0;
-
-	_steps = 0;
-	_winner = PieceSide::NoneSide;
-	_state = GameState::Running;
-
-	_hasForbidden = settings.hasForbidden;
-}
-
-void Rule::setData(int row,int column,PieceSide side)
-{
-	if(_goBangData[row][column] == 0)
-	{
-		_goBangData[row][column] = (int)side;
-		_steps ++;
-	}
-
-	if(_steps >= 9)
-	{
-		// 检查是否连到5子
-		checkSum(row,column,side);
-
-		if(!isFinished())
-		{
-			if(side == PieceSide::BlackSide && _hasForbidden)// 检查禁手，如果有则判负
-				checkForbidden(row,column,side);
-		}
-	}
-}
-
-void Rule::checkSum(int row,int column,PieceSide side)
+GameResult Rule::checkSum(int row,int column,PieceSide side,GomokuData data,bool hasBan)
 {
 	int value = (int)side;
 
 	for(int i = 0; i< 4 ; i ++)
 	{
-		int count = countNumber(row,column,FourDirections[i],value);
+		int count = countNumber(row,column,FourDirections[i],value,data);
 
 		if(side == PieceSide::WhiteSide)
 		{
 			if(count >= 5 )
 			{
 				// 白棋赢了
-				_state = GameState::Finished;
-				_winner = side;
+				return GameResult::WhiteWin;
 			}
 		}
 		else
 		{
-			if(count > 5 && _hasForbidden)
+			if(count > 5 && hasBan)
 			{
 				// 黑棋输了！
-				blackBanLose();
-				return;
+				return GameResult::BlackBan;
 			}
 			else if(count == 5)
 			{
 				// 黑棋赢了
-				_state = GameState::Finished;
-				_winner = side;
-				return;
+				return GameResult::BlackWin;
 			}
 		}
 	}
+
+	return NoResult;
 }
 
-int Rule::countNumber(int row,int column,int direction[2],int value)
+int Rule::countNumber(int row,int column,int direction[2],int value,GomokuData data)
 {
 	int count = 1;
 	int tmpRow = row;
 	int tmpColumn = column;
 
 	// 正方向计数
-	while(nextSame(tmpRow,tmpColumn,direction,value))
+	while(nextSame(tmpRow,tmpColumn,direction,value,data))
 	{
 		count ++;
 	}
@@ -115,7 +79,7 @@ int Rule::countNumber(int row,int column,int direction[2],int value)
 	tmpRow = row;
 	tmpColumn = column;
 	int reverseDirection[2] = {-direction[0], -direction[1]};
-	while(nextSame(tmpRow,tmpColumn,reverseDirection,value))
+	while(nextSame(tmpRow,tmpColumn,reverseDirection,value,data))
 	{
 		count++;
 	}
@@ -123,7 +87,7 @@ int Rule::countNumber(int row,int column,int direction[2],int value)
 	return count;
 }
 
-bool Rule::nextSame(int& row,int& column,const int direction[2],int value)
+bool Rule::nextSame(int& row,int& column,const int direction[2],int value,GomokuData data)
 {
 	row = row + direction[0];
 	column = column + direction[1];
@@ -132,7 +96,7 @@ bool Rule::nextSame(int& row,int& column,const int direction[2],int value)
 	if(row < 0 || row >= 15 || column < 0 || column >= 15)
 		return false;
 
-	if(_goBangData[row][column] == value)
+	if(data[row][column] == value)
 		return true;
 	else
 		return false;
@@ -140,20 +104,19 @@ bool Rule::nextSame(int& row,int& column,const int direction[2],int value)
 	return false;
 }
 
-void Rule::checkForbidden(int row,int column,PieceSide side)
+GameResult Rule::checkForbidden(int row,int column,PieceSide side,GomokuData data)
 {
 	int threeThreeCount = 0;
 	int fourFourCount = 0;
 	for(int i = 0; i< 4 ; i ++)
 	{
 		std::string baseString;
-		buildBasePieceString(row,column,FourDirections[i],baseString);
+		buildBasePieceString(row,column,FourDirections[i],baseString,data);
 
 		// 在一个方向上的四四禁
 		if(matchBanRuleOne(baseString))
 		{
-			blackBanLose();
-			break;
+			return GameResult::BlackBan;
 		}
 			
 		if(matchBanRuleTwo(baseString))
@@ -166,9 +129,10 @@ void Rule::checkForbidden(int row,int column,PieceSide side)
 	// 三三 或者 四四禁
 	if(threeThreeCount >= 2 || fourFourCount >= 2)
 	{
-		blackBanLose();
+		return GameResult::BlackBan;
 	}
 
+	return NoResult;
 }
 
 bool Rule::matchBanRuleOne(const std::string baseString)
@@ -305,7 +269,7 @@ bool Rule::matchBanRuleThree(const std::string baseString)
 }
 
 // 反方向是否被堵死
-bool Rule::behindBlocked(int row,int column,const int direction[2],int value)
+bool Rule::behindBlocked(int row,int column,const int direction[2],int value,GomokuData data)
 {
 	int behindRow = row - direction[0];
 	int behindColumn = column - direction[1];
@@ -314,7 +278,7 @@ bool Rule::behindBlocked(int row,int column,const int direction[2],int value)
 	if(behindRow < 0 || behindRow >= 15 || behindColumn < 0 || behindColumn >= 15)
 		return true;
 	
-	int behindValue = _goBangData[behindRow][behindColumn];
+	int behindValue = data[behindRow][behindColumn];
 
 	// 有白子！堵死！
 	if(behindValue != value || behindValue != 0)
@@ -324,17 +288,9 @@ bool Rule::behindBlocked(int row,int column,const int direction[2],int value)
 	return false;
 }
 
-bool Rule::isFinished()
-{
-	return _state == GameState::Finished;
-}
 
-PieceSide Rule::getWinner()
-{
-	return _winner;
-}
 
-void Rule::buildBasePieceString(int row,int column,int direction[2],std::string& baseString)
+void Rule::buildBasePieceString(int row,int column,int direction[2],std::string& baseString,GomokuData data)
 {
 	// 保存正面5个 反面5个 共11个格子的值
 
@@ -344,7 +300,7 @@ void Rule::buildBasePieceString(int row,int column,int direction[2],std::string&
 		int nextRow = row - ( 5 - i ) * direction[0];
 		int nextColumn = column - ( 5 - i ) * direction[1];
 
-		baseString += getStringValue(nextRow,nextColumn);
+		baseString += getStringValue(nextRow,nextColumn,data);
 	}
 
 	// 下的那个子本身
@@ -356,18 +312,18 @@ void Rule::buildBasePieceString(int row,int column,int direction[2],std::string&
 		int nextRow = row + ( i -5 ) * direction[0];
 		int nextColumn = column + ( i -5 ) * direction[1];
 
-		baseString += getStringValue(nextRow,nextColumn);
+		baseString += getStringValue(nextRow,nextColumn,data);
 	}
 }
 
-std::string Rule::getStringValue(int row,int column)
+std::string Rule::getStringValue(int row,int column,GomokuData data)
 {
 	// 出界了！
 	if(row < 0 || row >= 15 || column < 0 || column >=15)
 		return OutsideValue;
 	else
 	{
-		int v = _goBangData[row][column];
+		int v = data[row][column];
 		
 		switch(v)
 		{
@@ -383,8 +339,8 @@ std::string Rule::getStringValue(int row,int column)
 	}
 }
 
-void Rule::blackBanLose()
-{
-	_state = GameState::Finished;
-	_winner = PieceSide::WhiteSide;
-}
+//void Rule::blackBanLose()
+//{
+//	_state = GameState::Finished;
+//	_winner = PieceSide::WhiteSide;
+//}

@@ -10,51 +10,93 @@
     <Filter Include="resource">
       <UniqueIdentifier>{715254bc-d70b-4ec5-bf29-467dd3ace079}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\UI">
+      <UniqueIdentifier>{b140cb21-baad-4ba6-a99c-2a7a9636d6a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Layer">
+      <UniqueIdentifier>{d6324b66-d804-4496-80d3-2bb3dab20664}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Base">
+      <UniqueIdentifier>{e0b8afea-3dae-4be7-9777-23f817858bc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Logic">
+      <UniqueIdentifier>{ae70d37a-3dbc-4cda-80ce-594bc34a0032}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\AppDelegate.cpp">
-      <Filter>Classes</Filter>
+    <ClCompile Include="..\Classes\ChessBoard.cpp">
+      <Filter>Classes\UI</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\GameLayer.cpp">
-      <Filter>Classes</Filter>
+    <ClCompile Include="..\Classes\Hover.cpp">
+      <Filter>Classes\UI</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\MessageBox.cpp">
-      <Filter>Classes</Filter>
+      <Filter>Classes\UI</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Rule.cpp">
-      <Filter>Classes</Filter>
+    <ClCompile Include="..\Classes\GameLayer.cpp">
+      <Filter>Classes\Layer</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\StartLayer.cpp">
-      <Filter>Classes</Filter>
+      <Filter>Classes\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AppDelegate.cpp">
+      <Filter>Classes\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Resources.cpp">
+      <Filter>Classes\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Rule.cpp">
+      <Filter>Classes\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Stone.cpp">
+      <Filter>Classes\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Game.cpp">
+      <Filter>Classes\Logic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
       <Filter>win32</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\AppDelegate.h">
-      <Filter>Classes</Filter>
+    <ClInclude Include="..\Classes\ChessBoard.h">
+      <Filter>Classes\UI</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\AssertConfigs.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\GameLayer.h">
-      <Filter>Classes</Filter>
+    <ClInclude Include="..\Classes\Hover.h">
+      <Filter>Classes\UI</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\MessageBox.h">
-      <Filter>Classes</Filter>
+      <Filter>Classes\UI</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\public.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Rule.h">
-      <Filter>Classes</Filter>
+    <ClInclude Include="..\Classes\GameLayer.h">
+      <Filter>Classes\Layer</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\StartLayer.h">
-      <Filter>Classes</Filter>
+      <Filter>Classes\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AppDelegate.h">
+      <Filter>Classes\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AssertConfigs.h">
+      <Filter>Classes\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\public.h">
+      <Filter>Classes\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Resources.h">
+      <Filter>Classes\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Rule.h">
+      <Filter>Classes\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Stone.h">
+      <Filter>Classes\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Game.h">
+      <Filter>Classes\Logic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
