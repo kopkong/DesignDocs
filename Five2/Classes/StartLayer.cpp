@@ -53,7 +53,6 @@ void StartLayer::initUI()
 		button2->addTouchEventListener(this,toucheventselector(StartLayer::uiButtonTouchCallback));
 	}
 
-
 	this->addChild(_layout);
 }
 
@@ -69,12 +68,13 @@ void StartLayer::uiButtonTouchCallback(Ref* obj,TouchEventType eventType)
 		{
 			if(tag == UI_TAGID_STARTPAGE_AIBUTTON)
 			{
-				
+				auto scene = GameLayer::createScene(1);
+				Director::getInstance()->replaceScene(scene);
 			}
 
 			if(tag == UI_TAGID_STARTPAGE_PVPBUTTON)
 			{
-				auto scene = GameLayer::createScene(1);
+				auto scene = GameLayer::createScene(0);
 				Director::getInstance()->replaceScene(scene);
 			}
 			break;

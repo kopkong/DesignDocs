@@ -103,7 +103,7 @@ void TextAtlas::setStringValue(const std::string& value)
     _labelAtlasRenderer->setString(value);
     updateContentSizeWithTextureSize(_labelAtlasRenderer->getContentSize());
     _labelAtlasRendererAdaptDirty = true;
-    CCLOG("cssss w %f, h %f", _contentSize.width, _contentSize.height);
+    //CCLOG("cssss w %f, h %f", _contentSize.width, _contentSize.height);
 }
 
 const std::string& TextAtlas::getStringValue() const

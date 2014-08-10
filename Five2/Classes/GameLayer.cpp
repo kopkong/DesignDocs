@@ -3,6 +3,7 @@
 #include "AssertConfigs.h"
 #include "Game.h"
 
+
 static int _currentLevel = 0;
 
 GameLayer::~GameLayer()
@@ -40,9 +41,10 @@ bool GameLayer::init()
 	initState();
 	initUI();
 	dealWithCustomEvent();
-
-	this->schedule(schedule_selector(GameLayer::update));
 	
+	if(_gameSettings.hasAI)
+		this->schedule(schedule_selector(GameLayer::updateAIState),0.2);
+
     return true;
 }
 
@@ -55,11 +57,15 @@ void GameLayer::initState()
 	_gameSettings.ExtraTime = EXTRATIME_SECONDS[_extraTimeOption];
 	_gameSettings.hasForbidden = false;
 
-	// 初始化电脑选手
-	if(_currentLevel > 0)
+	if(_currentLevel > 0) // 有AI
 	{
-		_hasComputerPlayer = true;
-		_isComputerTurn = false;
+		_gameSettings.hasAI = true;
+		_gameSettings.aiSide = WhiteSide;
+		_gameSettings.aiLevel = _currentLevel;
+	}
+	else
+	{
+		_gameSettings.hasAI = false;
 	}
 }
 
@@ -197,15 +203,35 @@ void GameLayer::dealWithCustomEvent()
 
 	_listener2 = EventListenerCustom::create("event_turn_change",[=](EventCustom* event){
 		turnChange();
+		bool isPlayerTurn = Game::getInstance()->isPlayerTurn();
+
+		//log("event_turn_change, currentside is %d",Game::getInstance()->getTurn());
+		//log("isPlayerTurn = %i",isPlayerTurn);
+
+		if(!isPlayerTurn) // 如果是电脑的回合
+		{
+			aiMove();
+		}
 	});
 
 	_eventDispatcher->addEventListenerWithFixedPriority(_listener,1);
 	_eventDispatcher->addEventListenerWithFixedPriority(_listener2, 1);
+
+	_aiEvent = new EventCustom("event_ai_setStone");
 }
 
-void GameLayer::update(float dt)
+void GameLayer::updateAIState(float dt)
 {
-	// 在游戏还没开始前读取设置信息
+	// 刷新AI状态
+	if(!Game::getInstance()->isFinished() && aiResult != -1)
+	{
+		log("aiEvent send index = %d",aiResult);
+
+		_aiEvent->setUserData(&aiResult);
+		_eventDispatcher->dispatchEvent(_aiEvent);
+
+		aiResult = -1;
+	}
 
 }
 
@@ -368,9 +394,14 @@ void GameLayer::uiButtonTouchCallback(Ref* obj,TouchEventType eventType)
 	}
 }
 
-void GameLayer::computerMove(int level)
+void GameLayer::aiMove()
 {
+	pthread_mutex_init(&mutex,NULL);
 
+	Game::getInstance()->copyData(&aiData);
+
+	log("start ai working thread");
+	pthread_create(&aiWordThreadID,NULL,&aiWorkThread,0);
 
 }
 
@@ -395,3 +426,35 @@ void GameLayer::uiRefreshTime(int time)
 		_TextAtlasplayerTwoTimeLabel->setStringValue(buf);
 	}
 }
+
+void* GameLayer::aiWorkThread(void * arg)
+{
+	pthread_mutex_lock(&mutex);
+#if WIN32
+	Sleep(1000);
+#else
+	usleep(1000);
+#endif
+
+	for(int i = 0 ; i < 15 ; i ++)
+	{
+		for (int j=0;j<15;j++)
+		{
+			if(aiData[i][j] == 0)
+			{
+				log("Ai set Stone at (%d,%d)",i,j);
+				aiResult = getIndexByRC(i,j);
+				
+				i = 100;
+				j = 100;
+			}
+		}
+	}
+	pthread_mutex_unlock(&mutex);
+	return NULL;
+}
+
+GomokuData GameLayer::aiData;
+pthread_mutex_t GameLayer::mutex;
+int GameLayer::aiResult = -1;
+bool GameLayer::aiInTheWork = false;

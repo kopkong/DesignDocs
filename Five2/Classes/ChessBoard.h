@@ -9,8 +9,11 @@ class ChessBoard: public Sprite
 {
 private:
 	std::map<int,Rect> _stoneLocationMap;
+	std::map<int,bool> _stoneLocationOccupied;
 	EventCustom* _endEvent;
 	EventCustom* _turnChangeEvent;
+
+	EventListenerCustom* _listener;
 	Stone* _hoverStone;
 public:
 	ChessBoard();
@@ -30,7 +33,9 @@ public:
 
 	void clearStones();
 
-	void addStoneByIndex(int index,PieceSide);
+	void removeStoneByIndex(int index);
+
+	void addStoneByIndex(int index, PieceSide side);
 };
 
 #endif

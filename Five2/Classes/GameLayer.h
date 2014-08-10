@@ -8,6 +8,7 @@
 #include "cocostudio/CocoStudio.h"
 #include "MessageBox.h"
 #include "ChessBoard.h"
+#include "pthread.h"
 
 USING_NS_CC;
 using namespace cocos2d::ui;
@@ -57,10 +58,18 @@ private:
 	FiveMessageBox* _messageDialog;
 
 	// 电脑下棋
-	void computerMove(int level);
+	void aiMove();
 
+	EventCustom* _aiEvent;
 	EventListenerCustom* _listener;
 	EventListenerCustom* _listener2;
+
+	static GomokuData aiData;
+	static int aiResult;
+	static bool aiInTheWork;
+	pthread_t aiWordThreadID;
+	static pthread_mutex_t mutex;
+	static void* aiWorkThread(void *r);  
 
 protected:
 	~GameLayer();
@@ -74,7 +83,7 @@ public:
     
 	void updateTotalTime(float dt);
 
-	void update(float dt);
+	void updateAIState(float dt);
     
 	void loadLevel(int level);
     

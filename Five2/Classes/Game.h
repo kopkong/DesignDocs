@@ -2,6 +2,7 @@
 #define __GAME_H_
 
 #include "public.h"
+#include <stack>
 
 class Game
 {
@@ -12,6 +13,13 @@ private:
 	int _steps;
 	bool _hasForbidden;
 	PieceSide _currentSide;
+	std::stack<StepContent> _stepContent;
+
+	// 是不是人机
+	bool _hasAI;
+
+	// AI是黑子还是白子
+	PieceSide _aiSide;
 
 protected:
 	Game();
@@ -20,18 +28,23 @@ protected:
 public:
 	static Game* getInstance();
 	void init(GameSettings);
-	void setData(int index,PieceSide side);
+	bool setData(int index,PieceSide side);
 	bool isFinished();
 
 	void setTimeout(PieceSide side);
 	GameResult getResult();
 	PieceSide getWinner();
 
-	// 下回合
-	bool nextTurn();
+	// 悔棋(步数)
+	void backTurn(int turns,std::queue<StepContent>&);
+
+	int getAIChoosedNumber();
+
 	PieceSide getTurn();
 
-	bool isRunnint();
+	bool isPlayerTurn();
+
+	void copyData(GomokuData* tmpData);
 };
 
 #endif

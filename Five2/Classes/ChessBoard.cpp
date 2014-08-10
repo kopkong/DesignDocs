@@ -8,7 +8,6 @@ const static int RenderIndex_Stone = 2;
 
 ChessBoard::ChessBoard()
 {
-	int index = 0;
 	for(int row = 0 ; row < 15; row ++)
 	{
 		for(int column = 0 ; column < 15; column ++)
@@ -16,8 +15,10 @@ ChessBoard::ChessBoard()
 			float positionX = column * CellSize.width + 9  ;
 			float positionY = row * CellSize.height + 2 ;
 			Rect r = Rect(positionX,positionY,CellSize.width,CellSize.height);
+
+			int index = getIndexByRC(row,column);
 			_stoneLocationMap.insert(std::pair<int,Rect>(index,r));
-			index ++;
+			_stoneLocationOccupied.insert(std::pair<int,bool>(index,false));
 		}
 	}
 }
@@ -63,6 +64,13 @@ void ChessBoard::onEnter()
 
 	_endEvent = new EventCustom("event_game_end");
 	_turnChangeEvent = new EventCustom("event_turn_change");
+
+	_listener = EventListenerCustom::create("event_ai_setStone",[=](EventCustom* event){
+		int* pIndex = static_cast<int*>(event->getUserData());
+		addStoneByIndex(*pIndex,Game::getInstance()->getTurn());
+	});
+
+	_eventDispatcher->addEventListenerWithFixedPriority(_listener,1);
 }
 
 bool ChessBoard::containsTouchLocation(Touch* touch)
@@ -80,6 +88,7 @@ bool ChessBoard::onTouchBegan(Touch* touch, Event* event)
 	log("ChessBoard::onTouchBegan id = %d, x = %f, y = %f", touch->getID(), touch->getLocation().x, touch->getLocation().y);
 
 	if(!containsTouchLocation(touch)) return false;
+	if(!Game::getInstance()->isPlayerTurn()) return false;
 	if(Game::getInstance()->isFinished()) return false;
 	
 	for(std::map<int,Rect>::iterator it = _stoneLocationMap.begin(); it != _stoneLocationMap.end(); it++)
@@ -123,40 +132,11 @@ void ChessBoard::onTouchEnded(Touch* touch, Event* event)
 			// 不再显示悬浮框了
 			_hoverStone->setVisible(false);
 
-			// 图片偏移，为了显示阴影效果
-			Point offset = Point(3,12);
+			// 已经在这个位置下过子了
+			if(_stoneLocationOccupied[it->first])
+				break;
 
-			// display stone
-			if(Game::getInstance()->getTurn() == BlackSide)
-			{
-				Stone* s = Stone::createWithSpriteFrameName(SPRITECACHE_NAME_BLACKSTONE);
-				s->setAnchorPoint(Point::ZERO);
-				s->setPosition(it->second.getMinX() - offset.x ,it->second.getMinY() - offset.y);
-
-				this->addChild(s,RenderIndex_Stone);
-				//log("ChessBoard add child at index %d",it->first);
-				Game::getInstance()->setData(it->first,BlackSide);
-			}
-			else
-			{
-				Stone* s = Stone::createWithSpriteFrameName(SPRITECACHE_NAME_WHITESTONE);
-				s->setAnchorPoint(Point::ZERO);
-				s->setPosition(it->second.getMinX() - offset.x,it->second.getMinY() - offset.y);
-				this->addChild(s,RenderIndex_Stone);
-				//log("ChessBoard add child at index %d",it->first);
-				Game::getInstance()->setData(it->first,WhiteSide);
-			}
-
-			// next turn
-			if(!Game::getInstance()->nextTurn())
-			{
-				// 游戏已结束
-				_eventDispatcher->dispatchEvent(_endEvent);
-			}
-			else
-			{
-				_eventDispatcher->dispatchEvent(_turnChangeEvent);
-			}
+			addStoneByIndex(it->first,Game::getInstance()->getTurn());
 		}
 	}
 }
@@ -166,7 +146,36 @@ void ChessBoard::clearStones()
 	this->removeAllChildren();
 }
 
-void ChessBoard::addStoneByIndex(int index,PieceSide side)
+void ChessBoard::removeStoneByIndex(int index)
 {
 	
+}
+
+void ChessBoard::addStoneByIndex(int index, PieceSide side)
+{
+	log("Set side: %d stone at index:%d",side,index);
+
+	// 图片偏移，为了显示阴影效果
+	Point offset = Point(3,12);
+	Sprite* stone = Sprite::create();
+
+	// 设置黑子或者白子的图片
+	if(side == BlackSide)
+		stone->setSpriteFrame(SPRITECACHE_NAME_BLACKSTONE);
+	else
+		stone->setSpriteFrame(SPRITECACHE_NAME_WHITESTONE);
+
+	stone->setAnchorPoint(Point::ZERO);
+	
+	stone->setPosition(_stoneLocationMap.at(index).getMinX() - offset.x ,
+		_stoneLocationMap.at(index).getMinY() - offset.y);
+
+	this->addChild(stone,RenderIndex_Stone);
+	_stoneLocationOccupied[index] = true;
+
+	// 落子并判断是否结束
+	if(Game::getInstance()->setData(index,side))
+		_eventDispatcher->dispatchEvent(_turnChangeEvent);
+	else
+		_eventDispatcher->dispatchEvent(_endEvent);
 }
