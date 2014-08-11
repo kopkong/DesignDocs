@@ -180,7 +180,6 @@ void GameLayer::resetGame()
 		Node* rootChild = _layout->getChildren().at(0);
 		Widget* panelChessBoard = static_cast<Widget*>(rootChild->getChildByTag(UI_TAGID_MAIN_CHESSBOARD));
 
-		int count = panelChessBoard->getChildrenCount();
 		_WidgetChessBoard = static_cast<ChessBoard*>(panelChessBoard->getChildren().at(0));
 		_WidgetChessBoard->clearStones();
 	}
