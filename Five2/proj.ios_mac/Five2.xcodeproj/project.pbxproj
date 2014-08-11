@@ -57,8 +57,16 @@
 		896CDF541990DD860012D1E7 /* GameLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 896CDF4D1990DD860012D1E7 /* GameLayer.cpp */; };
 		896CDF551990DD860012D1E7 /* MessageBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 896CDF4F1990DD860012D1E7 /* MessageBox.cpp */; };
 		896CDF561990DD860012D1E7 /* Rule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 896CDF521990DD860012D1E7 /* Rule.cpp */; };
-		896CDFA01990E42D0012D1E7 /* UI_0 in Resources */ = {isa = PBXBuildFile; fileRef = 896CDF9E1990E42D0012D1E7 /* UI_0 */; };
-		896CDFA11990E42D0012D1E7 /* UI_1 in Resources */ = {isa = PBXBuildFile; fileRef = 896CDF9F1990E42D0012D1E7 /* UI_1 */; };
+		89FAC7501995DE840012CDD7 /* StartPage in Resources */ = {isa = PBXBuildFile; fileRef = 89FAC74F1995DE840012CDD7 /* StartPage */; };
+		89FAC7531995E0C80012CDD7 /* StartLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89FAC7511995E0C80012CDD7 /* StartLayer.cpp */; };
+		89FAC758199663EA0012CDD7 /* GamePage in Resources */ = {isa = PBXBuildFile; fileRef = 89FAC757199663EA0012CDD7 /* GamePage */; };
+		89FAC75A199663F20012CDD7 /* Textures in Resources */ = {isa = PBXBuildFile; fileRef = 89FAC759199663F20012CDD7 /* Textures */; };
+		89FAC7651996641A0012CDD7 /* ChessBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89FAC75B1996641A0012CDD7 /* ChessBoard.cpp */; };
+		89FAC7661996641A0012CDD7 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89FAC75D1996641A0012CDD7 /* Game.cpp */; };
+		89FAC7671996641A0012CDD7 /* Hover.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89FAC75F1996641A0012CDD7 /* Hover.cpp */; };
+		89FAC7681996641A0012CDD7 /* Resources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89FAC7611996641A0012CDD7 /* Resources.cpp */; };
+		89FAC7691996641A0012CDD7 /* Stone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89FAC7631996641A0012CDD7 /* Stone.cpp */; };
+		89FAC76E199866090012CDD7 /* AI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89FAC76B199866090012CDD7 /* AI.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -260,8 +268,24 @@
 		896CDF511990DD860012D1E7 /* public.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = public.h; path = ../Classes/public.h; sourceTree = "<group>"; };
 		896CDF521990DD860012D1E7 /* Rule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Rule.cpp; path = ../Classes/Rule.cpp; sourceTree = "<group>"; };
 		896CDF531990DD860012D1E7 /* Rule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Rule.h; path = ../Classes/Rule.h; sourceTree = "<group>"; };
-		896CDF9E1990E42D0012D1E7 /* UI_0 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = UI_0; sourceTree = "<group>"; };
-		896CDF9F1990E42D0012D1E7 /* UI_1 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = UI_1; sourceTree = "<group>"; };
+		89FAC74F1995DE840012CDD7 /* StartPage */ = {isa = PBXFileReference; lastKnownFileType = folder; path = StartPage; sourceTree = "<group>"; };
+		89FAC7511995E0C80012CDD7 /* StartLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StartLayer.cpp; path = ../Classes/StartLayer.cpp; sourceTree = "<group>"; };
+		89FAC7521995E0C80012CDD7 /* StartLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StartLayer.h; path = ../Classes/StartLayer.h; sourceTree = "<group>"; };
+		89FAC757199663EA0012CDD7 /* GamePage */ = {isa = PBXFileReference; lastKnownFileType = folder; path = GamePage; sourceTree = "<group>"; };
+		89FAC759199663F20012CDD7 /* Textures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Textures; sourceTree = "<group>"; };
+		89FAC75B1996641A0012CDD7 /* ChessBoard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ChessBoard.cpp; path = ../Classes/ChessBoard.cpp; sourceTree = "<group>"; };
+		89FAC75C1996641A0012CDD7 /* ChessBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChessBoard.h; path = ../Classes/ChessBoard.h; sourceTree = "<group>"; };
+		89FAC75D1996641A0012CDD7 /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Game.cpp; path = ../Classes/Game.cpp; sourceTree = "<group>"; };
+		89FAC75E1996641A0012CDD7 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Game.h; path = ../Classes/Game.h; sourceTree = "<group>"; };
+		89FAC75F1996641A0012CDD7 /* Hover.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Hover.cpp; path = ../Classes/Hover.cpp; sourceTree = "<group>"; };
+		89FAC7601996641A0012CDD7 /* Hover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Hover.h; path = ../Classes/Hover.h; sourceTree = "<group>"; };
+		89FAC7611996641A0012CDD7 /* Resources.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Resources.cpp; path = ../Classes/Resources.cpp; sourceTree = "<group>"; };
+		89FAC7621996641A0012CDD7 /* Resources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../Classes/Resources.h; sourceTree = "<group>"; };
+		89FAC7631996641A0012CDD7 /* Stone.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Stone.cpp; path = ../Classes/Stone.cpp; sourceTree = "<group>"; };
+		89FAC7641996641A0012CDD7 /* Stone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Stone.h; path = ../Classes/Stone.h; sourceTree = "<group>"; };
+		89FAC76B199866090012CDD7 /* AI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AI.cpp; path = ../Classes/AI.cpp; sourceTree = "<group>"; };
+		89FAC76C199866090012CDD7 /* AI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AI.h; path = ../Classes/AI.h; sourceTree = "<group>"; };
+		89FAC76D199866090012CDD7 /* AIPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AIPlayer.h; path = ../Classes/AIPlayer.h; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -338,6 +362,21 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				89FAC76B199866090012CDD7 /* AI.cpp */,
+				89FAC76C199866090012CDD7 /* AI.h */,
+				89FAC76D199866090012CDD7 /* AIPlayer.h */,
+				89FAC75B1996641A0012CDD7 /* ChessBoard.cpp */,
+				89FAC75C1996641A0012CDD7 /* ChessBoard.h */,
+				89FAC75D1996641A0012CDD7 /* Game.cpp */,
+				89FAC75E1996641A0012CDD7 /* Game.h */,
+				89FAC75F1996641A0012CDD7 /* Hover.cpp */,
+				89FAC7601996641A0012CDD7 /* Hover.h */,
+				89FAC7611996641A0012CDD7 /* Resources.cpp */,
+				89FAC7621996641A0012CDD7 /* Resources.h */,
+				89FAC7631996641A0012CDD7 /* Stone.cpp */,
+				89FAC7641996641A0012CDD7 /* Stone.h */,
+				89FAC7511995E0C80012CDD7 /* StartLayer.cpp */,
+				89FAC7521995E0C80012CDD7 /* StartLayer.h */,
 				896CDF4C1990DD860012D1E7 /* AssertConfigs.h */,
 				896CDF4D1990DD860012D1E7 /* GameLayer.cpp */,
 				896CDF4E1990DD860012D1E7 /* GameLayer.h */,
@@ -463,8 +502,9 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				896CDF9E1990E42D0012D1E7 /* UI_0 */,
-				896CDF9F1990E42D0012D1E7 /* UI_1 */,
+				89FAC759199663F20012CDD7 /* Textures */,
+				89FAC757199663EA0012CDD7 /* GamePage */,
+				89FAC74F1995DE840012CDD7 /* StartPage */,
 			);
 			name = Resources;
 			path = ../Resources;
@@ -636,8 +676,8 @@
 			files = (
 				5087E78117EB970100C73F5D /* Icon-120.png in Resources */,
 				5087E78617EB970100C73F5D /* Icon-76.png in Resources */,
-				896CDFA01990E42D0012D1E7 /* UI_0 in Resources */,
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
+				89FAC75A199663F20012CDD7 /* Textures in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
@@ -646,8 +686,9 @@
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
-				896CDFA11990E42D0012D1E7 /* UI_1 in Resources */,
+				89FAC758199663EA0012CDD7 /* GamePage in Resources */,
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
+				89FAC7501995DE840012CDD7 /* StartPage in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
@@ -670,13 +711,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89FAC7651996641A0012CDD7 /* ChessBoard.cpp in Sources */,
 				896CDF551990DD860012D1E7 /* MessageBox.cpp in Sources */,
 				896CDF561990DD860012D1E7 /* Rule.cpp in Sources */,
+				89FAC7531995E0C80012CDD7 /* StartLayer.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
+				89FAC76E199866090012CDD7 /* AI.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				1AFAF8B716D35DE700DB1158 /* AppDelegate.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				896CDF541990DD860012D1E7 /* GameLayer.cpp in Sources */,
+				89FAC7691996641A0012CDD7 /* Stone.cpp in Sources */,
+				89FAC7681996641A0012CDD7 /* Resources.cpp in Sources */,
+				89FAC7661996641A0012CDD7 /* Game.cpp in Sources */,
+				89FAC7671996641A0012CDD7 /* Hover.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

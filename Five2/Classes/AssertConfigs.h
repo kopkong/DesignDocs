@@ -39,7 +39,7 @@ static const string BOX_WHITE_PATH				=	RESOURCES_PATH + "Textures/box-w.png";
 static const string TOTALTIME_TEXT_PATH			=	RESOURCES_PATH + "Textures/t1.png";
 static const string EXTRATIME_TEXT_PATH			=	RESOURCES_PATH + "Textures/t2.png";
 static const string MESSAGEBOX_BACKGROUND_PATH  =	RESOURCES_PATH + "Textures/msg-board.png";
-static const string CHESSBOARD_BACKGROUND_PATH  =	RESOURCES_PATH + "Textures/chessboard.jpg";
+static const string CHESSBOARD_BACKGROUND_PATH  =	RESOURCES_PATH + "Textures/chessBoard.jpg";
 
 static const string USER_DEFAULT_DATAFILE		=	RESOURCES_PATH  + "UserData/data";
 static const string DATABASE_FILE				=	RESOURCES_PATH	+ "UserData/user.db";
