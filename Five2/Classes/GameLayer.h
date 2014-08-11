@@ -3,11 +3,12 @@
 
 #include "cocos2d.h"
 #include <vector>
-#include "Rule.h"
 #include "public.h"
 #include "CocosGUI.h"
 #include "cocostudio/CocoStudio.h"
 #include "MessageBox.h"
+#include "ChessBoard.h"
+#include "pthread.h"
 
 USING_NS_CC;
 using namespace cocos2d::ui;
@@ -16,14 +17,18 @@ class GameLayer : public cocos2d::Layer
 {
 private:
     Size _screenSize;
-	bool _gameRunning;
-	Vector<MenuItem*> _vectorPieces;
-	TurnOwner _whoseTurn;
-	int _currentCellIndex;
+	bool _hasComputerPlayer;
+	bool _isComputerTurn;
 
 	Layout* _layout;
-	Menu* _piecesMenu;
+	ChessBoard* _WidgetChessBoard;
 	Widget* _WidgetsettingsBoard;
+	CheckBox* _CheckBoxSetting1;
+	CheckBox* _CheckBoxSetting2;
+	CheckBox* _CheckBoxSetting3;
+	Slider* _SliderTime1;
+	Slider* _SliderTime2;
+
 	ImageView* _ImageViewplayerOneColor;
 	ImageView* _ImageViewplayerTwoColor;
 	ImageView* _ImageViewtotoalTimeSettings;
@@ -41,10 +46,6 @@ private:
 	int _playerOneExtraTurnTime;
 	int _playerTwoExtraTurnTime;
 
-
-	// 所有UI按钮的touch处理事件
-	void uiButtonTouchCallback(Ref* obj,TouchEventType eventType);
-
 	// 显示时间
 	void uiRefreshTime(int time);
 
@@ -55,6 +56,20 @@ private:
 
 	// 消息窗口
 	FiveMessageBox* _messageDialog;
+
+	// 电脑下棋
+	void aiMove();
+
+	EventCustom* _aiEvent;
+	EventListenerCustom* _listener;
+	EventListenerCustom* _listener2;
+
+	static GomokuData aiData;
+	static int aiResult;
+	static bool aiInTheWork;
+	pthread_t aiWordThreadID;
+	static pthread_mutex_t mutex;
+	static void* aiWorkThread(void *r);  
 
 protected:
 	~GameLayer();
@@ -68,7 +83,7 @@ public:
     
 	void updateTotalTime(float dt);
 
-	void update(float dt);
+	void updateAIState(float dt);
     
 	void loadLevel(int level);
     
@@ -76,27 +91,22 @@ public:
     
     void initUI();
 
-	void initPieces();
-
 	void initState();
 
-	void initTexture();
+	// 处理自定义事件
+	void dealWithCustomEvent();
 
-	// 交换回合
-	void changeTurn();
+	// 回合变化
+	void turnChange();
 
 	// 交换黑白方
 	void changeSide();
 
-	void winGame(PieceSide);
-    
-	void forbiddenLose();
+	void endGame();
 
-	void timeoutLose(PieceSide);
+	// 所有UI按钮的touch处理事件
+	void uiButtonTouchCallback(Ref* obj,TouchEventType eventType);
 
-	// 点击对应位置下子
-	void cellTouchCallback(int index);
-    
 };
 
 #endif // __GameLayer_SCENE_H__

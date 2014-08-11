@@ -24,6 +24,8 @@ public:
 	void setStringText(const std::string& str);
 	void setTextPosition(Point& pos);
 
+	void showResult();
+
 	void showBlackWin();
 
 	void showWhiteWin();

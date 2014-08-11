@@ -1,5 +1,5 @@
 ﻿#include "MessageBox.h"
-
+#include "Game.h"
 
 FiveMessageBox::FiveMessageBox()
 {
@@ -27,6 +27,32 @@ void FiveMessageBox::setTextPosition(Point& point)
 {
 	_textPosition = point;
 	//_textImage->setPosition(_textPosition);
+}
+
+void FiveMessageBox::showResult()
+{
+	GameResult result = Game::getInstance()->getResult();
+
+	switch(result)
+	{
+	case GameResult::BlackWin:
+		showBlackWin();
+		break;
+	case GameResult::WhiteWin:
+		showWhiteWin();
+		break;
+	case GameResult::BlackTimeOut:
+		showBlackTimeout();
+		break;
+	case GameResult::WhiteTimeOut:
+		showWhiteTimeout();
+		break;
+	case GameResult::BlackBan:
+		showBlackForbiddenLose();
+		break;
+	default:
+		break;
+	}
 }
 
 void FiveMessageBox::showBlackWin()

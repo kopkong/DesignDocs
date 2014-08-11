@@ -69,7 +69,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\Classes;..;$(EngineRoot)cocos\editor-support;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\Classes;..;$(EngineRoot)cocos\editor-support;$(EngineRoot)\external\win32-specific\pthreads-w32-2-9-1-release\Pre-built.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -82,16 +82,15 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>pthreadVCE2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(EngineRoot)\external\win32-specific\pthreads-w32-2-9-1-release\Pre-built.2\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>xcopy /Y /Q "$(EngineRoot)external\win32-specific\pthreads-w32-2-9-1-release\Pre-built.2\dll\x86\*.dll" "$(OutDir)" </Command>
     </PostBuildEvent>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
@@ -133,19 +132,34 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Classes\AI.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\ChessBoard.cpp" />
+    <ClCompile Include="..\Classes\Game.cpp" />
     <ClCompile Include="..\Classes\GameLayer.cpp" />
+    <ClCompile Include="..\Classes\Hover.cpp" />
     <ClCompile Include="..\Classes\MessageBox.cpp" />
+    <ClCompile Include="..\Classes\Resources.cpp" />
     <ClCompile Include="..\Classes\Rule.cpp" />
+    <ClCompile Include="..\Classes\StartLayer.cpp" />
+    <ClCompile Include="..\Classes\Stone.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Classes\AI.h" />
+    <ClInclude Include="..\Classes\AIPlayer.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\AssertConfigs.h" />
+    <ClInclude Include="..\Classes\ChessBoard.h" />
+    <ClInclude Include="..\Classes\Game.h" />
     <ClInclude Include="..\Classes\GameLayer.h" />
+    <ClInclude Include="..\Classes\Hover.h" />
     <ClInclude Include="..\Classes\MessageBox.h" />
     <ClInclude Include="..\Classes\public.h" />
+    <ClInclude Include="..\Classes\Resources.h" />
     <ClInclude Include="..\Classes\Rule.h" />
+    <ClInclude Include="..\Classes\StartLayer.h" />
+    <ClInclude Include="..\Classes\Stone.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>
