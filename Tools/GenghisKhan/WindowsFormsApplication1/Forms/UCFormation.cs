@@ -49,10 +49,10 @@ namespace WindowsFormsApplication1.Forms
             LB_BattlePower.Text = _formation.TeamBattlePowerPoint.ToString();
         }
 
-        public void InitNPCFormation(int levelConfigID)
+        public void InitNPCFormation(int levelConfigID,bool isElite)
         {
             _formation = new Formation();
-            _formation.InitNPCFormation(levelConfigID);
+            _formation.InitNPCFormation(levelConfigID, isElite);
 
             foreach (KeyValuePair<GeneralInfo, PositionPair> pair in _formation.FormationMap)
             {
@@ -76,6 +76,6 @@ namespace WindowsFormsApplication1.Forms
             _formation.ReComputePlayerTeamBattlePowerPoint();
             LB_BattlePower.Text = _formation.TeamBattlePowerPoint.ToString();
         }
-        
+
     }
 }

@@ -19,7 +19,11 @@ namespace WindowsFormsApplication1.Forms
             CanReComputeBattlePoint = false;
         }
 
+        int currentEditButtonID = -1;
+
         public int LevelID { get; set; }
+
+        public bool IsEliteLevel { get; set; }
 
         public bool CanReComputeBattlePoint { get; set; }
 
@@ -27,10 +31,17 @@ namespace WindowsFormsApplication1.Forms
 
         private Dictionary<int,NPCEnemy> EnemyList = new Dictionary<int,NPCEnemy>();
 
-        public void InitLevelEnemy(int levelID)
+        public void InitLevelEnemy(int levelID,bool isElite)
         {
+            IsEliteLevel = isElite;
+
+            string name = DBConfigMgr.Instance.MapLevel[levelID].Name;
+            if (isElite)
+                name += "精英";
+            this.Text = name;
+
             EnemyFormation = new Formation();
-            EnemyFormation.InitNPCFormation(levelID);
+            EnemyFormation.InitNPCFormation(levelID,isElite);
 
             LevelID = levelID;
             EnemyList = EnemyFormation.NPCFormation;
@@ -45,81 +56,38 @@ namespace WindowsFormsApplication1.Forms
 
         private void RefreashEnemyData()
         {
-            if(EnemyList!= null && EnemyList.Count > 0)
+            foreach (KeyValuePair<int, NPCEnemy> pair in EnemyList)
             {
-                dataGridView1.Rows.Clear();
-                foreach(KeyValuePair<int,NPCEnemy> kv in EnemyList)
-                {
-                    DataGridViewRow row = new DataGridViewRow();
+                string buttonName = "BTN_" + pair.Key.ToString();
 
-                    DataGridViewTextBoxCell cell0 = new DataGridViewTextBoxCell();
-                    cell0.Value = (FormationPosition)kv.Key;
-                    row.Cells.Add(cell0);
-
-                    DataGridViewTextBoxCell cell1 = new DataGridViewTextBoxCell();
-                    cell1.Value = kv.Value.GeneralConfigID;
-                    row.Cells.Add(cell1);
-
-                    DataGridViewTextBoxCell cell2 = new DataGridViewTextBoxCell();
-                    cell2.Value = kv.Value.GeneralLevel;
-                    row.Cells.Add(cell2);
-
-                    DataGridViewTextBoxCell cell3 = new DataGridViewTextBoxCell();
-                    cell3.Value = kv.Value.SoldierConfigID;
-                    row.Cells.Add(cell3);
-
-                    DataGridViewTextBoxCell cell4 = new DataGridViewTextBoxCell();
-                    cell4.Value = kv.Value.SoldierLevel;
-                    row.Cells.Add(cell4);
-
-                    DataGridViewTextBoxCell cell5 = new DataGridViewTextBoxCell();
-                    cell5.Value = kv.Value.SoldierCount;
-                    row.Cells.Add(cell5);
-
-                    dataGridView1.Rows.Add(row);
-
-                }
+                Button b = (Button)this.Controls.Find(buttonName,false)[0];
+                SetButtonString(b, pair.Value);
             }
+        }
+
+        private void SetButtonString(Button b, NPCEnemy npc)
+        {
+            string generalName = DBConfigMgr.Instance.MapGeneral[npc.GeneralConfigID].Name;
+
+            string generalLv = npc.GeneralLevel.ToString();
+
+            b.Text = string.Format("｛{0}｝-{1}级", generalName, generalLv); 
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ReComputeBattlePoint();
-            DBConfigMgr.Instance.SaveLevelEnemyData(LevelID, EnemyList);
-            MessageBox.Show("保存完毕");
-        }
+            CampaignBatch.RefreshOneLevelEnemy(LevelID, EnemyList, IsEliteLevel);
+            DBConfigMgr.Instance.UpdateLevelEnemy(LevelID);
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            ReComputeBattlePoint();
+            //MessageBox.Show("保存完毕");
+            this.Close();
         }
 
         private void ReComputeBattlePoint()
         {
-            EnemyList.Clear();
-            foreach (DataGridViewRow row in dataGridView1.Rows)
-            {
-                if (row.Cells[0].Value != null)
-                {
-                    string v0 = row.Cells[0].Value.ToString();
-                    FormationPosition p = (FormationPosition)Enum.Parse(typeof(FormationPosition), v0);
-
-                    int pos = (int)p;
-                    int generalConfig = Convert.ToInt32(row.Cells[1].Value);
-                    int generalLevel = Convert.ToInt32(row.Cells[2].Value);
-                    int soldierConfig = Convert.ToInt32(row.Cells[3].Value);
-                    int soldierLevel = Convert.ToInt32(row.Cells[4].Value);
-                    int soldierCount = Convert.ToInt32(row.Cells[5].Value);
-
-                    NPCEnemy n = new NPCEnemy(pos, generalConfig, generalLevel, soldierConfig, soldierLevel, soldierCount);
-                    EnemyList.Add(n.Position, n);
-                }
-            }
-
             EnemyFormation.NPCFormation = EnemyList;
             EnemyFormation.ReComputeNPCTeamBattlePowerPoint();
             LB_RealBattlePoint.Text = EnemyFormation.TeamBattlePowerPoint.ToString();
-
         }
 
         /// <summary>
@@ -127,308 +95,201 @@ namespace WindowsFormsApplication1.Forms
         /// </summary>
         private void GetReferBattlePoint()
         {
-            int refLevel = Formula.GetReferenceLevel(LevelID);
-            int refBattlePoint = Formula.GetLevelDifficulty(LevelID);
+            int refLevel = IsEliteLevel ? DBConfigMgr.Instance.MapLevel[LevelID].EliteRefLevel :
+                DBConfigMgr.Instance.MapLevel[LevelID].RefLevel;
+
+            int refBattlePoint = Formula.GetRefBattlePoint(refLevel);
 
             LB_ReferLevel.Text = refLevel.ToString();
+            LB_RefSquads.Text = Formula.GetOnBattleSquads(refLevel).ToString() ;
             LB_RefBattlePoint.Text = refBattlePoint.ToString();
         }
 
-        private void ResetTheFormation(FormationPosition[] formation)
+        private void SetTextBoxString()
         {
-            int rowIndex = 0;
-            CanReComputeBattlePoint = false;
-            foreach (DataGridViewRow row in dataGridView1.Rows)
-            {
-                if (row.Cells[0].Value != null)
-                {
-                    row.Cells[0].Value = formation[rowIndex].ToString();
-                }
+            if (currentEditButtonID < 0 || currentEditButtonID >= 20)
+                return;
 
-                rowIndex++;
+            if (EnemyList.ContainsKey(currentEditButtonID))
+            {
+                textBox1.Text = EnemyList[currentEditButtonID].BuildString();
+            }
+            else
+                textBox1.Text = "";
+
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            string buttonName = "BTN_" + currentEditButtonID.ToString();
+            Button b = (Button)this.Controls.Find(buttonName, false)[0];
+
+            if (textBox1.Text == "")
+            {
+                EnemyList.Remove(currentEditButtonID);
+                b.Text = "";
+            }
+            else
+            {
+                string completStr = currentEditButtonID.ToString() + "," + textBox1.Text;
+                if (EnemyList.ContainsKey(currentEditButtonID))
+                    EnemyList[currentEditButtonID].SetValueByString(completStr);
+                else
+                    EnemyList.Add(currentEditButtonID, new NPCEnemy(completStr));
+
+                SetButtonString(b, EnemyList[currentEditButtonID]);
             }
 
-            CanReComputeBattlePoint = true;
+            ReComputeBattlePoint();
         }
 
-        /// <summary>
-        /// 方块阵型
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        #region BTN_CLICK
+        private void BTN_0_Click(object sender, EventArgs e)
+        {
+            currentEditButtonID = 0;
+            SetTextBoxString();
+        }
+
+        private void BTN_4_Click(object sender, EventArgs e)
+        {
+            currentEditButtonID = 4;
+            SetTextBoxString();
+        }
+
+        private void BTN_1_Click(object sender, EventArgs e)
+        {
+            currentEditButtonID = 1;
+            SetTextBoxString();
+        }
+
+        private void BTN_2_Click(object sender, EventArgs e)
+        {
+            currentEditButtonID = 2;
+            SetTextBoxString();
+        }
+
+        private void BTN_3_Click(object sender, EventArgs e)
+        {
+            currentEditButtonID = 3;
+            SetTextBoxString();
+        }
+
+        private void BTN_5_Click(object sender, EventArgs e)
+        {
+            currentEditButtonID = 5;
+            SetTextBoxString();
+        }
+
+        private void BTN_6_Click(object sender, EventArgs e)
+        {
+            currentEditButtonID = 6;
+            SetTextBoxString();
+        }
+
+        private void BTN_7_Click(object sender, EventArgs e)
+        {
+            currentEditButtonID = 7;
+            SetTextBoxString();
+        }
+
+        private void BTN_8_Click(object sender, EventArgs e)
+        {
+            currentEditButtonID = 8;
+            SetTextBoxString();
+        }
+
+        private void BTN_9_Click(object sender, EventArgs e)
+        {
+            currentEditButtonID = 9;
+            SetTextBoxString();
+        }
+
+        private void BTN_10_Click(object sender, EventArgs e)
+        {
+            currentEditButtonID = 10;
+            SetTextBoxString();
+        }
+
+        private void BTN_11_Click(object sender, EventArgs e)
+        {
+            currentEditButtonID = 11;
+            SetTextBoxString();
+        }
+
+        private void BTN_12_Click(object sender, EventArgs e)
+        {
+            currentEditButtonID = 12;
+            SetTextBoxString();
+        }
+
+        private void BTN_13_Click(object sender, EventArgs e)
+        {
+            currentEditButtonID = 13;
+            SetTextBoxString();
+        }
+
+        private void BTN_14_Click(object sender, EventArgs e)
+        {
+            currentEditButtonID = 14;
+            SetTextBoxString();
+        }
+
+        private void BTN_15_Click(object sender, EventArgs e)
+        {
+            currentEditButtonID = 15;
+            SetTextBoxString();
+        }
+
+        private void BTN_16_Click(object sender, EventArgs e)
+        {
+            currentEditButtonID = 16;
+            SetTextBoxString();
+        }
+
+        private void BTN_17_Click(object sender, EventArgs e)
+        {
+            currentEditButtonID = 17;
+            SetTextBoxString();
+        }
+
+        private void BTN_18_Click(object sender, EventArgs e)
+        {
+            currentEditButtonID = 18;
+            SetTextBoxString();
+        }
+
+        private void BTN_19_Click(object sender, EventArgs e)
+        {
+            currentEditButtonID = 19;
+            SetTextBoxString();
+        }
+
+        #endregion
+
         private void button3_Click(object sender, EventArgs e)
         {
-            FormationPosition[] formation = 
-            { 
-                FormationPosition.B2,
-                FormationPosition.C2,
-                FormationPosition.B3,
-                FormationPosition.C3,
-                FormationPosition.D2,
-                FormationPosition.D3,
-                FormationPosition.B1,
-                FormationPosition.C1,
-                FormationPosition.D1,
-                FormationPosition.B4,
-                FormationPosition.C4,
-                FormationPosition.D4,
-                FormationPosition.A1,
-                FormationPosition.E1,
-                FormationPosition.A2,
-                FormationPosition.E2,
-                FormationPosition.A3,
-                FormationPosition.E3,
-                FormationPosition.A4,
-                FormationPosition.E4
-            };
+            ResetLevel(true);
 
-            ResetTheFormation(formation);
-            
+            ReComputeBattlePoint();
         }
 
-        /// <summary>
-        /// 锥形阵
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void button4_Click(object sender, EventArgs e)
+        public void ResetLevel(bool updateControl)
         {
-            FormationPosition[] formation = 
-            { 
-                FormationPosition.C1,
-                FormationPosition.B2,
-                FormationPosition.D2,
-                FormationPosition.C2,
-                FormationPosition.A2,
-                FormationPosition.E3,
-                FormationPosition.B3,
-                FormationPosition.C3,
-                FormationPosition.D3,
-                FormationPosition.C4,
-                FormationPosition.A4,
-                FormationPosition.E4,
-                FormationPosition.B4,
-                FormationPosition.D4,
-                FormationPosition.A2,
-                FormationPosition.E2,
-                FormationPosition.B1,
-                FormationPosition.D1,
-                FormationPosition.A1,
-                FormationPosition.E1
-            };
+            int refLevel = IsEliteLevel ? DBConfigMgr.Instance.MapLevel[LevelID].EliteRefLevel :
+                DBConfigMgr.Instance.MapLevel[LevelID].RefLevel;
 
-            ResetTheFormation(formation);
-        }
+            foreach (KeyValuePair<int, NPCEnemy> pair in EnemyList)
+            {
+                pair.Value.GeneralLevel = refLevel;
+                pair.Value.SoldierLevel = refLevel;
 
-        /// <summary>
-        /// 长条阵型
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void button5_Click(object sender, EventArgs e)
-        {
-            FormationPosition[] formation = 
-            { 
-                FormationPosition.B1,
-                FormationPosition.D1,
-                FormationPosition.B2,
-                FormationPosition.D2,
-                FormationPosition.B3,
-                FormationPosition.D3,
-                FormationPosition.B4,
-                FormationPosition.D4,
-                FormationPosition.C1,
-                FormationPosition.C2,
-                FormationPosition.C3,
-                FormationPosition.C4,
-                FormationPosition.A1,
-                FormationPosition.E1,
-                FormationPosition.A2,
-                FormationPosition.E2,
-                FormationPosition.A3,
-                FormationPosition.E3,
-                FormationPosition.A4,
-                FormationPosition.E4
-            };
-
-            ResetTheFormation(formation);
-        }
-
-        /// <summary>
-        /// U形
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void button6_Click(object sender, EventArgs e)
-        {
-            FormationPosition[] formation = 
-            { 
-                FormationPosition.A1,
-                FormationPosition.A2,
-                FormationPosition.A3,
-                FormationPosition.E1,
-                FormationPosition.E2,
-                FormationPosition.E3,
-                FormationPosition.B3,
-                FormationPosition.D3,
-                FormationPosition.B4,
-                FormationPosition.C4,
-                FormationPosition.D4,
-                FormationPosition.A4,
-                FormationPosition.E4,
-                FormationPosition.C3,
-                FormationPosition.B2,
-                FormationPosition.C2,
-                FormationPosition.D2,
-                FormationPosition.B1,
-                FormationPosition.C1,
-                FormationPosition.D1
-            };
-
-            ResetTheFormation(formation);
-        }
-
-
-        /// <summary>
-        /// 竖条阵型
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void button7_Click(object sender, EventArgs e)
-        {
-            FormationPosition[] formation = 
-            { 
-                FormationPosition.A1,
-                FormationPosition.B1,
-                FormationPosition.C1,
-                FormationPosition.D1,
-                FormationPosition.E1,
-                FormationPosition.A3,
-                FormationPosition.B3,
-                FormationPosition.C3,
-                FormationPosition.D3,
-                FormationPosition.E3,
-                FormationPosition.B4,
-                FormationPosition.C4,
-                FormationPosition.D4,
-                FormationPosition.A4,
-                FormationPosition.E4,
-                FormationPosition.B2,
-                FormationPosition.C2,
-                FormationPosition.D2,
-                FormationPosition.A2,
-                FormationPosition.E2
-            };
-
-            ResetTheFormation(formation);
-        }
-
-        /// <summary>
-        /// 圆形
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void button8_Click(object sender, EventArgs e)
-        {
-            FormationPosition[] formation = 
-            { 
-                FormationPosition.B1,
-                FormationPosition.C1,
-                FormationPosition.D1,
-                FormationPosition.A2,
-                FormationPosition.A3,
-                FormationPosition.E2,
-                FormationPosition.E3,
-                FormationPosition.B4,
-                FormationPosition.D4,
-                FormationPosition.C4,
-                FormationPosition.A1,
-                FormationPosition.E1,
-                FormationPosition.A4,
-                FormationPosition.E4,
-                FormationPosition.B2,
-                FormationPosition.C2,
-                FormationPosition.D2,
-                FormationPosition.B3,
-                FormationPosition.C3,
-                FormationPosition.D3
-            };
-
-            ResetTheFormation(formation);
-        }
-
-        /// <summary>
-        /// 倒三角
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void button9_Click(object sender, EventArgs e)
-        {
-            FormationPosition[] formation = 
-            { 
-                FormationPosition.C4,
-                FormationPosition.B3,
-                FormationPosition.D3,
-                FormationPosition.C3,
-                FormationPosition.C2,
-                FormationPosition.B2,
-                FormationPosition.D2,
-                FormationPosition.C1,
-                FormationPosition.B1,
-                FormationPosition.D1,
-                FormationPosition.A1,
-                FormationPosition.E1,
-                FormationPosition.B4,
-                FormationPosition.D4,
-                FormationPosition.A2,
-                FormationPosition.E2,
-                FormationPosition.A3,
-                FormationPosition.E3,
-                FormationPosition.A4,
-                FormationPosition.E4
-            };
-
-            ResetTheFormation(formation);
-        }
-
-        /// <summary>
-        /// 倒U形
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void button10_Click(object sender, EventArgs e)
-        {
-            FormationPosition[] formation = 
-            { 
-                FormationPosition.C1,
-                FormationPosition.B1,
-                FormationPosition.D1,
-                FormationPosition.A2,
-                FormationPosition.E2,
-                FormationPosition.A3,
-                FormationPosition.E3,
-                FormationPosition.A4,
-                FormationPosition.E4,
-                FormationPosition.B2,
-                FormationPosition.D2,
-                FormationPosition.C2,
-                FormationPosition.A1,
-                FormationPosition.E1,
-                FormationPosition.B3,
-                FormationPosition.D3,
-                FormationPosition.C3,
-                FormationPosition.B4,
-                FormationPosition.D4,
-                FormationPosition.C4
-            };
-
-            ResetTheFormation(formation);
-        }
-
-        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            if (CanReComputeBattlePoint)
-                ReComputeBattlePoint();
+                if (updateControl)
+                {
+                    string buttonName = "BTN_" + pair.Key.ToString();
+                    Button b = (Button)this.Controls.Find(buttonName, false)[0];
+                    SetButtonString(b, pair.Value);
+                }
+            }
         }
     }
 }

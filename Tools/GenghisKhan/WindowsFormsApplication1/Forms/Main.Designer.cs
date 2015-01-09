@@ -59,20 +59,34 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.button9 = new System.Windows.Forms.Button();
+            this.button26 = new System.Windows.Forms.Button();
+            this.button20 = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.button25 = new System.Windows.Forms.Button();
+            this.button24 = new System.Windows.Forms.Button();
+            this.button23 = new System.Windows.Forms.Button();
+            this.button22 = new System.Windows.Forms.Button();
+            this.button21 = new System.Windows.Forms.Button();
+            this.button19 = new System.Windows.Forms.Button();
+            this.button18 = new System.Windows.Forms.Button();
+            this.button16 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.button13 = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.button14 = new System.Windows.Forms.Button();
+            this.CB_ClearAllRewards = new System.Windows.Forms.CheckBox();
+            this.CB_GeneralMaterial = new System.Windows.Forms.CheckBox();
+            this.button11 = new System.Windows.Forms.Button();
+            this.button9 = new System.Windows.Forms.Button();
             this.button12 = new System.Windows.Forms.Button();
             this.button17 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.tabPage8 = new System.Windows.Forms.TabPage();
@@ -81,14 +95,18 @@
             this.tabPage11 = new System.Windows.Forms.TabPage();
             this.tabPage12 = new System.Windows.Forms.TabPage();
             this.tabPage13 = new System.Windows.Forms.TabPage();
+            this.tabPage14 = new System.Windows.Forms.TabPage();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.tabPage5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -181,8 +199,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.tabControl1);
-            this.splitContainer2.Size = new System.Drawing.Size(1019, 741);
-            this.splitContainer2.SplitterDistance = 64;
+            this.splitContainer2.Size = new System.Drawing.Size(1194, 775);
+            this.splitContainer2.SplitterDistance = 66;
             this.splitContainer2.TabIndex = 1;
             // 
             // TB_Energy
@@ -371,6 +389,7 @@
             this.tabControl1.Controls.Add(this.tabPage11);
             this.tabControl1.Controls.Add(this.tabPage12);
             this.tabControl1.Controls.Add(this.tabPage13);
+            this.tabControl1.Controls.Add(this.tabPage14);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.ItemSize = new System.Drawing.Size(60, 60);
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
@@ -378,7 +397,7 @@
             this.tabControl1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.tabControl1.RightToLeftLayout = true;
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1019, 673);
+            this.tabControl1.Size = new System.Drawing.Size(1194, 705);
             this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.tabControl1.TabIndex = 0;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
@@ -386,102 +405,232 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.Gainsboro;
-            this.tabPage1.Controls.Add(this.groupBox2);
+            this.tabPage1.Controls.Add(this.button26);
+            this.tabPage1.Controls.Add(this.button20);
+            this.tabPage1.Controls.Add(this.groupBox3);
+            this.tabPage1.Controls.Add(this.button10);
             this.tabPage1.Controls.Add(this.groupBox1);
             this.tabPage1.Controls.Add(this.button17);
-            this.tabPage1.Controls.Add(this.button11);
             this.tabPage1.Location = new System.Drawing.Point(4, 4);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1011, 605);
+            this.tabPage1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tabPage1.Size = new System.Drawing.Size(1186, 637);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "主城";
             // 
-            // groupBox2
+            // button26
             // 
-            this.groupBox2.Controls.Add(this.comboBox3);
-            this.groupBox2.Controls.Add(this.label11);
-            this.groupBox2.Controls.Add(this.button9);
-            this.groupBox2.Controls.Add(this.button10);
-            this.groupBox2.Location = new System.Drawing.Point(334, 185);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(286, 152);
-            this.groupBox2.TabIndex = 15;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "调整武将数据";
+            this.button26.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button26.Location = new System.Drawing.Point(305, 25);
+            this.button26.Name = "button26";
+            this.button26.Size = new System.Drawing.Size(110, 112);
+            this.button26.TabIndex = 20;
+            this.button26.Text = "金钱测试";
+            this.button26.UseVisualStyleBackColor = true;
+            this.button26.Click += new System.EventHandler(this.button26_Click);
             // 
-            // comboBox3
+            // button20
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Items.AddRange(new object[] {
-            "10",
-            "20",
-            "30",
-            "40",
-            "50"});
-            this.comboBox3.Location = new System.Drawing.Point(147, 35);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.comboBox3.Size = new System.Drawing.Size(121, 20);
-            this.comboBox3.TabIndex = 12;
+            this.button20.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button20.Location = new System.Drawing.Point(440, 25);
+            this.button20.Name = "button20";
+            this.button20.Size = new System.Drawing.Size(110, 112);
+            this.button20.TabIndex = 19;
+            this.button20.Text = "批量修改ModelPath";
+            this.button20.UseVisualStyleBackColor = true;
+            this.button20.Click += new System.EventHandler(this.button20_Click);
             // 
-            // label11
+            // groupBox3
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(27, 36);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(113, 12);
-            this.label11.TabIndex = 11;
-            this.label11.Text = "每个星级百分比间隔";
+            this.groupBox3.Controls.Add(this.button25);
+            this.groupBox3.Controls.Add(this.button24);
+            this.groupBox3.Controls.Add(this.button23);
+            this.groupBox3.Controls.Add(this.button22);
+            this.groupBox3.Controls.Add(this.button21);
+            this.groupBox3.Controls.Add(this.button19);
+            this.groupBox3.Controls.Add(this.button18);
+            this.groupBox3.Controls.Add(this.button16);
+            this.groupBox3.Location = new System.Drawing.Point(422, 185);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(315, 426);
+            this.groupBox3.TabIndex = 18;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "战斗相关";
             // 
-            // button9
+            // button25
             // 
-            this.button9.Location = new System.Drawing.Point(27, 89);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(100, 36);
-            this.button9.TabIndex = 9;
-            this.button9.Text = "刷新武将数值";
-            this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
+            this.button25.Location = new System.Drawing.Point(187, 148);
+            this.button25.Name = "button25";
+            this.button25.Size = new System.Drawing.Size(122, 56);
+            this.button25.TabIndex = 7;
+            this.button25.Text = "刷装备三维";
+            this.button25.UseVisualStyleBackColor = true;
+            this.button25.Click += new System.EventHandler(this.button25_Click);
+            // 
+            // button24
+            // 
+            this.button24.Location = new System.Drawing.Point(187, 86);
+            this.button24.Name = "button24";
+            this.button24.Size = new System.Drawing.Size(122, 56);
+            this.button24.TabIndex = 6;
+            this.button24.Text = "刷士兵三维";
+            this.button24.UseVisualStyleBackColor = true;
+            this.button24.Click += new System.EventHandler(this.button24_Click);
+            // 
+            // button23
+            // 
+            this.button23.Location = new System.Drawing.Point(187, 22);
+            this.button23.Name = "button23";
+            this.button23.Size = new System.Drawing.Size(122, 56);
+            this.button23.TabIndex = 5;
+            this.button23.Text = "刷武将三维";
+            this.button23.UseVisualStyleBackColor = true;
+            this.button23.Click += new System.EventHandler(this.button23_Click);
+            // 
+            // button22
+            // 
+            this.button22.Location = new System.Drawing.Point(18, 302);
+            this.button22.Name = "button22";
+            this.button22.Size = new System.Drawing.Size(122, 56);
+            this.button22.TabIndex = 4;
+            this.button22.Text = "清空测试用的武将";
+            this.button22.UseVisualStyleBackColor = true;
+            this.button22.Click += new System.EventHandler(this.button22_Click);
+            // 
+            // button21
+            // 
+            this.button21.Location = new System.Drawing.Point(18, 364);
+            this.button21.Name = "button21";
+            this.button21.Size = new System.Drawing.Size(122, 56);
+            this.button21.TabIndex = 3;
+            this.button21.Text = "生成测试用的武将";
+            this.button21.UseVisualStyleBackColor = true;
+            this.button21.Click += new System.EventHandler(this.button21_Click);
+            // 
+            // button19
+            // 
+            this.button19.Location = new System.Drawing.Point(6, 84);
+            this.button19.Name = "button19";
+            this.button19.Size = new System.Drawing.Size(150, 56);
+            this.button19.TabIndex = 2;
+            this.button19.Text = "从武将模版生成武将";
+            this.button19.UseVisualStyleBackColor = true;
+            this.button19.Click += new System.EventHandler(this.button19_Click);
+            // 
+            // button18
+            // 
+            this.button18.Location = new System.Drawing.Point(6, 146);
+            this.button18.Name = "button18";
+            this.button18.Size = new System.Drawing.Size(150, 56);
+            this.button18.TabIndex = 1;
+            this.button18.Text = "随机给武将配技能和天赋";
+            this.button18.UseVisualStyleBackColor = true;
+            this.button18.Click += new System.EventHandler(this.button18_Click);
+            // 
+            // button16
+            // 
+            this.button16.Location = new System.Drawing.Point(6, 22);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(150, 56);
+            this.button16.TabIndex = 0;
+            this.button16.Text = "从技能模版生成技能";
+            this.button16.UseVisualStyleBackColor = true;
+            this.button16.Click += new System.EventHandler(this.button16_Click);
             // 
             // button10
             // 
-            this.button10.Location = new System.Drawing.Point(143, 89);
+            this.button10.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button10.Location = new System.Drawing.Point(172, 25);
             this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(100, 36);
-            this.button10.TabIndex = 10;
-            this.button10.Text = "保存武将数值";
+            this.button10.Size = new System.Drawing.Size(110, 112);
+            this.button10.TabIndex = 17;
+            this.button10.Text = "战斗测试";
             this.button10.UseVisualStyleBackColor = true;
             this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.button13);
+            this.groupBox1.Controls.Add(this.groupBox2);
+            this.groupBox1.Controls.Add(this.button11);
+            this.groupBox1.Controls.Add(this.button9);
             this.groupBox1.Controls.Add(this.button12);
             this.groupBox1.Location = new System.Drawing.Point(24, 185);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(295, 152);
+            this.groupBox1.Size = new System.Drawing.Size(370, 426);
             this.groupBox1.TabIndex = 14;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "调整关卡";
             // 
-            // button13
+            // groupBox2
             // 
-            this.button13.Location = new System.Drawing.Point(6, 83);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(109, 42);
-            this.button13.TabIndex = 19;
-            this.button13.Text = "重置关卡经验";
-            this.button13.UseVisualStyleBackColor = true;
-            this.button13.Click += new System.EventHandler(this.button13_Click);
+            this.groupBox2.Controls.Add(this.button14);
+            this.groupBox2.Controls.Add(this.CB_ClearAllRewards);
+            this.groupBox2.Controls.Add(this.CB_GeneralMaterial);
+            this.groupBox2.Location = new System.Drawing.Point(161, 36);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(193, 131);
+            this.groupBox2.TabIndex = 25;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "ClientShowRewards";
+            // 
+            // button14
+            // 
+            this.button14.Location = new System.Drawing.Point(6, 69);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(176, 42);
+            this.button14.TabIndex = 22;
+            this.button14.Text = "随机刷关卡道具奖励";
+            this.button14.UseVisualStyleBackColor = true;
+            this.button14.Click += new System.EventHandler(this.button14_Click);
+            // 
+            // CB_ClearAllRewards
+            // 
+            this.CB_ClearAllRewards.AutoSize = true;
+            this.CB_ClearAllRewards.Location = new System.Drawing.Point(11, 18);
+            this.CB_ClearAllRewards.Name = "CB_ClearAllRewards";
+            this.CB_ClearAllRewards.Size = new System.Drawing.Size(96, 16);
+            this.CB_ClearAllRewards.TabIndex = 24;
+            this.CB_ClearAllRewards.Text = "清空已有奖励";
+            this.CB_ClearAllRewards.UseVisualStyleBackColor = true;
+            // 
+            // CB_GeneralMaterial
+            // 
+            this.CB_GeneralMaterial.AutoSize = true;
+            this.CB_GeneralMaterial.Location = new System.Drawing.Point(11, 40);
+            this.CB_GeneralMaterial.Name = "CB_GeneralMaterial";
+            this.CB_GeneralMaterial.Size = new System.Drawing.Size(96, 16);
+            this.CB_GeneralMaterial.TabIndex = 23;
+            this.CB_GeneralMaterial.Text = "重刷武将碎片";
+            this.CB_GeneralMaterial.UseVisualStyleBackColor = true;
+            // 
+            // button11
+            // 
+            this.button11.Location = new System.Drawing.Point(23, 153);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(109, 42);
+            this.button11.TabIndex = 21;
+            this.button11.Text = "重置所有关卡经验奖励";
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
+            // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(23, 95);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(109, 42);
+            this.button9.TabIndex = 20;
+            this.button9.Text = "重置所有关卡银币奖励";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // button12
             // 
-            this.button12.Location = new System.Drawing.Point(6, 23);
+            this.button12.Location = new System.Drawing.Point(23, 40);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(109, 42);
             this.button12.TabIndex = 11;
-            this.button12.Text = "计算关卡经验奖励是否合理";
+            this.button12.Text = "重置所有关卡敌人";
             this.button12.UseVisualStyleBackColor = true;
             this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
@@ -495,58 +644,73 @@
             this.button17.UseVisualStyleBackColor = true;
             this.button17.Click += new System.EventHandler(this.button17_Click);
             // 
-            // button11
-            // 
-            this.button11.Location = new System.Drawing.Point(154, 25);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(110, 112);
-            this.button11.TabIndex = 2;
-            this.button11.Text = "商店";
-            this.button11.UseVisualStyleBackColor = true;
-            // 
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Gainsboro;
             this.tabPage2.Location = new System.Drawing.Point(4, 4);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1011, 605);
+            this.tabPage2.Size = new System.Drawing.Size(1186, 637);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "仓库";
+            this.tabPage2.Text = "部队";
             // 
             // tabPage3
             // 
             this.tabPage3.BackColor = System.Drawing.Color.Gainsboro;
             this.tabPage3.Location = new System.Drawing.Point(4, 4);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(1011, 605);
+            this.tabPage3.Size = new System.Drawing.Size(1186, 637);
             this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "合成";
+            this.tabPage3.Text = "装备";
             // 
             // tabPage4
             // 
             this.tabPage4.BackColor = System.Drawing.Color.Gainsboro;
             this.tabPage4.Location = new System.Drawing.Point(4, 4);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(1011, 605);
+            this.tabPage4.Size = new System.Drawing.Size(1186, 637);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "武将";
             // 
             // tabPage5
             // 
             this.tabPage5.BackColor = System.Drawing.Color.Gainsboro;
+            this.tabPage5.Controls.Add(this.dataGridView1);
             this.tabPage5.Location = new System.Drawing.Point(4, 4);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(1011, 605);
+            this.tabPage5.Size = new System.Drawing.Size(1186, 637);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "阵容";
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn5,
+            this.dataGridViewTextBoxColumn6});
+            this.dataGridView1.Location = new System.Drawing.Point(28, 39);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.Size = new System.Drawing.Size(248, 481);
+            this.dataGridView1.TabIndex = 6;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.HeaderText = "等级";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.HeaderText = "上场武将";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
             // 
             // tabPage6
             // 
             this.tabPage6.BackColor = System.Drawing.Color.Gainsboro;
             this.tabPage6.Location = new System.Drawing.Point(4, 4);
             this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(1011, 605);
+            this.tabPage6.Size = new System.Drawing.Size(1186, 637);
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "任务";
             // 
@@ -555,7 +719,7 @@
             this.tabPage7.BackColor = System.Drawing.Color.Gainsboro;
             this.tabPage7.Location = new System.Drawing.Point(4, 4);
             this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(1011, 605);
+            this.tabPage7.Size = new System.Drawing.Size(1186, 637);
             this.tabPage7.TabIndex = 6;
             this.tabPage7.Text = "战役";
             // 
@@ -564,7 +728,7 @@
             this.tabPage8.BackColor = System.Drawing.Color.Gainsboro;
             this.tabPage8.Location = new System.Drawing.Point(4, 4);
             this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Size = new System.Drawing.Size(1011, 605);
+            this.tabPage8.Size = new System.Drawing.Size(1186, 637);
             this.tabPage8.TabIndex = 7;
             this.tabPage8.Text = "探索";
             // 
@@ -573,7 +737,7 @@
             this.tabPage9.BackColor = System.Drawing.Color.Gainsboro;
             this.tabPage9.Location = new System.Drawing.Point(4, 4);
             this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Size = new System.Drawing.Size(1011, 605);
+            this.tabPage9.Size = new System.Drawing.Size(1186, 637);
             this.tabPage9.TabIndex = 8;
             this.tabPage9.Text = "远征";
             // 
@@ -582,7 +746,7 @@
             this.tabPage10.BackColor = System.Drawing.Color.Gainsboro;
             this.tabPage10.Location = new System.Drawing.Point(4, 4);
             this.tabPage10.Name = "tabPage10";
-            this.tabPage10.Size = new System.Drawing.Size(1011, 605);
+            this.tabPage10.Size = new System.Drawing.Size(1186, 637);
             this.tabPage10.TabIndex = 9;
             this.tabPage10.Text = "军团";
             // 
@@ -591,7 +755,7 @@
             this.tabPage11.BackColor = System.Drawing.Color.Gainsboro;
             this.tabPage11.Location = new System.Drawing.Point(4, 4);
             this.tabPage11.Name = "tabPage11";
-            this.tabPage11.Size = new System.Drawing.Size(1011, 605);
+            this.tabPage11.Size = new System.Drawing.Size(1186, 637);
             this.tabPage11.TabIndex = 10;
             this.tabPage11.Text = "竞技场";
             // 
@@ -600,7 +764,7 @@
             this.tabPage12.BackColor = System.Drawing.Color.Gainsboro;
             this.tabPage12.Location = new System.Drawing.Point(4, 4);
             this.tabPage12.Name = "tabPage12";
-            this.tabPage12.Size = new System.Drawing.Size(1011, 605);
+            this.tabPage12.Size = new System.Drawing.Size(1186, 637);
             this.tabPage12.TabIndex = 11;
             this.tabPage12.Text = "爵位";
             // 
@@ -609,16 +773,25 @@
             this.tabPage13.BackColor = System.Drawing.Color.Gainsboro;
             this.tabPage13.Location = new System.Drawing.Point(4, 4);
             this.tabPage13.Name = "tabPage13";
-            this.tabPage13.Size = new System.Drawing.Size(1011, 605);
+            this.tabPage13.Size = new System.Drawing.Size(1186, 637);
             this.tabPage13.TabIndex = 12;
             this.tabPage13.Text = "守护神";
+            // 
+            // tabPage14
+            // 
+            this.tabPage14.Location = new System.Drawing.Point(4, 4);
+            this.tabPage14.Name = "tabPage14";
+            this.tabPage14.Size = new System.Drawing.Size(1186, 637);
+            this.tabPage14.TabIndex = 13;
+            this.tabPage14.Text = "抽宝箱";
+            this.tabPage14.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(1019, 741);
+            this.ClientSize = new System.Drawing.Size(1194, 775);
             this.Controls.Add(this.splitContainer2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -631,9 +804,12 @@
             this.splitContainer2.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
+            this.tabPage5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -651,7 +827,6 @@
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.Button button11;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage4;
@@ -685,13 +860,29 @@
         private System.Windows.Forms.TabPage tabPage11;
         private System.Windows.Forms.TabPage tabPage12;
         private System.Windows.Forms.TabPage tabPage13;
-        private System.Windows.Forms.Button button10;
-        private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ComboBox comboBox3;
-        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button button12;
-        private System.Windows.Forms.Button button13;
+        private System.Windows.Forms.TabPage tabPage14;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Button button14;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.CheckBox CB_ClearAllRewards;
+        private System.Windows.Forms.CheckBox CB_GeneralMaterial;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button button16;
+        private System.Windows.Forms.Button button18;
+        private System.Windows.Forms.Button button19;
+        private System.Windows.Forms.Button button20;
+        private System.Windows.Forms.Button button21;
+        private System.Windows.Forms.Button button22;
+        private System.Windows.Forms.Button button23;
+        private System.Windows.Forms.Button button24;
+        private System.Windows.Forms.Button button25;
+        private System.Windows.Forms.Button button26;
     }
 }

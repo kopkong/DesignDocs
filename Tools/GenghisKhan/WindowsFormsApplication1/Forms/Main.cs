@@ -9,11 +9,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApplication1;
 using WindowsFormsApplication1.Forms;
+using System.IO;
 
 namespace WindowsFormsApplication1
 {
     public partial class MainForm : Form
     {
+        Random rnd = new Random();
         public MainForm()
         {
             InitializeComponent();
@@ -25,7 +27,10 @@ namespace WindowsFormsApplication1
         {
             // 按照顺序初始化
             //ConfigMgr.Instance.Init();
-            SQLiteHelper.Instance.Init(@"D:\DesignDocs\Tools\GenghisKhan\test.db");
+            File.CreateText("test.txt");
+            string dbpath = File.ReadAllText("tool.config");
+
+            SQLiteHelper.Instance.Init(dbpath);
             DBConfigMgr.Instance.Init();
             PlayerDataMgr.Instance.Init();
             UpdatePlayerInfo();
@@ -57,12 +62,18 @@ namespace WindowsFormsApplication1
                     {
                         break;
                     }
-                case 1: // 仓库， 装备、部队、道具背包
+                case 1: // 部队
                     {
+                        UCSoldier ucSoldier = new UCSoldier();
+                        tabControl1.SelectedTab.Controls.Add(ucSoldier);
+                        ucSoldier.Dock = DockStyle.Fill;
                         break;
                     }
-                case 2: // 合成， 碎片背包
+                case 2: // 装备
                     {
+                        UCArmor ucArmor = new UCArmor();
+                        tabControl1.SelectedTab.Controls.Add(ucArmor);
+                        ucArmor.Dock = DockStyle.Fill;
                         break;
                     }
                 case 3: // 武将背包
@@ -75,13 +86,17 @@ namespace WindowsFormsApplication1
                     }
                 case 4: // 阵容
                     {
-                        UCFormation ucFormation = new UCFormation();
-                        tabControl1.SelectedTab.Controls.Add(ucFormation);
-                        ucFormation.InitPlayerFormation();
+                        InitMaxSquadList();
+                        //UCFormation ucFormation = new UCFormation();
+                        //tabControl1.SelectedTab.Controls.Add(ucFormation);
+                        //ucFormation.InitPlayerFormation();
                         break;
                     }
                 case 5: // 任务
                     {
+                        UCTask ucTask = new UCTask();
+                        tabControl1.SelectedTab.Controls.Add(ucTask);
+                        ucTask.Dock = DockStyle.Fill;
                         break;
                     }
                 case 6: //  战役
@@ -97,6 +112,30 @@ namespace WindowsFormsApplication1
                     {
                         break;
                     }
+                case 10: // 竞技场
+                    {
+                        UCArena ucArena = new UCArena();
+                        tabControl1.SelectedTab.Controls.Add(ucArena);
+                        ucArena.Dock = DockStyle.Fill;
+
+                        break;
+                    }
+                case 11: //爵位
+                    {
+                        break;
+                    }
+                case 12:// 守护神
+                    {
+                        break;
+                    }
+                case 13: // 抽宝箱
+                    {
+                        UCLottery ucLottery = new UCLottery();
+                        tabControl1.SelectedTab.Controls.Add(ucLottery);
+                        ucLottery.Dock = DockStyle.Fill;
+
+                        break;
+                    }
 
                 default:
                     break;
@@ -105,46 +144,231 @@ namespace WindowsFormsApplication1
 
         private void button17_Click(object sender, EventArgs e)
         {
-            Form1 form = new Form1();
+            ConfigExporter form = new ConfigExporter();
 
             form.Show();
         }
 
-        private void button9_Click(object sender, EventArgs e)
-        {
-            //if (comboBox3.SelectedIndex >= 0)
-            //{
-                //int gapBetweenStar = Convert.ToInt32(comboBox3.SelectedText);
-            Formula.ComputeGeneralBasicAttribute(20);
-            Console.WriteLine("刷新成功");
-            //}
-        }
-
-        private void button10_Click(object sender, EventArgs e)
-        {
-            int affectRows = DBConfigMgr.Instance.SaveGeneralData();
-            MessageBox.Show(String.Format("成功保存了{0}条武将数据", affectRows));
-        }
-
         /// <summary>
-        /// 调整关卡难度
+        /// 刷新关卡怪物和等级难度
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void button12_Click(object sender, EventArgs e)
         {
-            Formula.ComputeGeneralLevelAterEveryLevel();
+            CampaignBatch.RefreshLevelEnemy();
+
+            DBConfigMgr.Instance.UpdateAllLevelEnemy();
+
+            MessageBox.Show("全部关卡怪物等级刷新完毕！");
+        }
+
+        public void InitMaxSquadList()
+        {
+            dataGridView1.Rows.Clear();
+
+            foreach (MaxSquad m in DBConfigMgr.Instance.MapMaxSquads.Values)
+            {
+                DataGridViewRow row = new DataGridViewRow();
+
+                DataGridViewTextBoxCell textbox1 = new DataGridViewTextBoxCell();
+                textbox1.Value = m.Level;
+                row.Cells.Add(textbox1);
+
+                DataGridViewTextBoxCell textbox2 = new DataGridViewTextBoxCell();
+                textbox2.Value = m.MaxSquads;
+                row.Cells.Add(textbox2);
+
+                dataGridView1.Rows.Add(row);
+            }
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            Form form2 = new BattleSimu();
+            form2.Show();
         }
 
         /// <summary>
-        /// 刷新关卡奖励的经验
+        /// 重置关卡金钱奖励
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button13_Click(object sender, EventArgs e)
+        private void button9_Click(object sender, EventArgs e)
         {
-            int affectRows = Formula.ComputeLevelGeneralEXPReward();
-            MessageBox.Show(String.Format("成功保存了{0}条关卡奖励数据",affectRows));
+            CampaignBatch.RefreshLevelMoneyReward();
+            int affectRows = DBConfigMgr.Instance.UpdateAllLevelMoneyReward();
+            MessageBox.Show(String.Format("刷新了{0}条关卡奖励", affectRows));
         }
+
+        /// <summary>
+        /// 重置关卡经验奖励
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button11_Click(object sender, EventArgs e)
+        {
+            CampaignBatch.RefreshLevelGeneralEXPReward();
+            int affectRows =DBConfigMgr.Instance.UpdateAllLevelGeneralEXPReward();
+            MessageBox.Show(String.Format("刷新了{0}条关卡奖励", affectRows));
+        }
+
+        /// <summary>
+        /// 随机刷新出来关卡的额外奖励
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button14_Click(object sender, EventArgs e)
+        {
+            if(CB_ClearAllRewards.Checked)
+                DBConfigMgr.Instance.ClearAllLevelItemReward();
+
+            if(CB_GeneralMaterial.Checked)
+                CampaignBatch.RefreshLevelGeneralMaterialReward();
+
+            CampaignBatch.RefreshLevelSoldierExpansionItemReward();
+            CampaignBatch.RefreshLevelArmorReward();
+            CampaignBatch.RefreshLevelTreasureBoxReward();
+
+            DBConfigMgr.Instance.UpdateAllLevelReward();
+            MessageBox.Show("刷新完毕！");
+        }
+
+        /// <summary>
+        /// 重置所有关卡的脚本奖励名称
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button15_Click(object sender, EventArgs e)
+        {
+            foreach (Level level in DBConfigMgr.Instance.MapLevel.Values)
+            {
+                if (level.ChapterID <= 30)
+                {
+                    level.LevelReward = String.Format("CampaignReward");
+                    level.EliteLevelReward = String.Format("EliteCampaignReward");
+                }
+
+                if (level.ChapterID == 900)
+                    level.LevelReward = "ExploreReward";
+
+                if (level.ChapterID == 999)
+                    level.LevelReward = "RegionReward";
+
+                if (level.ChapterID == 1000)
+                    level.LevelReward = "LongMarchReward";
+            }
+
+            DBConfigMgr.Instance.UpdateAllLevelRewardScriptName();
+
+            MessageBox.Show("刷新成功！");
+        }
+
+        /// <summary>
+        /// 生成技能
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button16_Click(object sender, EventArgs e)
+        {
+            SkillBatch.GenerateSkills();
+
+            DBConfigMgr.Instance.ClearAndSaveSkillAndBuff();
+
+            MessageBox.Show("生成完毕！");
+        }
+
+        /// <summary>
+        /// 随机给武将配技能
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button18_Click(object sender, EventArgs e)
+        {
+            GeneralBatch.DispatchRandomSkillForGeneral();
+            GeneralBatch.DispatchTalentForGeneral();
+
+            DBConfigMgr.Instance.UpdateAllGeneralSkillAndTalent();
+
+            MessageBox.Show("分配完毕！");
+        }
+
+        private void button19_Click(object sender, EventArgs e)
+        {
+            GeneralBatch.GenerateGenerals();
+
+            DBConfigMgr.Instance.ClearAndSaveGeneral();
+
+            MessageBox.Show("保存完毕");
+        }
+
+        private void button20_Click(object sender, EventArgs e)
+        {
+            Form form = new RenameModel();
+            form.Show();
+        }
+
+        /// <summary>
+        /// 生成测试用的武将
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button21_Click(object sender, EventArgs e)
+        {
+            GeneralBatch.GenerateTestGenerals();
+
+             // 保存到数据库
+            DBConfigMgr.Instance.SaveTestGeneral();
+
+            MessageBox.Show("生成完毕！");
+        }
+
+        /// <summary>
+        /// 删除测试用武将
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button22_Click(object sender, EventArgs e)
+        {
+            GeneralBatch.ClearTestGenerals();
+
+            DBConfigMgr.Instance.ClearTestGeneral();
+
+            MessageBox.Show("清理完毕！");
+        }
+
+        private void button23_Click(object sender, EventArgs e)
+        {
+            GeneralBatch.RefreshRandomGeneralMainAttribute();
+
+            DBConfigMgr.Instance.UpdateAllGeneralBasicInfo();
+
+            MessageBox.Show("刷新完毕！");
+        }
+
+        private void button24_Click(object sender, EventArgs e)
+        {
+            SoldierBatch.RefreshRandomSoldierMainAttribute();
+
+            DBConfigMgr.Instance.UpdateAllSoldier();
+
+            MessageBox.Show("刷新完毕！");
+        }
+
+        private void button25_Click(object sender, EventArgs e)
+        {
+            ArmorBatch.RefreshArmorMainAttribute();
+
+            DBConfigMgr.Instance.UpdateAllArmor();
+
+            MessageBox.Show("刷新完毕");
+        }
+
+        private void button26_Click(object sender, EventArgs e)
+        {
+            MoneySimu form = new MoneySimu();
+            form.Show();
+        }
+
     }
 }
